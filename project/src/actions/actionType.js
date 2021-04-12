@@ -1,0 +1,6 @@
+
+export const  FETCH_PLACE = "FETCH_PLACE" 
+
+
+export const  FETCH_PLACE_SUCCESS = "FETCH_PLACE_SUCCESS" 
+export const  FETCH_PLACE_FAILED = "FETCH_PLACE_FAILED" 
