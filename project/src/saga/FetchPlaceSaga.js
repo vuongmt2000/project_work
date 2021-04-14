@@ -1,25 +1,36 @@
-import React, { useEffect } from 'react';
-import { View } from 'react-native';
-import {takeLatest , put} from 'redux-saga/effects'; 
-import SQLite from 'react-native-sqlite-storage'
-import {FETCH_PLACE, FETCH_PLACE_FAILED, FETCH_PLACE_SUCCESS} from '../actions/actionType'
+import React, { useEffect } from "react";
+import { View } from "react-native";
+import { takeLatest, put, call } from "redux-saga/effects";
+import {ExecuteSQL} from './OpenDatabase'
+import {
+  FETCH_PLACE,
+  FETCH_PLACE_FAILED,
+  FETCH_PLACE_SUCCESS,
+} from "../actions/actionType";
 
 
+function* HandleFetchPlace(action) {
+  const results = yield call(ExecuteSQL, "SELECT * FROM  Product;", []);
 
-function* HandleFetchPlace(action){
-    console.log("HandleFetchPlace")
-        console.log("ongetdata")
-        const a = SQLite.openDatabase({name: 'database.db', createFromLocation: '~www/database.db'}, ()=>{}, (err)=>{console.log(err)});
-        a.transaction(tx=>{
-            tx.executeSql('SELECT * FROM Product', [], (tx, results) =>{
-                console.log(JSON.stringify(results.rows.item(0)));
-            })
-        })
+  console.log("results:", results);
+  var len = results.rows.length;
+  const data = [];
+
+  for (let i = 0; i < len; i++) {
+    let row = results.rows.item(i);
+    data.push(row)
+  }
+
+  if (data?.length > 0) {
+    console.log("dataFetchSaga", data);
+    yield put({ type: FETCH_PLACE_SUCCESS, data });
+  }
+  else {
+    yield put({ type: FETCH_PLACE_FAILED, data });
+  }
 }
 
-export function* watchFetchPlace(){
-    console.log('SAGA_WATCH_FETCH_PLACE')
-    yield takeLatest(FETCH_PLACE,HandleFetchPlace);
-    
+export function* watchFetchPlace() {
+  console.log("SAGA_WATCH_FETCH_PLACE");
+  yield takeLatest(FETCH_PLACE, HandleFetchPlace);
 }
-

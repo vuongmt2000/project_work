@@ -1,6 +1,10 @@
-
+ // screen home
 export const  FETCH_PLACE = "FETCH_PLACE" 
-
-
 export const  FETCH_PLACE_SUCCESS = "FETCH_PLACE_SUCCESS" 
 export const  FETCH_PLACE_FAILED = "FETCH_PLACE_FAILED" 
+
+// screen list custom
+
+export const FETCH_LIST_CUSTOM = "FETCH_LIST_CUSTOM"
+export const FETCH_LIST_CUSTOM_SUCCESS = "FETCH_LIST_CUSTOM_SUCCESS"
+export const FETCH_LIST_CUSTOM_FAILED = "FETCH_LIST_CUSTOM_FAILED"
