@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { TouchableOpacity, View, Text, Image, TextInput } from "react-native";
+import {useDispatch, useSelector} from 'react-redux'
 import Feather from "react-native-vector-icons/Feather";
 import ImagePicker from "react-native-image-crop-picker";
+import { updateCustomAction , deleteCustomAction} from '../../actions/index'
 function EditCustom(props) {
   const { item } = props.route.params;
   const [fullName, setFullName] = useState(item.name);
@@ -9,9 +11,18 @@ function EditCustom(props) {
   const [image, setImage] = useState(item.image);
   const [address, setAddress] = useState(item.address);
   const [note, setNote] = useState(item.note);
-  console.log("props", props);
+  const dispatch = useDispatch();
+  const len = useSelector(state => state.listCustomReducer.len)
+  function onBack() {
+    props.navigation.goBack();
+  }
 
-  function onBack() {}
+  function onDelete(id){
+   dispatch(deleteCustomAction(id))
+   setTimeout(()=>{
+    props.navigation.navigate("ListCustom");
+  }, 1000)
+  }
 
   function editImage() {
     ImagePicker.openPicker({
@@ -24,89 +35,128 @@ function EditCustom(props) {
     });
   }
 
+  function updateCustomer(name, phone, address, image, note, id){
+    console.log("run update")
+    let obj = {id, name, phone, address, image, note};
+    dispatch(updateCustomAction(obj));
+    setTimeout(()=>{
+      props.navigation.navigate("ListCustom");
+    }, 1000)
+  }
+
   return (
     <View style={{ flex: 1 }}>
       {/* Header */}
+      <View style ={{width:"100%", backgroundColor: "#34a4eb"}}>
       <View
         style={{
-          width: "100%",
+          width: "90%",
           height: 60,
-          backgroundColor: "#34a4eb",
           alignItems: "center",
+          justifyContent:"space-between",
           flexDirection: "row",
+          alignSelf:"center"
         }}
       >
-        <TouchableOpacity style={{ marginLeft: 10 }} onPress={onBack}>
+        <TouchableOpacity  onPress={onBack}>
           <Feather name="arrow-left" color="white" size={26} />
         </TouchableOpacity>
-        <Text style={{ color: "white", fontSize: 18, marginLeft: 50 }}>
+        <Text style={{ color: "white", fontSize: 18}}>
           Sửa thông tin khách hàng
         </Text>
+        <TouchableOpacity  onPress={()=>onDelete(item.id)}>
+          <Feather name="trash-2" color="white" size={26} />
+        </TouchableOpacity>
+      </View>
       </View>
       <View
-        style={{ justifyContent: "center", alignItems: "center", height: 200 }}
+        style={{ width: "90%", height: 230, marginTop:10, alignSelf:"center" }}
       >
         <TouchableOpacity onPress={editImage}>
           <Image
-            style={{ width: 100, height: 100, borderRadius: 50 }}
+            style={{ width: 200, height: 200, borderRadius :200, alignSelf :"center" }}
             source={{ uri: image }}
           />
+          <View style ={{flexDirection :"row", marginTop: 5}}>
+            <Feather name ="edit-3" color ="black" size  ={24}/>
+            <Text style ={{alignItems: "flex-end", marginLeft:5}}>Edit</Text>
+          </View>
         </TouchableOpacity>
       </View>
-      <View style={{ width: "90%", alignSelf: "center" }}>
+      <View style={{ width: "90%", alignSelf: "center" , flexDirection :"row",
+            borderRadius: 5,
+            borderWidth: 1,
+            borderColor: "gray",
+            marginTop: 10,}}>
+        <View style ={{width:"10%", justifyContent:"center",alignItems:"center"}}> 
+          <Feather name = "user" color="blue" size={24}/>
+        </View>
         <TextInput
           value={fullName}
           onChangeText={setFullName}
           style={{
             height: 50,
             width: "100%",
-            alignSelf: "center",
+            
+          }}
+        />
+         </View>
+         <View style={{ width: "90%", alignSelf: "center" , flexDirection :"row",
             borderRadius: 5,
             borderWidth: 1,
             borderColor: "gray",
-            marginTop: 10,
-          }}
-        />
+            marginTop: 10,}}>
+        <View style ={{width:"10%", justifyContent:"center",alignItems:"center"}}> 
+          <Feather name = "phone" color="blue" size={24}/>
+        </View>
         <TextInput
+        keyboardType ="numeric"
           value={phone}
           onChangeText={setPhone}
           style={{
             height: 50,
             width: "100%",
-            alignSelf: "center",
+            
+          }}
+        />
+         </View>
+         <View style={{ width: "90%", alignSelf: "center" , flexDirection :"row",
             borderRadius: 5,
             borderWidth: 1,
             borderColor: "gray",
-            marginTop: 10,
-          }}
-        />
+            marginTop: 10,}}>
+        <View style ={{width:"10%", justifyContent:"center",alignItems:"center"}}> 
+          <Feather name = "map-pin" color="blue" size={24}/>
+        </View>
         <TextInput
           value={address}
           onChangeText={setAddress}
           style={{
             height: 50,
             width: "100%",
-            alignSelf: "center",
+            
+          }}
+        />
+         </View>
+         <View style={{ width: "90%", alignSelf: "center" , flexDirection :"row",
             borderRadius: 5,
             borderWidth: 1,
             borderColor: "gray",
-            marginTop: 10,
-          }}
-        />
+            marginTop: 10,}}>
+        <View style ={{width:"10%", justifyContent:"center",alignItems:"center"}}> 
+          <Feather name = "file-text" color="blue" size={24}/>
+        </View>
         <TextInput
           value={note}
           onChangeText={setNote}
           style={{
             height: 50,
             width: "100%",
-            alignSelf: "center",
-            borderRadius: 5,
-            borderWidth: 1,
-            borderColor: "gray",
-            marginTop: 10,
+            
           }}
         />
-      </View>
+         </View>
+     
       <View
         style={{
           flexDirection: "row",
@@ -130,6 +180,7 @@ function EditCustom(props) {
           <Text style={{ color: "white" }}>Hủy</Text>
         </TouchableOpacity>
         <TouchableOpacity
+        onPress ={()=> updateCustomer(fullName, phone, address, image, note, item.id)}
           style={{
             height: 50,
             width: 120,

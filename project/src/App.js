@@ -20,6 +20,9 @@ import ListProduct from './components/screens/ListProduct'
 import OverView from './components/screens/OverView'
 import AddCustom from './components/screens/AddCustom'
 import EditCustom from './components/screens/EditCustom'
+import EditProduct from './components/screens/EditProduct'
+import AddProduct from './components/screens/AddProduct'
+import AddPlace from './components/screens/AddPlace'
 
 const MyContext = React.createContext()
 const sagaMiddleware = creatSagaMiddleware();
@@ -38,7 +41,7 @@ const App=()=> {
     function BottomTab(){
         return(
         <Tab.Navigator 
-        initialRouteName = "Khách hàng"
+        initialRouteName = "Trang chủ"
         tabBarOptions={{
             activeTintColor: '#e91e63',
           }}>
@@ -66,14 +69,81 @@ const App=()=> {
         </Tab.Navigator>
         )
     }
+    function BottomTab_Custom(){
+      return(
+      <Tab.Navigator 
+      initialRouteName = "Khách hàng"
+      tabBarOptions={{
+          activeTintColor: '#e91e63',
+        }}>
+          <Tab.Screen  name = "Trang chủ" component ={Home} options={{
+        tabBarIcon: ({ color, size }) => (
+          <Feather name="home" color={color} size={26} />
+        ),
+      }}/>
+          <Tab.Screen  name = "Khách hàng" component ={ListCustom}  options={{
+        tabBarIcon: ({ color, size }) => (
+          <Feather name="users" color={color} size={26} />
+        ),
+      }}
+          />
+          <Tab.Screen  name = "Sản phẩm" component ={ListProduct}  options={{
+        tabBarIcon: ({ color, size }) => (
+          <Feather name="server" color={color} size={26} />
+        ),
+      }}/>
+          <Tab.Screen  name = "Tổng quan" component ={OverView}  options={{
+        tabBarIcon: ({ color, size }) => (
+          <Feather name="package" color={color} size={26} />
+        ),
+      }}/>
+      </Tab.Navigator>
+      )
+  }
+  function BottomTab_Product(){
+    return(
+    <Tab.Navigator 
+    initialRouteName = "Sản phẩm"
+    tabBarOptions={{
+        activeTintColor: '#e91e63',
+      }}>
+        <Tab.Screen  name = "Trang chủ" component ={Home} options={{
+      tabBarIcon: ({ color, size }) => (
+        <Feather name="home" color={color} size={26} />
+      ),
+    }}/>
+        <Tab.Screen  name = "Khách hàng" component ={ListCustom}  options={{
+      tabBarIcon: ({ color, size }) => (
+        <Feather name="users" color={color} size={26} />
+      ),
+    }}
+        />
+        <Tab.Screen  name = "Sản phẩm" component ={ListProduct}  options={{
+      tabBarIcon: ({ color, size }) => (
+        <Feather name="server" color={color} size={26} />
+      ),
+    }}/>
+        <Tab.Screen  name = "Tổng quan" component ={OverView}  options={{
+      tabBarIcon: ({ color, size }) => (
+        <Feather name="package" color={color} size={26} />
+      ),
+    }}/>
+    </Tab.Navigator>
+    )
+}
         function StackTab(){
             return (
         <TabScreen.Navigator
-        initialRouteName ="Custom" screenOptions={{
+        initialRouteName ="Home" screenOptions={{
             headerShown: false}} > 
-            <TabScreen.Screen name = "Custom" component ={BottomTab} />
+            <TabScreen.Screen name = "Home" component ={BottomTab} />
             <TabScreen.Screen name = "AddCustom" component ={AddCustom} />
             <TabScreen.Screen name = "EditCustom" component ={EditCustom} />
+            <TabScreen.Screen name = "ListCustom" component ={BottomTab_Custom} />
+            <TabScreen.Screen name = "ListProduct" component ={BottomTab_Product} />
+            <TabScreen.Screen name = "EditProduct" component ={EditProduct} />
+            <TabScreen.Screen name = "AddProduct" component ={AddProduct} />
+            <TabScreen.Screen name = "AddPlace" component ={AddPlace} />
         </TabScreen.Navigator>
     )
     }
