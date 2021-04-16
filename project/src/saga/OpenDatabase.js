@@ -23,8 +23,7 @@ const OpenDatabase = async () => {
     const db = await OpenDatabase();
     if (db) {
       try {
-        const response = await db.executeSql(sqlStatement, arguments);
-        console.log("response", response);
+        const response = await db.executeSql(sqlStatement, args);
         const results = response[0];
   
         db.close();
