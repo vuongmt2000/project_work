@@ -39,7 +39,9 @@ function AddCustom(props) {
       cropping: true,
     }).then((image) => {
       setImage(image.path)
-    });
+    }).catch((err)=>{
+      return console.log(err)
+    });;
   }
 
   return (
@@ -60,7 +62,7 @@ function AddCustom(props) {
           <Feather name="arrow-left" color="white" size={26} />
         </TouchableOpacity>
         <Text style={{ color: "white", fontSize: 18}}>
-          Sửa thông tin khách hàng
+          Thêm khách hàng
         </Text>
         <TouchableOpacity  onPress={()=>onAdd(fullName, phone, address, image, note)}>
           <Feather name="check" color="white" size={26} />

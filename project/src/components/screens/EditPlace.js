@@ -10,18 +10,36 @@ import {
 import Feather from "react-native-vector-icons/Feather";
 import { useDispatch } from "react-redux";
 import ImagePicker from "react-native-image-crop-picker";
-import { addPlaceAction } from "../../actions/index";
+import { deletePlaceAction } from "../../actions/index";
 import { Input } from "react-native-elements";
+import Moment from 'moment';
 
 
 // const dataProduct =[
 //   {"id": 1, "imageProduct": "asdfasdf", "nameProduct": "iphone 6", "noteProdcut": "hangf moiw vef", "valueProduct": 30000000}
 // ]
-function AddPlace(props) {
-  const itemCustom = props.route.params?.itemCustom;
+function EditPlace(props) {
+  const custom = props.route.params?.itemCustom;
   const itemProduct = props.route.params?.itemProduct;
+  const item = props.route.params?.item;
   const [dataProduct, setDataProduct] = useState([]);
+  const [itemCustom, setItemCustom ] = useState(null);
   const [notePlace, setNotePlace] = useState("")
+
+  useEffect(()=>{
+    console.log("22222222222222");
+    if(custom){
+      setItemCustom(custom);
+    }  
+  }, [custom])
+
+  useEffect(()=>{
+    console.log(`item`, item)
+    console.log("1111111111111111");
+    setDataProduct(item.Place_Product);
+    setItemCustom(item.custom);
+  }, [item])
+
   useEffect(() => {
     if (itemProduct) {
       let check = true;
@@ -57,13 +75,13 @@ function AddPlace(props) {
   const dispatch = useDispatch();
 
   function onBack() {
-    props.navigation.goBack();
+    props.navigation.navigate("Home");
   }
 
   // price 
   function price(item) {
     let priceProduct = Math.floor(
-      (1 - item.discount / 100) * item.valueProduct 
+      (1 - item.discount / 100) * item.valueProduct
     );
     return priceProduct.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
@@ -91,7 +109,7 @@ function AddPlace(props) {
           marginBottom: 10,
         }}
       >
-        <TouchableOpacity onPress={() => changeToListProduct()}>
+      
           <View
             style={{
               width: "90%",
@@ -173,10 +191,10 @@ function AddPlace(props) {
               <Feather name="trash-2" size={20} />
             </TouchableOpacity>
           </View>
-        </TouchableOpacity>
       </View>
     );
   };
+
 
   function changeToListCustom() {
     props.navigation.navigate("ListCustomNoBottom", { code: 2 });
@@ -217,21 +235,12 @@ function AddPlace(props) {
   }
 
 
-  function onAddPlace(dataProduct, notePlace, itemCustom ){
-    let date = new Date();
-    let statePlace = "Pending";
-    let newPlace = {dataListProduct: dataProduct, itemCustom : itemCustom, notePlace: notePlace, timePlace :date.toString(), statePlace : statePlace};
-    if(dataProduct.length > 0 && itemCustom){
-      dispatch(addPlaceAction(newPlace));
+  function onAddPlace(id){  
+    console.log("xaos", id) 
+      dispatch(deletePlaceAction(id));
       setTimeout(() => {
         props.navigation.navigate("Home");
-      }, 500)
-       
-     
-    }
-    else{
-      alert("lỗi")
-    }
+      }, 3000);
   }
   return (
     <View style={{ flex: 1 }}>
@@ -247,21 +256,24 @@ function AddPlace(props) {
             alignSelf: "center",
           }}
         >
+         
           <TouchableOpacity onPress={onBack}>
             <Feather name="arrow-left" color="white" size={26} />
           </TouchableOpacity>
-          <Text style={{ color: "white", fontSize: 18 }}>Thêm đơn hàng</Text>
+          <Text style={{ color: "white", fontSize: 18 }}>Sửa đơn hàng</Text>
           <TouchableOpacity
-            onPress={() => onAddPlace(dataProduct, notePlace, itemCustom)}
+            onPress={() => onAddPlace(item.place.id)}
           >
-            <Feather name="check" color="white" size={26} />
+            <Feather name="trash-2" color="white" size={26} />
           </TouchableOpacity>
         </View>
       </View>
       <ScrollView>
+
         <View
-          style={{ width: "90%", alignSelf: "center", flexDirection: "row" }}
+          style={{ width: "90%", alignSelf: "center" }}
         >
+           <Text  style={{ fontSize: 18}}>{ Moment(item.place.timeOrder).format('DD/MM/yyyy HH:mm')}</Text>
           <Text style={{ fontSize: 16, marginTop: 20 }}>Khách hàng</Text>
           {itemCustom ? (
             <View />
@@ -351,12 +363,51 @@ function AddPlace(props) {
           }}
         />
          </View>
-      </ScrollView>
-      <View style = {{position : "absolute" , flexDirection: "row", marginTop: "156%", marginLeft: "50%"}}>
-          <Text style ={{fontWeight: "bold", fontSize: 20, color: "red"}}>Tổng tiền : {sumPrice()}</Text>
+         <View style = {{ flexDirection: "row", marginLeft: "5%", marginTop: 20}}>
+          <Text style ={{fontWeight: "bold", fontSize: 20, color: "red"}}>Tổng tiền : {sumPrice()} đ</Text>
       </View>
+      
+      <View
+        style={{
+          flexDirection: "row",
+          marginTop: 20,
+          width: "90%",
+          justifyContent: "flex-end",
+          alignSelf: "center",
+        }}
+      >
+        <TouchableOpacity
+          style={{
+            height: 50,
+            width: 120,
+            borderRadius: 5,
+            backgroundColor: "#ed422f",
+            justifyContent: "center",
+            alignItems: "center",
+            marginRight: 10,
+          }}
+        >
+          <Text style={{ color: "white" }}>Hủy</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+        // onPress ={()=> updateCustomer(fullName, phone, address, image, note, item.id)}
+          style={{
+            height: 50,
+            width: 120,
+            borderRadius: 5,
+            backgroundColor: "#0641cc",
+            justifyContent: "center",
+            alignItems: "center",
+            marginBottom:20
+          }}
+        >
+          <Text style={{ color: "white" }}>Cập nhật</Text>
+        </TouchableOpacity>
+      </View>
+      </ScrollView>
+
     </View>
   );
 }
 
-export default AddPlace;
+export default EditPlace;

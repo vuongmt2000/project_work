@@ -6,6 +6,7 @@ import Feather from 'react-native-vector-icons/Feather'
 
 
 function ListCustom(props, {navigation}) {
+    const code = props.route.params?.code;
     const dispatch = useDispatch();
 
     const dataListCustom = useSelector(state =>state.listCustomReducer.dataListCustom);
@@ -15,7 +16,12 @@ function ListCustom(props, {navigation}) {
 
 
     function onChangeScreenEdit(item) {
-        props.navigation.navigate("EditCustom", {item : item});
+        if(code!=2){
+            props.navigation.navigate("EditCustom", {item : item});
+        }
+        else {
+            props.navigation.navigate("AddPlace", {itemCustom : item})
+        }
     }
 
     function changeAddCustom(navigation){

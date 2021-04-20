@@ -38,3 +38,10 @@ export const FETCH_LIST_PRODUCT_FAILED = "FETCH_LIST_PRODUCT_FAILED"
 export const UPDATE_PRODUCT = "UPDATE_PRODUCT"
 export const DELETE_PRODUCT = "DELETE_PRODUCT"
 export const ADD_PRODUCT = "ADD_PRODUCT"
+
+
+// screen add place 
+
+export const ADD_PLACE = "ADD_PLACE";
+
+export const DELETE_PLACE = "DELETE_PLACE";

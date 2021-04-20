@@ -30,7 +30,9 @@ function EditProduct(props) {
       cropping: true,
     }).then((image) => {
       setImageProduct(image.path)
-    });
+    }).catch((err)=>{
+      return console.log(err)
+    });;
   }
 
   function updateProduct(nameProduct, valueProduct, imageProduct, noteProduct, id){

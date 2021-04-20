@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { TouchableOpacity, View, Text, Image, TextInput } from "react-native";
-import Feather from "react-native-vector-icons/Feather";
+import { TouchableOpacity, View, Text, Image, TextInput, ScrollView } from "react-native";
+import Icon from "react-native-vector-icons/FontAwesome";
+import Feather from 'react-native-vector-icons/Feather'
 import {useDispatch} from 'react-redux'
 import ImagePicker from "react-native-image-crop-picker";
 import {addProductAction} from '../../actions/index'
@@ -38,11 +39,22 @@ function AddProduct(props) {
       cropping: true,
     }).then((image) => {
       setImageProduct(image.path)
+    }).catch((err)=>{
+      return console.log(err)
     });
   }
 
+
+  function onChangeTextValue(text) {
+    if(text){
+      setValueProduct(parseInt(text.replace(/\,/g,'')))
+    }
+    else{
+      setValueProduct(0);
+    }
+  } 
   return (
-    <View style={{ flex: 1 }}>
+    <ScrollView style={{ flex: 1}}>
       {/* Header */}
       <View style ={{width:"100%", backgroundColor: "#34a4eb"}}>
       <View
@@ -59,7 +71,7 @@ function AddProduct(props) {
           <Feather name="arrow-left" color="white" size={26} />
         </TouchableOpacity>
         <Text style={{ color: "white", fontSize: 18}}>
-          Sửa thông tin khách hàng
+          Thêm sản phẩm
         </Text>
         <TouchableOpacity  onPress={()=>onAdd(nameProduct, valueProduct, imageProduct, noteProduct)}>
           <Feather name="check" color="white" size={26} />
@@ -86,7 +98,7 @@ function AddProduct(props) {
             borderColor: "gray",
             marginTop: 10,}}>
         <View style ={{width:"10%", justifyContent:"center",alignItems:"center"}}> 
-          <Feather name = "user" color="blue" size={24}/>
+          <Feather name = "user" color="#b50000" size={24}/>
         </View>
         <TextInput
         placeholder = "Tên sản phẩm"
@@ -105,13 +117,12 @@ function AddProduct(props) {
             borderColor: "gray",
             marginTop: 10,}}>
         <View style ={{width:"10%", justifyContent:"center",alignItems:"center"}}> 
-          <Feather name = "phone" color="blue" size={24}/>
+          <Icon name = "money" color="#b50000" size={24}/>
         </View>
         <TextInput
-        placeholder ="giá"
-          value={valueProduct.toString()}
+          value={valueProduct.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
           keyboardType ='numeric'
-          onChangeText={text=> setValueProduct(parseInt(text))}
+          onChangeText={text=> {onChangeTextValue(text)}}
           style={{
             height: 50,
             width: "100%",
@@ -125,7 +136,7 @@ function AddProduct(props) {
             borderColor: "gray",
             marginTop: 10,}}>
         <View style ={{width:"10%", justifyContent:"center",alignItems:"center"}}> 
-          <Feather name = "file-text" color="blue" size={24}/>
+          <Feather name = "file-text" color="#b50000" size={24}/>
         </View>
         <TextInput
         placeholder ="Ghi chú"
@@ -139,7 +150,7 @@ function AddProduct(props) {
         />
          </View>
          {check?<Text style = {{color: "red", marginTop: 20, alignSelf: "center"}}>Kiểm tra thông tin tên, giá sản phẩm :v</Text>:<View/>}
-    </View>
+    </ScrollView>
   );
 }
 

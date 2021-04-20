@@ -1,5 +1,5 @@
 import {FETCH_PLACE, FETCH_LIST_CUSTOM, UPDATE_CUSTOM, DELETE_CUSTOM, ADD_CUSTOM, FETCH_LIST_PRODUCT,
-ADD_PRODUCT, UPDATE_PRODUCT, DELETE_PRODUCT} from './actionType'
+ADD_PRODUCT, UPDATE_PRODUCT, DELETE_PRODUCT, ADD_PLACE, DELETE_PLACE} from './actionType'
 
 
 // screen home
@@ -73,6 +73,24 @@ export const updateProductAction =(obj)=>{
 export const deleteProductAction =(id)=>{
     return{
         type: DELETE_PRODUCT,
+        id
+    }
+}
+
+
+// ADD PLACE
+export const addPlaceAction = (newPlace)=>{
+    return {
+        type : ADD_PLACE,
+        newPlace
+    }
+}
+
+// delete place
+
+export const deletePlaceAction =(id)=>{
+    return {
+        type :DELETE_PLACE,
         id
     }
 }
