@@ -3,7 +3,7 @@ import { ScrollView, View, Text, TouchableOpacity, Image } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux'
 import {fetchListProductAction} from '../../actions/index'
 function ListProduct(props) {
-    
+    const code  = props.route.params?.code;
     const dispatch = useDispatch();
     const dataListProduct = useSelector(state => state.listProductReducer.dataListProduct)
 
@@ -13,7 +13,13 @@ function ListProduct(props) {
 
 
     function onChangeScreenEdit(item){
-        props.navigation.navigate("EditProduct", {item : item});
+        if(code !=1){
+            props.navigation.navigate("EditProduct", {item : item});
+        }
+        else {
+            props.navigation.navigate("AddPlace", {itemProduct : item});
+        }
+        
     }
 
 
@@ -30,7 +36,7 @@ function ListProduct(props) {
                    </View>
                    <View style= {{marginLeft: 10, justifyContent :"center"}}>
                        <Text style ={{fontSize :16, fontWeight:"bold"}}>Tên Sp: {item.nameProduct}</Text>
-                       <Text style ={{marginTop: 5}}>Giá: {item.valueProduct} đ</Text>
+                       <Text style ={{marginTop: 5}}>Giá: {item.valueProduct.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} đ</Text>
                        <Text style ={{marginTop:5,fontStyle :"italic"}}>Ghi chú: {item.noteProdcut}</Text>
 
                    </View>
@@ -45,7 +51,7 @@ function ListProduct(props) {
             <View style = {{height:60, backgroundColor:'#34a4eb',  alignItems: "center", flexDirection:"row", justifyContent:"center"}}>
                 <Text style = {{color: "white", fontSize: 18}}>Danh sách sản phẩm</Text>
             </View>
-            
+
             <ScrollView>
             {dataListProduct?.map((item, index)=>(
                 <RenderItemListProduct item = {item} key = {index}/>

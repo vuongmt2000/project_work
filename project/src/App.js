@@ -23,12 +23,11 @@ import EditCustom from './components/screens/EditCustom'
 import EditProduct from './components/screens/EditProduct'
 import AddProduct from './components/screens/AddProduct'
 import AddPlace from './components/screens/AddPlace'
+import EditPlace from './components/screens/EditPlace'
 
-const MyContext = React.createContext()
+
 const sagaMiddleware = creatSagaMiddleware();
-export const useStore = createStoreHook(MyContext)
-export const useDispatch = createDispatchHook(MyContext)
-export const useSelector = createSelectorHook(MyContext)
+
 let store = createStore(allReducer,applyMiddleware(sagaMiddleware));
 
 const App=()=> {
@@ -43,7 +42,8 @@ const App=()=> {
         <Tab.Navigator 
         initialRouteName = "Trang chủ"
         tabBarOptions={{
-            activeTintColor: '#e91e63',
+            activeTintColor: '#b50000',
+            activeBackgroundColor: '#fff0f0',
           }}>
             <Tab.Screen  name = "Trang chủ" component ={Home} options={{
           tabBarIcon: ({ color, size }) => (
@@ -74,7 +74,8 @@ const App=()=> {
       <Tab.Navigator 
       initialRouteName = "Khách hàng"
       tabBarOptions={{
-          activeTintColor: '#e91e63',
+          activeTintColor: '#b50000',
+          activeBackgroundColor: '#fff0f0',
         }}>
           <Tab.Screen  name = "Trang chủ" component ={Home} options={{
         tabBarIcon: ({ color, size }) => (
@@ -105,7 +106,8 @@ const App=()=> {
     <Tab.Navigator 
     initialRouteName = "Sản phẩm"
     tabBarOptions={{
-        activeTintColor: '#e91e63',
+        activeTintColor: '#b50000',
+        activeBackgroundColor: '#fff0f0',
       }}>
         <Tab.Screen  name = "Trang chủ" component ={Home} options={{
       tabBarIcon: ({ color, size }) => (
@@ -144,6 +146,10 @@ const App=()=> {
             <TabScreen.Screen name = "EditProduct" component ={EditProduct} />
             <TabScreen.Screen name = "AddProduct" component ={AddProduct} />
             <TabScreen.Screen name = "AddPlace" component ={AddPlace} />
+            <TabScreen.Screen name = "ListCustomNoBottom" component ={ListCustom} />
+            <TabScreen.Screen name = "ListProductNoBottom" component ={ListProduct} />
+            <TabScreen.Screen name = "EditPlace" component ={EditPlace} />
+
         </TabScreen.Navigator>
     )
     }

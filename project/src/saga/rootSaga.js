@@ -8,6 +8,8 @@ import {watchFetchListProduct} from './FetchListProductSaga'
 import {watchDeleteProduct} from './DeleteProductSaga'
 import {watchUpdateProduct} from './UpdateProductSaga'
 import {watchAddProduct} from './AddProductSaga'
+import {watchAddPlace} from './AddPlaceSaga'
+import {watchDeletePlace} from './DeletePlaceSaga'
 
 export default function* rootSaga(){
     
@@ -20,6 +22,8 @@ export default function* rootSaga(){
         fork(watchFetchListProduct),
         fork(watchDeleteProduct),
         fork(watchUpdateProduct),
-        fork(watchAddProduct)
+        fork(watchAddProduct),
+        fork(watchAddPlace),
+        fork(watchDeletePlace)
     ])
 }
