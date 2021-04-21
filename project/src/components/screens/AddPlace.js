@@ -54,6 +54,26 @@ function AddPlace(props) {
     }
   }, [itemProduct]);
 
+  function changeDiscount(text, item){
+    if(text){
+      setDataProduct(x=>{
+        let index = x.findIndex((y)=> y.id === item.id);
+        if(index !== -1){
+          x[index].discount = parseInt(text);
+        }
+        return [...x];
+      })
+    }
+    else {
+      setDataProduct(x=>{
+        let index = x.findIndex((y)=> y.id === item.id);
+        if(index !== -1){
+          x[index].discount = 0;
+        }
+        return [...x];
+      })
+    }
+  }
   const dispatch = useDispatch();
 
   function onBack() {
@@ -77,6 +97,8 @@ function AddPlace(props) {
     }
     return tong.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
+
+
   
 
   const RenderItemProduct = ({ item }) => {
@@ -85,19 +107,19 @@ function AddPlace(props) {
         style={{
           width: "90%",
           alignSelf: "center",
-          backgroundColor: "#d6d5d2",
+          backgroundColor: "#20e012",
           marginTop: 10,
           borderRadius: 5,
           marginBottom: 10,
         }}
       >
-        <TouchableOpacity onPress={() => changeToListProduct()}>
+   
           <View
             style={{
               width: "90%",
               alignSelf: "center",
               flexDirection: "row",
-              backgroundColor: "#d6d5d2",
+             
               borderRadius: 5,
             }}
           >
@@ -138,7 +160,9 @@ function AddPlace(props) {
                     borderRadius: 10,
                     paddingLeft: 5,
                   }}
+                
                   keyboardType="numeric"
+                  onChangeText = {text => changeDiscount(text, item)}
                 />
                 <Text style={{ alignItems: "center" }}> %</Text>
               </View>
@@ -146,7 +170,8 @@ function AddPlace(props) {
                 style={{
                   flexDirection: "row",
                   justifyContent: "space-between",
-                  width: "80%"
+                  width: "80%",
+                  marginTop: 10
                 }}
               >
                 {item.quantity > 1 ? (
@@ -173,7 +198,6 @@ function AddPlace(props) {
               <Feather name="trash-2" size={20} />
             </TouchableOpacity>
           </View>
-        </TouchableOpacity>
       </View>
     );
   };
@@ -220,7 +244,7 @@ function AddPlace(props) {
   function onAddPlace(dataProduct, notePlace, itemCustom ){
     let date = new Date();
     let statePlace = "Pending";
-    let newPlace = {dataListProduct: dataProduct, itemCustom : itemCustom, notePlace: notePlace, timePlace :date.toString(), statePlace : statePlace};
+    let newPlace = {dataListProduct: dataProduct, itemCustom : itemCustom, notePlace: notePlace, timePlace :date.toISOString(), statePlace : statePlace};
     if(dataProduct.length > 0 && itemCustom){
       dispatch(addPlaceAction(newPlace));
       setTimeout(() => {
@@ -282,7 +306,7 @@ function AddPlace(props) {
                 width: "90%",
                 alignSelf: "center",
                 flexDirection: "row",
-                backgroundColor: "#d6d5d2",
+                backgroundColor: "#dbde14",
                 marginTop: 10,
                 borderRadius: 5,
                 marginBottom: 10,
@@ -351,10 +375,11 @@ function AddPlace(props) {
           }}
         />
          </View>
-      </ScrollView>
-      <View style = {{position : "absolute" , flexDirection: "row", marginTop: "156%", marginLeft: "50%"}}>
-          <Text style ={{fontWeight: "bold", fontSize: 20, color: "red"}}>Tổng tiền : {sumPrice()}</Text>
+         <View style = {{ flexDirection: "row", width:"90%", alignSelf: "center", marginTop: 10}}>
+          <Text style ={{fontWeight: "bold", fontSize: 20, color: "red"}}>Tổng tiền : {sumPrice()} Đ</Text>
       </View>
+      </ScrollView>
+      
     </View>
   );
 }

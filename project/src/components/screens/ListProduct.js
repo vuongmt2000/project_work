@@ -1,11 +1,16 @@
-import React, {useEffect} from 'react';
-import { ScrollView, View, Text, TouchableOpacity, Image } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import { ScrollView, View, Text, TouchableOpacity, Image , RefreshControl} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux'
 import {fetchListProductAction} from '../../actions/index'
+
+const wait = (timeout) => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+  }
 function ListProduct(props) {
     const code  = props.route.params?.code;
     const dispatch = useDispatch();
     const dataListProduct = useSelector(state => state.listProductReducer.dataListProduct)
+    const [refreshing, setRefreshing] = useState(false);
 
     useEffect(()=>{
         dispatch(fetchListProductAction());
@@ -27,14 +32,19 @@ function ListProduct(props) {
         props.navigation.navigate("AddProduct")
     }
 
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        wait(2000).then(() => setRefreshing(false));
+      }, []);
+
     const RenderItemListProduct =({item})=>{
         return(
             <TouchableOpacity Style = {{flex :1}} onPress = {()=> onChangeScreenEdit(item)}> 
-                <View style = {{width: "90%", alignSelf: "center", flexDirection: "row", backgroundColor :"#d6d5d2",marginTop: 10, borderRadius:5, marginBottom: 10}}>
+                <View style = {{width: "90%", alignSelf: "center", flexDirection: "row", backgroundColor :"#20e012",marginTop: 10, borderRadius:5, marginBottom: 10}}>
                    <View style = {{width:"30%", justifyContent: "center", alignItems: "center", marginTop:10, marginBottom:10}}>
-                        <Image style ={{height: 80, width:80, borderRadius:40}} source ={{uri : item.imageProduct}}/>
+                        <Image style ={{height: 80, width:80, borderRadius:1}} source ={{uri : item.imageProduct}}/>
                    </View>
-                   <View style= {{marginLeft: 10, justifyContent :"center"}}>
+                   <View style= {{marginLeft: 10, justifyContent :"center", width: "60%"}}>
                        <Text style ={{fontSize :16, fontWeight:"bold"}}>Tên Sp: {item.nameProduct}</Text>
                        <Text style ={{marginTop: 5}}>Giá: {item.valueProduct.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} đ</Text>
                        <Text style ={{marginTop:5,fontStyle :"italic"}}>Ghi chú: {item.noteProdcut}</Text>
@@ -52,7 +62,15 @@ function ListProduct(props) {
                 <Text style = {{color: "white", fontSize: 18}}>Danh sách sản phẩm</Text>
             </View>
 
-            <ScrollView>
+            <ScrollView
+            
+            refreshControl={
+                <RefreshControl
+                  refreshing={refreshing}
+                  onRefresh={onRefresh}
+                />
+              }
+            >
             {dataListProduct?.map((item, index)=>(
                 <RenderItemListProduct item = {item} key = {index}/>
             ))}

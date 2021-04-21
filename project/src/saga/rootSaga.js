@@ -10,6 +10,7 @@ import {watchUpdateProduct} from './UpdateProductSaga'
 import {watchAddProduct} from './AddProductSaga'
 import {watchAddPlace} from './AddPlaceSaga'
 import {watchDeletePlace} from './DeletePlaceSaga'
+import {watchUpdatePlace} from './UpdatePlaceSaga'
 
 export default function* rootSaga(){
     
@@ -24,6 +25,7 @@ export default function* rootSaga(){
         fork(watchUpdateProduct),
         fork(watchAddProduct),
         fork(watchAddPlace),
-        fork(watchDeletePlace)
+        fork(watchDeletePlace),
+        fork(watchUpdatePlace)
     ])
 }

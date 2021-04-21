@@ -10,7 +10,7 @@ import {
 import Feather from "react-native-vector-icons/Feather";
 import { useDispatch } from "react-redux";
 import ImagePicker from "react-native-image-crop-picker";
-import { deletePlaceAction } from "../../actions/index";
+import { deletePlaceAction, updatePlaceAction } from "../../actions/index";
 import { Input } from "react-native-elements";
 import Moment from 'moment';
 
@@ -96,6 +96,37 @@ function EditPlace(props) {
     return tong.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
   
+  function changeDiscount(text, item){
+    if(text){
+      setDataProduct(x=>{
+        let index = x.findIndex((y)=> y.id === item.id);
+        if(index !== -1){
+          x[index].discount = parseInt(text);
+        }
+        return [...x];
+      })
+    }
+    else {
+      setDataProduct(x=>{
+        let index = x.findIndex((y)=> y.id === item.id);
+        if(index !== -1){
+          x[index].discount = 0;
+        }
+        return [...x];
+      })
+    }
+  }
+
+  function updatePlace(itemCustom, dataProduct, notePlace, time){
+    if(dataProduct.length >0){
+      let a = {custom: itemCustom, dataListProduct: dataProduct, notePlace: notePlace, timeOrder: time}
+      dispatch(updatePlaceAction(a));
+      props.navigation.navigate("Home");
+    }
+    else {
+      alert("không có sản phẩm trong đơn hàng, bạn nên xóa đơn hàng:v")
+    }
+  }
 
   const RenderItemProduct = ({ item }) => {
     return (
@@ -103,7 +134,7 @@ function EditPlace(props) {
         style={{
           width: "90%",
           alignSelf: "center",
-          backgroundColor: "#d6d5d2",
+          backgroundColor: "#20e012",
           marginTop: 10,
           borderRadius: 5,
           marginBottom: 10,
@@ -115,7 +146,6 @@ function EditPlace(props) {
               width: "90%",
               alignSelf: "center",
               flexDirection: "row",
-              backgroundColor: "#d6d5d2",
               borderRadius: 5,
             }}
           >
@@ -157,6 +187,7 @@ function EditPlace(props) {
                     paddingLeft: 5,
                   }}
                   keyboardType="numeric"
+                  onChangeText = {text => changeDiscount(text, item)}
                 />
                 <Text style={{ alignItems: "center" }}> %</Text>
               </View>
@@ -294,7 +325,7 @@ function EditPlace(props) {
                 width: "90%",
                 alignSelf: "center",
                 flexDirection: "row",
-                backgroundColor: "#d6d5d2",
+                backgroundColor: "#dbde14",
                 marginTop: 10,
                 borderRadius: 5,
                 marginBottom: 10,
@@ -390,7 +421,7 @@ function EditPlace(props) {
           <Text style={{ color: "white" }}>Hủy</Text>
         </TouchableOpacity>
         <TouchableOpacity
-        // onPress ={()=> updateCustomer(fullName, phone, address, image, note, item.id)}
+        onPress ={()=> updatePlace(itemCustom, dataProduct, notePlace, item.place.timeOrder)}
           style={{
             height: 50,
             width: 120,
