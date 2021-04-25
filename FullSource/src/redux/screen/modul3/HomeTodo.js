@@ -59,6 +59,11 @@ const HomeTodo = () => {
   const [showSwitch, setShowSwitch] = useState(false);
   const dataPlace = useSelector(state => state.HomeReducer.dataPlace);
 
+  dataPlace
+    .sort((a, b) => {
+      return a.place.timeOrder.localeCompare(b.place.timeOrder);
+    })
+    .reverse();
   useEffect(() => {
     if (todoItems?.length > 0) {
       storeData(todoItems, 'data');
@@ -244,7 +249,7 @@ const HomeTodo = () => {
                                 textDecorationLine: 'none',
                               },
                         ]}>
-                        Đơn hàng của {item.custom.name}
+                        Đơn hàng của {item.custom?.name}
                       </Text>
                     </View>
                   </View>
