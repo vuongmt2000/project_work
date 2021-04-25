@@ -19,7 +19,6 @@ import {Input} from 'react-native-elements';
 
 function Home(props) {
   const dispatch = useDispatch();
-  const [dataPlace, setDataPlace] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   const [imageProductChoose, setImageProductChoose] = useState('');
   const [checkInput, setCheckInput] = useState(false);
@@ -27,12 +26,11 @@ function Home(props) {
   const [input_search, setInput_search] = useState('');
 
   const [date, setDate] = useState(new Date());
-  const data = useSelector(state => state.HomeReducer.dataPlace || []);
-  console.log(`data1111111111111111111111111111111111`, data);
+  const dataPlace = useSelector(state => state.HomeReducer.dataPlace || []);
 
   useEffect(() => {
     dispatch(fetchPlaceAction());
-  }, [dispatch]);
+  }, []);
 
   function onAddPlace() {
     props.navigation.navigate('AddPlace');
@@ -45,10 +43,6 @@ function Home(props) {
     setRefreshing(true);
     wait(2000).then(() => setRefreshing(false));
   }, []);
-
-  useEffect(() => {
-    setDataPlace(data);
-  }, [data]);
 
   // price
   function price(item) {
@@ -162,6 +156,7 @@ function Home(props) {
     props.navigation.navigate('EditPlace', {item: item});
   }
   const RenderItem = ({item}) => {
+    console.log('item?.custom :>> ', item?.custom);
     return (
       <View
         style={{
