@@ -73,12 +73,12 @@ function* HandleAddPlace(action) {
 
       dataPlace_Product.push(row);
     }
-    let dataPlace = {
+    let dataPlace1 = {
       custom: rowCustom,
       Place_Product: dataPlace_Product,
       place: rowPlace,
     };
-    data.push(dataPlace);
+    data.push(dataPlace1);
   }
   if (data?.length > 0) {
     yield put({type: FETCH_PLACE_SUCCESS, data});

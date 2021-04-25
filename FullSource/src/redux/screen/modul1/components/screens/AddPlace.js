@@ -23,6 +23,7 @@ function AddPlace(props) {
   const [dataProduct, setDataProduct] = useState([]);
   const [notePlace, setNotePlace] = useState('');
   const [refreshing, setRefreshing] = useState(false);
+  console.log(itemCustom);
   useEffect(() => {
     if (itemProduct) {
       let check = true;
@@ -244,7 +245,7 @@ function AddPlace(props) {
       timePlace: date.toISOString(),
       statePlace: statePlace,
     };
-    if (dataProduct.length > 0 && itemCustom) {
+    if (dataProduct.length > 0 && itemCustom !== null) {
       dispatch(addPlaceAction(newPlace));
       setRefreshing(true);
       setTimeout(() => {
