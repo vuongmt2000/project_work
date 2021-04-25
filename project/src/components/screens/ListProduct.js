@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react';
 import { ScrollView, View, Text, TouchableOpacity, Image , RefreshControl} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux'
 import {fetchListProductAction} from '../../actions/index'
+import Feather from 'react-native-vector-icons/Feather'
+import { Input } from 'react-native-elements';
 
 const wait = (timeout) => {
     return new Promise(resolve => setTimeout(resolve, timeout));
@@ -11,12 +13,29 @@ function ListProduct(props) {
     const dispatch = useDispatch();
     const dataListProduct = useSelector(state => state.listProductReducer.dataListProduct)
     const [refreshing, setRefreshing] = useState(false);
+    const [nameProduct, setNameProduct] = useState("Danh sách sản phẩm")
+    const [checkInput, setCheckInput] = useState(false)
+    const [input_name, setInput_name] = useState("");
+    const [dataProduct, setDataProduct] = useState([]);
 
     useEffect(()=>{
         dispatch(fetchListProductAction());
     }, [dispatch])
+    useEffect(() => {
+        setDataProduct(dataListProduct)
+        
+    }, [dataListProduct])
 
-
+    function onChange(text){
+        console.log("text", text)
+        setInput_name(text);
+        if(text){
+            setDataProduct([...(dataListProduct??[]).filter(y=>y.nameProduct.toLowerCase().includes(text.toLowerCase())||y.valueProduct.toString().includes(text)|| y.noteProdcut.toLowerCase().includes(text.toLowerCase()))])
+        }
+        else {
+            setDataProduct(dataListProduct);
+        }
+    }
     function onChangeScreenEdit(item){
         if(code !=1){
             props.navigation.navigate("EditProduct", {item : item});
@@ -26,7 +45,15 @@ function ListProduct(props) {
         }
         
     }
+    
+    function setName_Product(){
+        setNameProduct(input_name);
+        setCheckInput(false)
+    }
 
+    function searchListProduct(){
+        setCheckInput(!checkInput)
+    }
 
     function changeAddProduct(){
         props.navigation.navigate("AddProduct")
@@ -58,8 +85,16 @@ function ListProduct(props) {
         <View style={{flex:1}}>
 
             {/* Header */}
-            <View style = {{height:60, backgroundColor:'#34a4eb',  alignItems: "center", flexDirection:"row", justifyContent:"center"}}>
-                <Text style = {{color: "white", fontSize: 18}}>Danh sách sản phẩm</Text>
+            <View style ={{ backgroundColor:'#34a4eb',}}>
+       <View style = {{  height:60,alignItems: "center", flexDirection:"row", justifyContent: "space-between", width: "95%",alignSelf: "center"}}>
+          <View style ={{width:30, height:20}}/>
+                <Text style = {{color: "white", fontSize: 18}}>{nameProduct}</Text>
+                <TouchableOpacity onPress = {searchListProduct}>
+                <Feather name ="search" size ={26} color = "white"/>
+                </TouchableOpacity>
+               
+
+            </View>
             </View>
 
             <ScrollView
@@ -71,7 +106,13 @@ function ListProduct(props) {
                 />
               }
             >
-            {dataListProduct?.map((item, index)=>(
+                {checkInput? <Input autoFocus 
+                placeholder = "nhập tên, giá, ghi chú"
+                value = {input_name}
+                onChangeText = {text => onChange(text)}
+                onSubmitEditing ={setName_Product}
+                 />:<View/>}
+            {dataProduct?.map((item, index)=>(
                 <RenderItemListProduct item = {item} key = {index}/>
             ))}
             </ScrollView>

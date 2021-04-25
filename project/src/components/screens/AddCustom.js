@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TouchableOpacity, View, Text, Image, TextInput, ScrollView } from "react-native";
+import { TouchableOpacity, View, Text, Image, TextInput, ScrollView , RefreshControl} from "react-native";
 import Feather from "react-native-vector-icons/Feather";
 import {useDispatch} from 'react-redux'
 import ImagePicker from "react-native-image-crop-picker";
@@ -11,6 +11,7 @@ function AddCustom(props) {
   const [address, setAddress] = useState("");
   const [note, setNote] = useState("");
   const [check, setCheck] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
   const dispatch = useDispatch();
 
   function onBack() {
@@ -22,14 +23,16 @@ function AddCustom(props) {
       setCheck(false);
       let newCustom = {name, phone, address, image, note}
       dispatch(addCustomAction(newCustom));
-     
+      setRefreshing(true)
+      setTimeout(()=>{
         props.navigation.navigate("ListCustom");
         setFullName("")
         setImage("https://st.quantrimang.com/photos/image/072015/22/avatar.jpg")
         setNote("")
         setAddress("")
         setPhone("")
-    
+        setRefreshing(false)
+      }, 1000)
     }
     else {
       setCheck(true);
@@ -50,7 +53,13 @@ function AddCustom(props) {
   }
 
   return (
-    <ScrollView style={{ flex: 1 }}>
+    <ScrollView style={{ flex: 1 }}
+    refreshControl={
+      <RefreshControl
+        refreshing={refreshing}
+      />
+    }
+    >
       {/* Header */}
       <View style ={{width:"100%", backgroundColor: "#34a4eb"}}>
       <View

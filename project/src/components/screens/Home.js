@@ -1,18 +1,28 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { View, Text, TouchableOpacity, Image, ScrollView } from "react-native";
+import { View, Text, TouchableOpacity, Image, ScrollView, RefreshControl } from "react-native";
 import styles from "../customs/Styles";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPlaceAction } from "../../actions/index";
 import ImagePicker from "react-native-image-crop-picker";
 import Feather from "react-native-vector-icons/Feather";
+import DateTimePicker from '@react-native-community/datetimepicker';
 import Moment from 'moment';
+import { ScreenStackHeaderBackButtonImage } from "react-native-screens";
+import { Input } from "react-native-elements";
 
 function Home(props) {
   const dispatch = useDispatch();
   const [dataPlace, setDataPlace] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
   const [imageProductChoose, setImageProductChoose] = useState("");
+  const [checkInput, setCheckInput] = useState(false);
+  const [show, setShow] = useState(false);
+  const [input_search, setInput_search] = useState("")
+
+  const [date, setDate] = useState(new Date())
   const data = useSelector((state) => state.homeReducer.dataPlace);
-  const date = new Date();
+  console.log(`data1111111111111111111111111111111111`, data);
+
   useEffect(() => {
     dispatch(fetchPlaceAction());
   }, [dispatch]);
@@ -22,12 +32,41 @@ function Home(props) {
     props.navigation.navigate("AddPlace")
   }
 
+  const wait = (timeout) => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+  }
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
+
+  useEffect(()=>{
+    setDataPlace(data);
+  }, [data]);
+
   // price 
   function price(item) {
     let priceProduct = Math.floor(
       (1 - item.discount / 100) * item.valueProduct 
     );
     return priceProduct.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShow(Platform.OS === 'ios');
+    setDate(currentDate);
+    setDataPlace([...(data??[]).filter(y=> y.place.timeOrder.includes(Moment(currentDate).format("yyyy-MM-DD")))])
+  };
+
+  function searchText(text) {
+    setInput_search(text);
+    if(text){
+        setDataPlace([...(data??[]).filter(y=>y.custom.name.toLowerCase().includes(text.toLowerCase()) )])
+    }
+    else {
+        setDataPlace(data);
+    }
   }
 
   const RenderItemProduct = ({ item }) => {
@@ -116,7 +155,7 @@ function Home(props) {
         <View style={{  marginTop:10, marginBottom:10,borderRadius:5,
       }}>
          <View style ={{flexDirection : "row"}}>
-         <Text style={{ fontSize: 18, marginLeft: 20, color: "white"}}>{ Moment(item.place.timeOrder).format('HH:mm')}</Text>
+         <Text style={{ fontSize: 18, marginLeft: 20, color: "white"}}>{ Moment(item.place.timeOrder).format('DD-MM-yyyy')}</Text>
          <Text style = {{alignSelf:"center", marginLeft:40, fontSize:18, fontWeight: "bold", color: "white"}}>{item.custom.name}</Text>
          </View>
             <Text style ={{marginTop: 10, fontSize: 18, fontWeight: "bold", marginLeft:20, color: "white"}}>Sản Phẩm: </Text>   
@@ -143,6 +182,15 @@ function Home(props) {
       </View>
     );
   };
+  function onSearch(){
+    setCheckInput(!checkInput);
+    setDataPlace(data);
+  }
+
+
+  function chooseDate(){
+    setShow(true);
+  }
 
   return (
     <View style={styles.container}>
@@ -151,19 +199,48 @@ function Home(props) {
        <View style = {{  height:60,alignItems: "center", flexDirection:"row", justifyContent: "space-between", width: "95%",alignSelf: "center"}}>
           <View style ={{width:30, height:20}}/>
                 <Text style = {{color: "white", fontSize: 18}}>Quản lý đơn hàng</Text>
+                <View style = {{flexDirection :"row"}}>
                 <TouchableOpacity onPress = {onAddPlace}>
                 <Feather name ="plus-square" size ={26} color = "white"/>
                 </TouchableOpacity>
-               
-
+                <TouchableOpacity onPress = {onSearch} style ={{marginLeft:10}}>
+                <Feather name ="search" size ={26} color = "white"/>
+                </TouchableOpacity>
+                </View>
             </View>
             </View>
       
-      <ScrollView>
-      {data?.map((item, index) => (
+      <ScrollView
+      refreshControl={
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+        />}
+      >
+        {checkInput?<View style ={{flexDirection: "row", height: 60, width: "95%", alignSelf: "center", marginTop:5}}>
+          <TouchableOpacity onPress ={chooseDate}
+          style ={{width: "40%", justifyContent: "center", alignItems: "center", borderWidth:0.5, borderColor:"gray"}}>
+            <Text>{Moment(date).format("DD-MM-yyyy")}</Text>
+          </TouchableOpacity>
+          <View style ={{width: "60%"}}>
+          <Input  value ={input_search}
+           onChangeText = {text => searchText(text)}/>
+          </View>
+       
+        </View>:<View/>}
+      {dataPlace?.map((item, index) => (
         <RenderItem item={item} key={index+ " "+item.id+" " + item.Place_Product.id+ Math.random()*100} />
       ))}
       </ScrollView>
+      {show && (
+        <DateTimePicker
+          value={ date}
+          mode={"date"}
+          is24Hour={true}
+          display="default"
+          onChange={onChange}
+        />
+      )}
     </View>
   );
 }

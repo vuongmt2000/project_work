@@ -6,6 +6,7 @@ import {
   Image,
   TextInput,
   ScrollView,
+  RefreshControl,
 } from "react-native";
 import Feather from "react-native-vector-icons/Feather";
 import { useDispatch } from "react-redux";
@@ -25,6 +26,8 @@ function EditPlace(props) {
   const [dataProduct, setDataProduct] = useState([]);
   const [itemCustom, setItemCustom ] = useState(null);
   const [notePlace, setNotePlace] = useState("")
+  const [statusPlace, setStatusPlace] = useState("")
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(()=>{
     console.log("22222222222222");
@@ -38,6 +41,8 @@ function EditPlace(props) {
     console.log("1111111111111111");
     setDataProduct(item.Place_Product);
     setItemCustom(item.custom);
+    setNotePlace(item.place.noteOrder)
+    setStatusPlace(item.place.statusOrder)
   }, [item])
 
   useEffect(() => {
@@ -117,11 +122,17 @@ function EditPlace(props) {
     }
   }
 
-  function updatePlace(itemCustom, dataProduct, notePlace, time){
+  function updatePlace(itemCustom, dataProduct, notePlace, time, status){
     if(dataProduct.length >0){
-      let a = {custom: itemCustom, dataListProduct: dataProduct, notePlace: notePlace, timeOrder: time}
+      let idPlace = item.place.id
+      let a = {custom: itemCustom, dataListProduct: dataProduct, notePlace: notePlace, timeOrder: time, statusOrder : status, id : idPlace}
       dispatch(updatePlaceAction(a));
-      props.navigation.navigate("Home");
+      setRefreshing(true);
+      setTimeout(()=>{
+        props.navigation.navigate("Home");
+        setRefreshing(false)
+      }, 2000)
+     
     }
     else {
       alert("không có sản phẩm trong đơn hàng, bạn nên xóa đơn hàng:v")
@@ -269,7 +280,9 @@ function EditPlace(props) {
   function onAddPlace(id){  
     console.log("xaos", id) 
       dispatch(deletePlaceAction(id));
+      setRefreshing(true)
       setTimeout(() => {
+        setRefreshing(false)
         props.navigation.navigate("Home");
       }, 3000);
   }
@@ -299,7 +312,13 @@ function EditPlace(props) {
           </TouchableOpacity>
         </View>
       </View>
-      <ScrollView>
+      <ScrollView
+            refreshControl={
+              <RefreshControl
+                refreshing={refreshing}
+              />
+            }
+      >
 
         <View
           style={{ width: "90%", alignSelf: "center" }}
@@ -394,6 +413,25 @@ function EditPlace(props) {
           }}
         />
          </View>
+         <View style={{ width: "90%", alignSelf: "center" , flexDirection :"row",
+            borderRadius: 5,
+            borderWidth: 1,
+            borderColor: "gray",
+            marginTop: 10,}}>
+        <View style ={{width:"10%", justifyContent:"center",alignItems:"center"}}> 
+          <Feather name = "star" color="blue" size={24}/>
+        </View>
+        <TextInput
+        placeholder ="Trạng thái"
+          value={statusPlace}
+          onChangeText={setStatusPlace}
+          style={{
+            height: 50,
+            width: "100%",
+            
+          }}
+        />
+         </View>
          <View style = {{ flexDirection: "row", marginLeft: "5%", marginTop: 20}}>
           <Text style ={{fontWeight: "bold", fontSize: 20, color: "red"}}>Tổng tiền : {sumPrice()} đ</Text>
       </View>
@@ -421,7 +459,7 @@ function EditPlace(props) {
           <Text style={{ color: "white" }}>Hủy</Text>
         </TouchableOpacity>
         <TouchableOpacity
-        onPress ={()=> updatePlace(itemCustom, dataProduct, notePlace, item.place.timeOrder)}
+        onPress ={()=> updatePlace(itemCustom, dataProduct, notePlace, item.place.timeOrder, statusPlace)}
           style={{
             height: 50,
             width: 120,

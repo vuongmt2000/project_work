@@ -6,11 +6,12 @@ import {
   Image,
   TextInput,
   ScrollView,
+  RefreshControl
 } from "react-native";
 import Feather from "react-native-vector-icons/Feather";
 import { useDispatch } from "react-redux";
 import ImagePicker from "react-native-image-crop-picker";
-import { addPlaceAction } from "../../actions/index";
+import { addPlaceAction, fetchPlaceAction } from "../../actions/index";
 import { Input } from "react-native-elements";
 
 
@@ -22,6 +23,7 @@ function AddPlace(props) {
   const itemProduct = props.route.params?.itemProduct;
   const [dataProduct, setDataProduct] = useState([]);
   const [notePlace, setNotePlace] = useState("")
+  const [refreshing, setRefreshing] = useState(false);
   useEffect(() => {
     if (itemProduct) {
       let check = true;
@@ -241,15 +243,20 @@ function AddPlace(props) {
   }
 
 
+  useEffect (()=>{
+    dispatch(fetchPlaceAction());
+  }, [dispatch]);
   function onAddPlace(dataProduct, notePlace, itemCustom ){
     let date = new Date();
-    let statePlace = "Pending";
+    let statePlace = "New";
     let newPlace = {dataListProduct: dataProduct, itemCustom : itemCustom, notePlace: notePlace, timePlace :date.toISOString(), statePlace : statePlace};
     if(dataProduct.length > 0 && itemCustom){
-      dispatch(addPlaceAction(newPlace));
+      dispatch(addPlaceAction(newPlace));  
+      setRefreshing(true)
       setTimeout(() => {
         props.navigation.navigate("Home");
-      }, 500)
+        setRefreshing(false)
+      }, 2000)
        
      
     }
@@ -282,7 +289,13 @@ function AddPlace(props) {
           </TouchableOpacity>
         </View>
       </View>
-      <ScrollView>
+      <ScrollView
+      refreshControl={
+        <RefreshControl
+          refreshing={refreshing}
+        />
+      }
+      >
         <View
           style={{ width: "90%", alignSelf: "center", flexDirection: "row" }}
         >
