@@ -1,17 +1,23 @@
 import React, { useState } from "react";
-import { TouchableOpacity, View, Text, Image, TextInput, ScrollView } from "react-native";
+import { TouchableOpacity, View, Text, Image, TextInput, ScrollView, RefreshControl } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Feather from 'react-native-vector-icons/Feather'
 import {useDispatch} from 'react-redux'
 import ImagePicker from "react-native-image-crop-picker";
 import {addProductAction} from '../../actions/index'
+
+
 function AddProduct(props) {
     const [nameProduct, setNameProduct] = useState("");
     const [valueProduct, setValueProduct] = useState(0);
     const [imageProduct, setImageProduct] = useState("https://topthuthuat.com/wp/wp-content/uploads/2017/07/android.jpg");
     const [noteProduct, setNoteProduct] = useState("");
-  const [check, setCheck] = useState(false);
+    const [check, setCheck] = useState(false);
+    const [refreshing, setRefreshing] = useState(false);
+
+
   const dispatch = useDispatch();
+  
 
   function onBack() {
     props.navigation.goBack();
@@ -22,9 +28,16 @@ function AddProduct(props) {
       setCheck(false);
       let obj = {nameProduct, valueProduct, imageProduct, noteProduct}
       dispatch(addProductAction(obj));
-      setTimeout(()=>{
+      setRefreshing(true)
+      setTimeout(() => {
         props.navigation.navigate("ListProduct");
-      }, 1000)
+        setNameProduct("");
+        setValueProduct(0);
+        setImageProduct("https://topthuthuat.com/wp/wp-content/uploads/2017/07/android.jpg");
+        setNoteProduct("");
+        setRefreshing(false);
+      }, 2000);
+       
     }
     else {
       setCheck(true);
@@ -54,7 +67,13 @@ function AddProduct(props) {
     }
   } 
   return (
-    <ScrollView style={{ flex: 1}}>
+    <ScrollView style={{ flex: 1}}
+    refreshControl={
+      <RefreshControl
+        refreshing={refreshing}
+      />
+    }
+    >
       {/* Header */}
       <View style ={{width:"100%", backgroundColor: "#34a4eb"}}>
       <View
@@ -83,7 +102,7 @@ function AddProduct(props) {
       >
         <TouchableOpacity onPress={editImage}>
           <Image
-            style={{ width: 200, height: 200, borderRadius :200, alignSelf :"center" }}
+            style={{ width: 200, height: 200, borderRadius :0, alignSelf :"center" }}
             source={{ uri: imageProduct }}
           />
           <View style ={{flexDirection :"row", marginTop: 5}}>

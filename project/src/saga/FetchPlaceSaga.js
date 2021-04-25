@@ -10,7 +10,7 @@ import {
 
 
 function* HandleFetchPlace(action) {
-  const results = yield call(ExecuteSQL, "SELECT * from Place" ,[]);
+  const results = yield call(ExecuteSQL, "SELECT * from Place  " ,[]);
   console.log("1", results)
   const data = [];
   for(let i =0; i< results.rows.length; i++){

@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { View } from "react-native";
 import { takeLatest, put, call } from "redux-saga/effects";
 import {ExecuteSQL} from './OpenDatabase'
+import {fetchPlaceAction} from '../actions/index'
 import {
     ADD_PLACE,
 } from "../actions/actionType";
@@ -25,6 +26,11 @@ function* HandleAddPlace(action) {
         const results2 = yield call(ExecuteSQL, "INSERT INTO Place_Prodcut VALUES (? , ?, ?, ?, ?)",
      [ null ,dataPlace.dataListProduct[v].id, id_place,dataPlace.dataListProduct[v].quantity, dataPlace.dataListProduct[v].discount]);
      console.log("add place product2" , results2.rowsAffected);
+     }
+
+     if(results.rowsAffected){
+       console.log("dispatch")
+      fetchPlaceAction
      }
 }
 

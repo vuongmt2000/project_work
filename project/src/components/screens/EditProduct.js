@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TouchableOpacity, View, Text, Image, TextInput } from "react-native";
+import { TouchableOpacity, View, Text, Image, TextInput, ScrollView } from "react-native";
 import {useDispatch, useSelector} from 'react-redux'
 import Feather from "react-native-vector-icons/Feather";
 import ImagePicker from "react-native-image-crop-picker";
@@ -45,7 +45,7 @@ function EditProduct(props) {
   }
 
   return (
-    <View style={{ flex: 1 }}>
+    <ScrollView style={{ flex: 1 }}>
       {/* Header */}
       <View style ={{width:"100%", backgroundColor: "#34a4eb"}}>
       <View
@@ -62,7 +62,7 @@ function EditProduct(props) {
           <Feather name="arrow-left" color="white" size={26} />
         </TouchableOpacity>
         <Text style={{ color: "white", fontSize: 18}}>
-          Sửa thông tin khách hàng
+          Sửa thông tin sản phẩm
         </Text>
         <TouchableOpacity  onPress={()=>onDelete(item.id)}>
           <Feather name="trash-2" color="white" size={26} />
@@ -74,7 +74,7 @@ function EditProduct(props) {
       >
         <TouchableOpacity onPress={editImage}>
           <Image
-            style={{ width: 200, height: 200, borderRadius :200, alignSelf :"center" }}
+            style={{ width: 200, height: 200, borderRadius :0, alignSelf :"center" }}
             source={{ uri: imageProduct }}
           />
           <View style ={{flexDirection :"row", marginTop: 5}}>
@@ -176,7 +176,7 @@ function EditProduct(props) {
           <Text style={{ color: "white" }}>Cập nhật</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
