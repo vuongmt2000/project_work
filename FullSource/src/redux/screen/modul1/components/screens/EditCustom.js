@@ -43,7 +43,7 @@ function EditCustom(props) {
     let obj = {id, name, phone, address, image, note};
     dispatch(updateCustomAction(obj));
     setTimeout(() => {
-      props.navigation.navigate('ListCustom');
+      props.navigation.goBack();
     }, 1000);
   }
 

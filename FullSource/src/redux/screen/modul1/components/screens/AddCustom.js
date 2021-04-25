@@ -35,7 +35,6 @@ function AddCustom(props) {
       dispatch(addCustomAction(newCustom));
       setRefreshing(true);
       setTimeout(() => {
-        props.navigation.navigate('ListCustom');
         setFullName('');
         setImage(
           'https://st.quantrimang.com/photos/image/072015/22/avatar.jpg',
@@ -44,6 +43,7 @@ function AddCustom(props) {
         setAddress('');
         setPhone('');
         setRefreshing(false);
+        props.navigation.goBack();
       }, 1000);
     } else {
       setCheck(true);

@@ -27,7 +27,7 @@ function Home(props) {
   const [input_search, setInput_search] = useState('');
 
   const [date, setDate] = useState(new Date());
-  const data = useSelector(state => state.HomeReducer.dataPlace);
+  const data = useSelector(state => state.HomeReducer.dataPlace || []);
   console.log(`data1111111111111111111111111111111111`, data);
 
   useEffect(() => {
@@ -177,7 +177,7 @@ function Home(props) {
           <View style={{marginTop: 10, marginBottom: 10, borderRadius: 5}}>
             <View style={{flexDirection: 'row'}}>
               <Text style={{fontSize: 18, marginLeft: 20, color: 'white'}}>
-                {Moment(item.place.timeOrder).format('DD-MM-yyyy')}
+                {Moment(item?.place.timeOrder).format('DD-MM-yyyy')}
               </Text>
               <Text
                 style={{
@@ -187,7 +187,7 @@ function Home(props) {
                   fontWeight: 'bold',
                   color: 'white',
                 }}>
-                {item.custom.name}
+                {item?.custom?.name}
               </Text>
             </View>
             <Text
@@ -200,7 +200,7 @@ function Home(props) {
               }}>
               Sản Phẩm:{' '}
             </Text>
-            {item.Place_Product?.map((item, index) => (
+            {item?.Place_Product?.map((item, index) => (
               <RenderItemProduct
                 item={item}
                 key={index + ' ' + item.id + Math.random() * 100}
@@ -209,7 +209,7 @@ function Home(props) {
           </View>
         </TouchableOpacity>
         <View>
-          {item.place.noteOrder ? (
+          {item?.place.noteOrder ? (
             <Text style={{marginLeft: 20, color: 'white', fontStyle: 'italic'}}>
               Ghi chú: {item.place.noteOrder}
             </Text>
@@ -236,7 +236,7 @@ function Home(props) {
                 borderRadius: 5,
               }}>
               <Text style={{color: 'white', fontWeight: 'bold'}}>
-                {item.place.statusOrder}
+                {item?.place.statusOrder}
               </Text>
             </TouchableOpacity>
           </View>
@@ -266,7 +266,9 @@ function Home(props) {
             width: '95%',
             alignSelf: 'center',
           }}>
-          <View style={{width: 30, height: 20}} />
+          <TouchableOpacity onPress={() => props.navigation.openDrawer()}>
+            <Feather name="menu" size={30} color="white" />
+          </TouchableOpacity>
           <Text style={{color: 'white', fontSize: 18}}>Quản lý đơn hàng</Text>
           <View style={{flexDirection: 'row'}}>
             <TouchableOpacity onPress={onAddPlace}>

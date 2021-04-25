@@ -2,8 +2,13 @@ import React, {useEffect} from 'react';
 import {View} from 'react-native';
 import {takeLatest, put, call} from 'redux-saga/effects';
 import {ExecuteSQL} from './OpenDataBase';
-import {fetchPlaceAction} from '../actions/index';
 import {ADD_PLACE} from '../actions/actionType';
+
+import {
+  FETCH_PLACE,
+  FETCH_PLACE_FAILED,
+  FETCH_PLACE_SUCCESS,
+} from '../actions/actionType';
 
 function* HandleAddPlace(action) {
   const dataPlace = action.newPlace;
@@ -43,9 +48,42 @@ function* HandleAddPlace(action) {
     console.log('add place product2', results2.rowsAffected);
   }
 
-  if (results.rowsAffected) {
-    console.log('dispatch');
-    fetchPlaceAction;
+  ////////////// fetch place action
+  const results3 = yield call(ExecuteSQL, 'SELECT * from Place', []);
+  const data = [];
+  for (let i = 0; i < results3.rows.length; i++) {
+    let rowPlace = results3.rows.item(i);
+
+    const result4 = yield call(
+      ExecuteSQL,
+      'SELECT * FROM Customer WHERE id = ?',
+      [results3.rows.item(i).id_Customer],
+    );
+    let rowCustom = result4.rows.item(i);
+
+    const result5 = yield call(
+      ExecuteSQL,
+      'SELECT * FROM Place_Prodcut JOIN Product on Product.id = Place_Prodcut.id_prouct WHERE id_place = ?',
+      [results3.rows.item(i).id],
+    );
+
+    const dataPlace_Product = [];
+    for (let v = 0; v < result5.rows.length; v++) {
+      let row = result5.rows.item(v);
+
+      dataPlace_Product.push(row);
+    }
+    let dataPlace = {
+      custom: rowCustom,
+      Place_Product: dataPlace_Product,
+      place: rowPlace,
+    };
+    data.push(dataPlace);
+  }
+  if (data?.length > 0) {
+    yield put({type: FETCH_PLACE_SUCCESS, data});
+  } else {
+    yield put({type: FETCH_PLACE_FAILED, data});
   }
 }
 

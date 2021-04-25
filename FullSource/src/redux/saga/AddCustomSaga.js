@@ -7,6 +7,11 @@ import {
   ADD_CUSTOM_FAILED,
   ADD_CUSTOM_SUCCESS,
 } from '../actions/actionType';
+import {
+  FETCH_LIST_CUSTOM,
+  FETCH_LIST_CUSTOM_SUCCESS,
+  FETCH_LIST_CUSTOM_FAILED,
+} from '../actions/actionType';
 
 function* HandleAddCustom(action) {
   console.log(`actionUpdateCustom:  `, action);
@@ -24,6 +29,22 @@ function* HandleAddCustom(action) {
       dataUpdate.note,
     ],
   );
+  const results1 = yield call(ExecuteSQL, 'SELECT * FROM  Customer;', []);
+  // console.log("RESULTS FETCH CUSTOM SAGA : ", results);
+  var len = results1.rows.length;
+  const data = [];
+
+  for (let i = 0; i < len; i++) {
+    let row = results1.rows.item(i);
+    data.push(row);
+  }
+
+  if (data?.length > 0) {
+    // console.log("dataFetchSaga", data);
+    yield put({type: FETCH_LIST_CUSTOM_SUCCESS, data});
+  } else {
+    yield put({type: FETCH_LIST_CUSTOM_FAILED, data});
+  }
 }
 
 export function* watchAddCustom() {

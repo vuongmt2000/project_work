@@ -37,7 +37,6 @@ function AddProduct(props) {
       dispatch(addProductAction(obj));
       setRefreshing(true);
       setTimeout(() => {
-        props.navigation.navigate('ListProduct');
         setNameProduct('');
         setValueProduct(0);
         setImageProduct(
@@ -45,6 +44,7 @@ function AddProduct(props) {
         );
         setNoteProduct('');
         setRefreshing(false);
+        props.navigation.goBack();
       }, 2000);
     } else {
       setCheck(true);

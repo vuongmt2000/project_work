@@ -59,7 +59,7 @@ function EditProduct(props) {
     let obj = {id, nameProduct, valueProduct, imageProduct, noteProduct};
     dispatch(updateProductAction(obj));
     setTimeout(() => {
-      props.navigation.navigate('ListProduct');
+      props.navigation.goBack();
     }, 1000);
   }
 

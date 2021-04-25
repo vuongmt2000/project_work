@@ -194,10 +194,10 @@ function AddPlace(props) {
   };
 
   function changeToListCustom() {
-    props.navigation.navigate('ListCustomNoBottom', {code: 2});
+    props.navigation.navigate('ListCustom', {code: 2});
   }
   function changeToListProduct() {
-    props.navigation.navigate('ListProductNoBottom', {code: 1});
+    props.navigation.navigate('ListProduct', {code: 1});
   }
 
   function plusQuantity(item) {
@@ -248,7 +248,7 @@ function AddPlace(props) {
       dispatch(addPlaceAction(newPlace));
       setRefreshing(true);
       setTimeout(() => {
-        props.navigation.navigate('Home');
+        props.navigation.goBack();
         setRefreshing(false);
       }, 2000);
     } else {

@@ -67,7 +67,7 @@ function OverView(props) {
           borderRadius: 5,
           marginBottom: 5,
         }}>
-        <Text style={{fontSize: 18}}> Đơn hàng của: {item.custom.name}</Text>
+        <Text style={{fontSize: 18}}> Đơn hàng của: {item.custom?.name}</Text>
       </TouchableOpacity>
     );
   };

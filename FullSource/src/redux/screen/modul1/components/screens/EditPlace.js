@@ -236,10 +236,10 @@ function EditPlace(props) {
   };
 
   function changeToListCustom() {
-    props.navigation.navigate('ListCustomNoBottom', {code: 2});
+    props.navigation.navigate('ListCustom', {code: 2});
   }
   function changeToListProduct() {
-    props.navigation.navigate('ListProductNoBottom', {code: 1});
+    props.navigation.navigate('ListProduct', {code: 1});
   }
 
   function plusQuantity(item) {

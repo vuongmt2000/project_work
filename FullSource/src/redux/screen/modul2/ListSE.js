@@ -397,56 +397,54 @@ const ListSE = ({navigation}) => {
                         </Text>
                       </View>
                       {dataP?.map(item => {
-                        console.log(item);
                         let product = item.Place_Product;
-                        return (
-                          <TouchableOpacity
-                            style={styles.row}
-                            key={Math.random() * 100 + 'a'}>
-                            <View style={styles.bodyChildrenContent}>
-                              <Image
-                                source={require('../assets/box-outline-filled.png')}
-                                style={{width: 50, height: 50}}
-                              />
-                              {product?.map(e => {
-                                return (
-                                  <View
-                                    style={{marginLeft: 10}}
-                                    key={Math.random() * 100 + 'b'}>
-                                    <Text
-                                      style={[
-                                        styles.txtContent,
-                                        {color: 'black', fontSize: 20},
-                                      ]}>
-                                      {e.nameProduct} (
-                                      <Text>x{e.quantity}</Text>)
-                                    </Text>
-                                    <Text style={styles.txtContent}>
-                                      {item.custom.name}
-                                    </Text>
-                                    <Text style={styles.txtContent}>
-                                      Trạng thái:{' '}
-                                      {item.place.statusOrder === 'pending' ? (
-                                        <Text style={{color: '#e3e30e'}}>
-                                          {item.place.statusOrder}
-                                        </Text>
-                                      ) : (
-                                        <Text style={{color: 'green'}}>
-                                          {item.place.statusOrder}
-                                        </Text>
-                                      )}
-                                    </Text>
-                                  </View>
-                                );
-                              })}
-                            </View>
-                            <Text>
-                              {caculateTotalP(product)
-                                ?.toString()
-                                .replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,')}
-                            </Text>
-                          </TouchableOpacity>
-                        );
+                        console.log(product);
+                        return product?.map(e => {
+                          console.log('e :>> ', e);
+                          return (
+                            <TouchableOpacity
+                              style={styles.row}
+                              key={Math.random() * 100 + 'a'}>
+                              <View style={styles.bodyChildrenContent}>
+                                <Image
+                                  source={require('../assets/box-outline-filled.png')}
+                                  style={{width: 50, height: 50}}
+                                />
+                                <View
+                                  style={{marginLeft: 10}}
+                                  key={Math.random() * 100 + 'b'}>
+                                  <Text
+                                    style={[
+                                      styles.txtContent,
+                                      {color: 'black', fontSize: 20},
+                                    ]}>
+                                    {e.nameProduct} (<Text>x{e.quantity}</Text>)
+                                  </Text>
+                                  <Text style={styles.txtContent}>
+                                    {item.custom?.name}
+                                  </Text>
+                                  <Text style={styles.txtContent}>
+                                    Trạng thái:{' '}
+                                    {item.place.statusOrder === 'pending' ? (
+                                      <Text style={{color: '#e3e30e'}}>
+                                        {item.place.statusOrder}
+                                      </Text>
+                                    ) : (
+                                      <Text style={{color: 'green'}}>
+                                        {item.place.statusOrder}
+                                      </Text>
+                                    )}
+                                  </Text>
+                                </View>
+                              </View>
+                              <Text>
+                                {caculateTotalP(product)
+                                  ?.toString()
+                                  .replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,')}
+                              </Text>
+                            </TouchableOpacity>
+                          );
+                        });
                       })}
                     </View>
                   );
