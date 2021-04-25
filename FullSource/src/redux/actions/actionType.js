@@ -92,3 +92,5 @@ export const ADD_PRODUCT = 'ADD_PRODUCT';
 export const ADD_PLACE = 'ADD_PLACE';
 
 export const DELETE_PLACE = 'DELETE_PLACE';
+
+export const UPDATE_PLACE = 'DELETE_PLACE';

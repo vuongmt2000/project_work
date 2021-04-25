@@ -173,3 +173,11 @@ export const deletePlaceAction = id => {
     id,
   };
 };
+
+export const updatePlaceAction = updatePlace => {
+  console.log('action', updatePlace);
+  return {
+    type: Action.UPDATE_PLACE,
+    updatePlace,
+  };
+};
