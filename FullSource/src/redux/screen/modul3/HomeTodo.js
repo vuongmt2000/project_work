@@ -50,7 +50,7 @@ const getData = async key => {
   }
 };
 
-const HomeTodo = () => {
+const HomeTodo = ({navigation}) => {
   const [todoItems, setTodoItems] = useState([]);
   const itemE = useRef({});
   const [modalVisible, setModalVisible] = useState(false);
@@ -217,7 +217,14 @@ const HomeTodo = () => {
             renderItem={({item, index}) => {
               return (
                 <TouchableOpacity
-                  onPress={() => console.log('edit place screen')}
+                  onPress={() =>
+                    navigation.navigate('Sale', {
+                      screen: 'EditPlace',
+                      params: {
+                        item: item,
+                      },
+                    })
+                  }
                   style={{
                     paddingVertical: 8,
                     flexDirection: 'row',

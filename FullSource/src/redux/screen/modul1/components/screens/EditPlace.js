@@ -22,6 +22,9 @@ function EditPlace(props) {
   const custom = props.route.params?.itemCustom;
   const itemProduct = props.route.params?.itemProduct;
   const item = props.route.params?.item;
+  // console.log('custom :>> ', custom);
+  // console.log('itemProduct :>> ', itemProduct);
+  console.log('item :>> ', item);
   const [dataProduct, setDataProduct] = useState([]);
   const [itemCustom, setItemCustom] = useState(null);
   const [notePlace, setNotePlace] = useState('');
@@ -79,7 +82,7 @@ function EditPlace(props) {
   const dispatch = useDispatch();
 
   function onBack() {
-    props.navigation.navigate('Home');
+    props.navigation.goBack();
   }
 
   // price
@@ -295,7 +298,7 @@ function EditPlace(props) {
             flexDirection: 'row',
             alignSelf: 'center',
           }}>
-          <TouchableOpacity onPress={onBack}>
+          <TouchableOpacity onPress={() => props.navigation.goBack()}>
             <Feather name="arrow-left" color="white" size={26} />
           </TouchableOpacity>
           <Text style={{color: 'white', fontSize: 18}}>Sửa đơn hàng</Text>

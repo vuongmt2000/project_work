@@ -404,7 +404,15 @@ const ListSE = ({navigation}) => {
                           return (
                             <TouchableOpacity
                               style={styles.row}
-                              key={Math.random() * 100 + 'a'}>
+                              key={Math.random() * 100 + 'a'}
+                              onPress={() =>
+                                navigation.navigate('Sale', {
+                                  screen: 'EditPlace',
+                                  params: {
+                                    item: item,
+                                  },
+                                })
+                              }>
                               <View style={styles.bodyChildrenContent}>
                                 <Image
                                   source={require('../assets/box-outline-filled.png')}
