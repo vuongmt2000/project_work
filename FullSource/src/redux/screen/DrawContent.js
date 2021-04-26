@@ -66,7 +66,7 @@ const DrawContent = ({props, navigation}) => {
           setForecast(response.data);
         })
         .catch(function (error) {
-          console.log("drawContent", error);
+          console.log('drawContent', error);
         });
     }
     setRefreshing(false);
@@ -92,7 +92,6 @@ const DrawContent = ({props, navigation}) => {
   console.log(current);
   return (
     <DrawerContentScrollView
-      contentContainerStyle={{flex: 1, padding: 5}}
       refreshControl={
         <RefreshControl
           onRefresh={() => {
@@ -105,7 +104,7 @@ const DrawContent = ({props, navigation}) => {
                   lon: location.longitude,
                 });
               },
-              error => console.log("Error local",error),
+              error => console.log('Error local', error),
             );
             loadForecast();
           }}
@@ -113,7 +112,7 @@ const DrawContent = ({props, navigation}) => {
         />
       }
       showsVerticalScrollIndicator={false}
-      scrollEnabled={true}>
+      style={{flex: 1, padding: 5}}>
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
         <IconM
           name="category"
@@ -231,7 +230,7 @@ const DrawContent = ({props, navigation}) => {
           </View>
         ) : null}
       </View>
-      <ScrollView style={{marginLeft: 20, marginTop: 35}}>
+      <View style={{marginLeft: 20, marginTop: 35}}>
         <TouchableOpacity
           style={{flexDirection: 'row', alignItems: 'center'}}
           onPress={() => setShowTool(!showTool)}>
@@ -304,7 +303,7 @@ const DrawContent = ({props, navigation}) => {
             />
           </View>
         ) : null}
-      </ScrollView>
+      </View>
     </DrawerContentScrollView>
   );
 };
