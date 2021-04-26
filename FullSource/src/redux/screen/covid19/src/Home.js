@@ -30,7 +30,7 @@ function Covid_19(props) {
         setTg(response.data.Global);
       })
       .catch(function (error) {
-        console.log(error);
+        console.log("covid19" ,error);
       });
   }, []);
 

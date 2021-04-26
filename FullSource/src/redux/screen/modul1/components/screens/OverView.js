@@ -7,14 +7,13 @@ import {useSelector} from 'react-redux';
 function OverView(props) {
   const data = useSelector(state => state.HomeReducer.dataPlace);
   console.log(`data`, data);
-  console.log(`data1`, data[0].Place_Product);
   const [revenue, setRevenue] = useState(0);
   const [newPlace, setNewPlace] = useState(0);
   const [cancelPlace, setCancelPlace] = useState(0);
   const [donePlace, setDonePlace] = useState(0);
 
   useEffect(() => {
-    let lenPlace = data.length;
+    let lenPlace = data?.length;
     let tongPrice = 0;
     let n = 0;
     let c = 0;

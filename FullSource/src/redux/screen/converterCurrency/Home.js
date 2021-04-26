@@ -23,7 +23,7 @@ const getFirstRate = currency => {
       return Response.data['conversion_rates']['USD'];
     })
     .catch(Error => {
-      console.log(Error);
+      console.log("Home Converter", Error);
     });
 };
 
@@ -58,7 +58,7 @@ const Home = () => {
         setRate(Response.data['conversion_rates']);
       })
       .catch(Error => {
-        console.log(Error);
+        console.log("error converter", Error);
       });
   }, [currency1]);
 

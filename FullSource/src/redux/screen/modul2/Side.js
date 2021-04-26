@@ -69,7 +69,7 @@ const Side = ({route, navigation}) => {
         setIsWellCome(true);
       }
     } catch (error) {
-      console.log(error);
+      console.log("side :",error);
     }
   }, []);
 

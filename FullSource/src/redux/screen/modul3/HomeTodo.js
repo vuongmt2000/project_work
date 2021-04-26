@@ -241,7 +241,7 @@ const HomeTodo = ({navigation}) => {
                     <IconF name="pencil-square-o" size={30} color="#b50000" />
                     <View style={{marginLeft: 10, marginRight: 20}}>
                       <Text style={{color: 'gray'}}>
-                        {moment(new Date(item.place.timeOrder)).format(
+                        {moment(new Date(item?.place.timeOrder)).format(
                           'DD/MM/yyyy',
                         )}
                       </Text>

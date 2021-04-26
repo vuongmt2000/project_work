@@ -18,11 +18,11 @@ function* HandleDeleteCustom(action) {
   console.log(`actionUpdateCustom:  `, action);
   const dataDelete = action.id;
   console.log('dataUpdate : ', dataDelete);
-  const results = yield call(ExecuteSQL, 'DELETE FROM Customer WHERE id = ?', [
-    dataDelete,
+  const results = yield call(ExecuteSQL, 'UPDATE Customer set stateCustomer = ?  WHERE id = ?', [
+    0,dataDelete,
   ]);
 
-  const results1 = yield call(ExecuteSQL, 'SELECT * FROM  Customer;', []);
+  const results1 = yield call(ExecuteSQL, 'SELECT * FROM  Customer where stateCustomer = ? ;', [1]);
   // console.log("RESULTS FETCH CUSTOM SAGA : ", results);
   var len = results1.rows.length;
   const data = [];

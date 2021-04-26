@@ -494,7 +494,7 @@ const ElectricBill = () => {
     if (currentNumber > beforeNumber) {
       setNumberBill(currentNumber - beforeNumber);
     }
-  });
+  },[]);
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.Container1}>

@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {View, Text, ScrollView, FlatList} from 'react-native';
 import styles from './Styles';
-import Home from '../screens/Home';
 
 function GrossToNet({navigation, route}) {
   console.log(route.name + 'vvv');

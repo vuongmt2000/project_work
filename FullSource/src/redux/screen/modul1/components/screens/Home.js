@@ -26,11 +26,17 @@ function Home(props) {
   const [input_search, setInput_search] = useState('');
 
   const [date, setDate] = useState(new Date());
-  const dataPlace = useSelector(state => state.HomeReducer.dataPlace || []);
+  const data = useSelector(state => state.HomeReducer.dataPlace);
+  const [dataPlace, setDataPlace] = useState([]);
+  console.log(`dataHome: `, data);
 
   useEffect(() => {
     dispatch(fetchPlaceAction());
   }, []);
+
+  useEffect(() =>{
+    setDataPlace(data)
+  }, [data])
 
   function onAddPlace() {
     props.navigation.navigate('AddPlace');
@@ -156,12 +162,12 @@ function Home(props) {
     props.navigation.navigate('EditPlace', {item: item});
   }
   const RenderItem = ({item}) => {
-    console.log('item?.custom :>> ', item?.custom);
+    console.log('item?.custom :>> ', item);
     return (
       <View
         style={{
           flex: 1,
-          backgroundColor: '#b50000',
+          backgroundColor: '#919eb3',
           marginBottom: 10,
           marginTop: 10,
           alignSelf: 'center',
@@ -171,16 +177,17 @@ function Home(props) {
         <TouchableOpacity onLongPress={() => ChangeEditPlace(item)}>
           <View style={{marginTop: 10, marginBottom: 10, borderRadius: 5}}>
             <View style={{flexDirection: 'row'}}>
-              <Text style={{fontSize: 18, marginLeft: 20, color: 'white'}}>
+               <Text style={{fontSize: 18, marginLeft: 20, color: 'white'}}>
                 {Moment(item?.place.timeOrder).format('DD-MM-yyyy')}
               </Text>
-              <Text
+               <Text
                 style={{
                   alignSelf: 'center',
                   marginLeft: 40,
                   fontSize: 18,
                   fontWeight: 'bold',
                   color: 'white',
+                  width:"50%"
                 }}>
                 {item?.custom?.name}
               </Text>
@@ -231,11 +238,11 @@ function Home(props) {
                 borderRadius: 5,
               }}>
               <Text style={{color: 'white', fontWeight: 'bold'}}>
-                {item?.place.statusOrder}
+                {item.place.statusOrder}
               </Text>
             </TouchableOpacity>
           </View>
-        </View>
+        </View> 
       </View>
     );
   };
@@ -318,7 +325,6 @@ function Home(props) {
               ' ' +
               item.id +
               ' ' +
-              item.Place_Product.id +
               Math.random() * 100
             }
           />

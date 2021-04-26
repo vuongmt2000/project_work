@@ -105,16 +105,16 @@ function AddPlace(props) {
     return (
       <View
         style={{
-          width: '90%',
+          width: '95%',
           alignSelf: 'center',
-          backgroundColor: '#20e012',
+          backgroundColor: '#919eb3',
           marginTop: 10,
           borderRadius: 5,
           marginBottom: 10,
         }}>
         <View
           style={{
-            width: '90%',
+            width: '95%',
             alignSelf: 'center',
             flexDirection: 'row',
 
@@ -134,10 +134,10 @@ function AddPlace(props) {
           </View>
           <View
             style={{marginLeft: 10, justifyContent: 'center', width: '58%'}}>
-            <Text style={{fontSize: 16, fontWeight: 'bold'}}>
+            <Text style={{fontSize: 16, fontWeight: 'bold', color:"white"}}>
               Tên Sp: {item.nameProduct}
             </Text>
-            <Text style={{marginTop: 5}}>
+            <Text style={{marginTop: 5, color:"white"}}>
               Giá gốc:{' '}
               {item.valueProduct
                 .toString()
@@ -145,7 +145,7 @@ function AddPlace(props) {
               đ
             </Text>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Text style={{alignItems: 'center'}}>Giảm giá: </Text>
+              <Text style={{alignItems: 'center', color:"white"}}>Giảm giá: </Text>
               <TextInput
                 value={item.discount.toString()}
                 style={{
@@ -153,12 +153,13 @@ function AddPlace(props) {
                   borderWidth: 1,
                   width: 60,
                   borderRadius: 10,
-                  paddingLeft: 5,
+                  paddingLeft: 5, color:"white",
+                  borderColor:"white"
                 }}
                 keyboardType="numeric"
                 onChangeText={text => changeDiscount(text, item)}
               />
-              <Text style={{alignItems: 'center'}}> %</Text>
+              <Text style={{alignItems: 'center', color:"white"}}> %</Text>
             </View>
             <View
               style={{
@@ -169,25 +170,25 @@ function AddPlace(props) {
               }}>
               {item.quantity > 1 ? (
                 <TouchableOpacity onPress={() => minusQuantity(item)}>
-                  <Feather name="minus-circle" size={20} />
+                  <Feather name="minus-circle" size={20} color ="white"/>
                 </TouchableOpacity>
               ) : (
                 <View />
               )}
-              <Text> SL: {item.quantity}</Text>
+              <Text style ={{color : "white"}}> SL: {item.quantity}</Text>
               <TouchableOpacity onPress={() => plusQuantity(item)}>
-                <Feather name="plus-circle" size={20} />
+                <Feather name="plus-circle" size={20} color ="white" />
               </TouchableOpacity>
             </View>
-            <Text style={{marginTop: 5}}>Giá : {price(item)} đ</Text>
-            <Text style={{marginTop: 5, fontStyle: 'italic', marginBottom: 5}}>
+            <Text style={{marginTop: 5, color:"white"}}>Giá : {price(item)} đ</Text>
+            <Text style={{marginTop: 5, fontStyle: 'italic', marginBottom: 5, color:"white"}}>
               Ghi chú: {item.noteProdcut}
             </Text>
           </View>
           <TouchableOpacity
             onPress={() => deleteItem(item)}
             style={{justifyContent: 'center', alignItems: 'center'}}>
-            <Feather name="trash-2" size={20} />
+            <Feather name="trash-2" size={20} color = "white"/>
           </TouchableOpacity>
         </View>
       </View>
@@ -232,9 +233,6 @@ function AddPlace(props) {
     });
   }
 
-  useEffect(() => {
-    dispatch(fetchPlaceAction());
-  }, [dispatch]);
   function onAddPlace(dataProduct, notePlace, itemCustom) {
     let date = new Date();
     let statePlace = 'New';
@@ -249,7 +247,7 @@ function AddPlace(props) {
       dispatch(addPlaceAction(newPlace));
       setRefreshing(true);
       setTimeout(() => {
-        props.navigation.goBack();
+        props.navigation.navigate("Home");
         setRefreshing(false);
       }, 2000);
     } else {
@@ -262,7 +260,7 @@ function AddPlace(props) {
       <View style={{width: '100%', backgroundColor: '#34a4eb'}}>
         <View
           style={{
-            width: '90%',
+            width: '95%',
             height: 60,
             alignItems: 'center',
             justifyContent: 'space-between',
@@ -280,7 +278,7 @@ function AddPlace(props) {
         </View>
       </View>
       <ScrollView refreshControl={<RefreshControl refreshing={refreshing} />}>
-        <View style={{width: '90%', alignSelf: 'center', flexDirection: 'row'}}>
+        <View style={{width: '95%', alignSelf: 'center', flexDirection: 'row'}}>
           <Text style={{fontSize: 16, marginTop: 20}}>Khách hàng</Text>
           {itemCustom ? (
             <View />
@@ -298,10 +296,10 @@ function AddPlace(props) {
           <TouchableOpacity style={{}} onPress={() => changeToListCustom()}>
             <View
               style={{
-                width: '90%',
+                width: '95%',
                 alignSelf: 'center',
                 flexDirection: 'row',
-                backgroundColor: '#dbde14',
+                backgroundColor: '#919eb3',
                 marginTop: 10,
                 borderRadius: 5,
                 marginBottom: 10,
@@ -320,11 +318,11 @@ function AddPlace(props) {
                 />
               </View>
               <View style={{marginLeft: 10, justifyContent: 'center'}}>
-                <Text style={{fontSize: 16, fontWeight: 'bold'}}>
+                <Text style={{fontSize: 16, fontWeight: 'bold', color:"white"}}>
                   {itemCustom.name}
                 </Text>
-                <Text style={{marginTop: 5}}>SĐT: {itemCustom.phone}</Text>
-                <Text style={{marginTop: 5, fontStyle: 'italic'}}>
+                <Text style={{marginTop: 5, color:"white"}}>SĐT: {itemCustom.phone}</Text>
+                <Text style={{marginTop: 5, fontStyle: 'italic', color:"white"}}>
                   Địa chỉ: {itemCustom.address}
                 </Text>
               </View>
@@ -333,7 +331,7 @@ function AddPlace(props) {
         ) : (
           <View />
         )}
-        <View style={{width: '90%', alignSelf: 'center', flexDirection: 'row'}}>
+        <View style={{width: '95%', alignSelf: 'center', flexDirection: 'row'}}>
           <Text style={{fontSize: 16, marginTop: 20}}>Sản phẩm</Text>
 
           <TouchableOpacity onPress={changeToListProduct}>
@@ -349,7 +347,7 @@ function AddPlace(props) {
         ))}
         <View
           style={{
-            width: '90%',
+            width: '95%',
             alignSelf: 'center',
             flexDirection: 'row',
             borderRadius: 5,
@@ -378,7 +376,7 @@ function AddPlace(props) {
         <View
           style={{
             flexDirection: 'row',
-            width: '90%',
+            width: '95%',
             alignSelf: 'center',
             marginTop: 10,
           }}>
