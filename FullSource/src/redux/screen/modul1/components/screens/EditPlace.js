@@ -126,7 +126,9 @@ function EditPlace(props) {
   }
 
   function updatePlace(itemCustom, dataProduct, notePlace, time, status) {
+    console.log("--------------------------UPDatePlace")
     if (dataProduct.length > 0) {
+      console.log("--------------------------UPDatePlace")
       let idPlace = item.place.id;
       let a = {
         custom: itemCustom,
@@ -151,16 +153,16 @@ function EditPlace(props) {
     return (
       <View
         style={{
-          width: '90%',
+          width: '95%',
           alignSelf: 'center',
-          backgroundColor: '#20e012',
+          backgroundColor: '#919eb3',
           marginTop: 10,
           borderRadius: 5,
           marginBottom: 10,
         }}>
         <View
           style={{
-            width: '90%',
+            width: '95%',
             alignSelf: 'center',
             flexDirection: 'row',
             borderRadius: 5,
@@ -179,10 +181,10 @@ function EditPlace(props) {
           </View>
           <View
             style={{marginLeft: 10, justifyContent: 'center', width: '58%'}}>
-            <Text style={{fontSize: 16, fontWeight: 'bold'}}>
+            <Text style={{fontSize: 16, fontWeight: 'bold', color :"white"}}>
               Tên Sp: {item.nameProduct}
             </Text>
-            <Text style={{marginTop: 5}}>
+            <Text style={{marginTop: 5, color :"white"}}>
               Giá gốc:{' '}
               {item.valueProduct
                 .toString()
@@ -190,7 +192,7 @@ function EditPlace(props) {
               đ
             </Text>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Text style={{alignItems: 'center'}}>Giảm giá: </Text>
+              <Text style={{alignItems: 'center', color :"white"}}>Giảm giá: </Text>
               <TextInput
                 value={item.discount.toString()}
                 style={{
@@ -199,11 +201,13 @@ function EditPlace(props) {
                   width: 60,
                   borderRadius: 10,
                   paddingLeft: 5,
+                  color :"white",
+                  borderColor:"white"
                 }}
                 keyboardType="numeric"
                 onChangeText={text => changeDiscount(text, item)}
               />
-              <Text style={{alignItems: 'center'}}> %</Text>
+              <Text style={{alignItems: 'center', color :"white"}}> %</Text>
             </View>
             <View
               style={{
@@ -213,25 +217,25 @@ function EditPlace(props) {
               }}>
               {item.quantity > 1 ? (
                 <TouchableOpacity onPress={() => minusQuantity(item)}>
-                  <Feather name="minus-circle" size={20} />
+                  <Feather name="minus-circle" size={20}  color ="white"/>
                 </TouchableOpacity>
               ) : (
                 <View />
               )}
-              <Text> SL: {item.quantity}</Text>
+              <Text style ={{color :"white"}}> SL: {item.quantity}</Text>
               <TouchableOpacity onPress={() => plusQuantity(item)}>
-                <Feather name="plus-circle" size={20} />
+                <Feather name="plus-circle" size={20} color ="white"/>
               </TouchableOpacity>
             </View>
-            <Text style={{marginTop: 5}}>Giá : {price(item)} đ</Text>
-            <Text style={{marginTop: 5, fontStyle: 'italic', marginBottom: 5}}>
+            <Text style={{marginTop: 5, color :"white"}}>Giá : {price(item)} đ</Text>
+            <Text style={{marginTop: 5, fontStyle: 'italic', marginBottom: 5, color :"white"}}>
               Ghi chú: {item.noteProdcut}
             </Text>
           </View>
           <TouchableOpacity
             onPress={() => deleteItem(item)}
             style={{justifyContent: 'center', alignItems: 'center'}}>
-            <Feather name="trash-2" size={20} />
+            <Feather name="trash-2" size={20} color ="white" />
           </TouchableOpacity>
         </View>
       </View>
@@ -291,7 +295,7 @@ function EditPlace(props) {
       <View style={{width: '100%', backgroundColor: '#34a4eb'}}>
         <View
           style={{
-            width: '90%',
+            width: '95%',
             height: 60,
             alignItems: 'center',
             justifyContent: 'space-between',
@@ -308,9 +312,9 @@ function EditPlace(props) {
         </View>
       </View>
       <ScrollView refreshControl={<RefreshControl refreshing={refreshing} />}>
-        <View style={{width: '90%', alignSelf: 'center'}}>
+        <View style={{width: '95%', alignSelf: 'center'}}>
           <Text style={{fontSize: 18}}>
-            {Moment(item.place.timeOrder).format('DD/MM/yyyy HH:mm')}
+            {Moment(item?.place.timeOrder).format('DD/MM/yyyy HH:mm')}
           </Text>
           <Text style={{fontSize: 16, marginTop: 20}}>Khách hàng</Text>
           {itemCustom ? (
@@ -329,10 +333,10 @@ function EditPlace(props) {
           <TouchableOpacity style={{}} onPress={() => changeToListCustom()}>
             <View
               style={{
-                width: '90%',
+                width: '95%',
                 alignSelf: 'center',
                 flexDirection: 'row',
-                backgroundColor: '#dbde14',
+                backgroundColor: '#919eb3',
                 marginTop: 10,
                 borderRadius: 5,
                 marginBottom: 10,
@@ -351,11 +355,11 @@ function EditPlace(props) {
                 />
               </View>
               <View style={{marginLeft: 10, justifyContent: 'center'}}>
-                <Text style={{fontSize: 16, fontWeight: 'bold'}}>
+                <Text style={{fontSize: 16, fontWeight: 'bold', color : "white"}}>
                   {itemCustom.name}
                 </Text>
-                <Text style={{marginTop: 5}}>SĐT: {itemCustom.phone}</Text>
-                <Text style={{marginTop: 5, fontStyle: 'italic'}}>
+                <Text style={{marginTop: 5, color : "white"}}>SĐT: {itemCustom.phone}</Text>
+                <Text style={{marginTop: 5, fontStyle: 'italic', color : "white"}}>
                   Địa chỉ: {itemCustom.address}
                 </Text>
               </View>
@@ -364,7 +368,7 @@ function EditPlace(props) {
         ) : (
           <View />
         )}
-        <View style={{width: '90%', alignSelf: 'center', flexDirection: 'row'}}>
+        <View style={{width: '95%', alignSelf: 'center', flexDirection: 'row'}}>
           <Text style={{fontSize: 16, marginTop: 20}}>Sản phẩm</Text>
 
           <TouchableOpacity onPress={changeToListProduct}>
@@ -380,7 +384,7 @@ function EditPlace(props) {
         ))}
         <View
           style={{
-            width: '90%',
+            width: '95%',
             alignSelf: 'center',
             flexDirection: 'row',
             borderRadius: 5,
@@ -408,7 +412,7 @@ function EditPlace(props) {
         </View>
         <View
           style={{
-            width: '90%',
+            width: '95%',
             alignSelf: 'center',
             flexDirection: 'row',
             borderRadius: 5,
@@ -425,7 +429,7 @@ function EditPlace(props) {
             <Feather name="star" color="blue" size={24} />
           </View>
           <TextInput
-            placeholder="Trạng thái"
+            placeholder="New, Done or Cancel"
             value={statusPlace}
             onChangeText={setStatusPlace}
             style={{
@@ -444,7 +448,7 @@ function EditPlace(props) {
           style={{
             flexDirection: 'row',
             marginTop: 20,
-            width: '90%',
+            width: '95%',
             justifyContent: 'flex-end',
             alignSelf: 'center',
           }}>
@@ -466,7 +470,7 @@ function EditPlace(props) {
                 itemCustom,
                 dataProduct,
                 notePlace,
-                item.place.timeOrder,
+                item?.place.timeOrder,
                 statusPlace,
               )
             }

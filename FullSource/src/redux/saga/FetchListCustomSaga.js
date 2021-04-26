@@ -6,10 +6,10 @@ import {
   FETCH_LIST_CUSTOM,
   FETCH_LIST_CUSTOM_SUCCESS,
   FETCH_LIST_CUSTOM_FAILED,
-} from '../actions/actionType';
+} from '../actions/actionType';                                             
 
 function* getListCustom() {
-  const results = yield call(ExecuteSQL, 'SELECT * FROM  Customer;', []);
+  const results = yield call(ExecuteSQL, 'SELECT * FROM  Customer where stateCustomer = ?', [1]);
   // console.log("RESULTS FETCH CUSTOM SAGA : ", results);
   var len = results.rows.length;
   const data = [];

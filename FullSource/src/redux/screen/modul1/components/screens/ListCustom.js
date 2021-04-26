@@ -35,6 +35,7 @@ function ListCustom(props, {navigation}) {
   );
   useEffect(() => {
     setDataCustom(dataListCustom);
+    console.log(`dataListCustom : `, dataListCustom)
   }, [dataListCustom]);
 
   useEffect(() => {
@@ -72,7 +73,7 @@ function ListCustom(props, {navigation}) {
             width: '95%',
             alignSelf: 'center',
             flexDirection: 'row',
-            backgroundColor: '#dbde14',
+            backgroundColor: '#919eb3',
             marginTop: 10,
             borderRadius: 5,
             marginBottom: 10,
@@ -91,9 +92,9 @@ function ListCustom(props, {navigation}) {
             />
           </View>
           <View style={{marginLeft: 10, justifyContent: 'center'}}>
-            <Text style={{fontSize: 16, fontWeight: 'bold'}}>{item.name}</Text>
-            <Text style={{marginTop: 5}}>SĐT: {item.phone}</Text>
-            <Text style={{marginTop: 5, fontStyle: 'italic'}}>
+            <Text style={{fontSize: 16, fontWeight: 'bold', color:"white"}}>{item.name}</Text>
+            <Text style={{marginTop: 5, color:"white"}}>SĐT: {item.phone}</Text>
+            <Text style={{marginTop: 5, fontStyle: 'italic', color:"white"}}>
               Địa chỉ: {item.address}
             </Text>
           </View>

@@ -16,11 +16,11 @@ import {
 function* deleteProductSaga(action) {
   console.log('deleteProduct', action.id);
   const d = action.id;
-  const results = yield call(ExecuteSQL, 'DELETE FROM Product WHERE id = ?;', [
-    d,
+  const results = yield call(ExecuteSQL, 'UPDATE Product set deleteProduct =? WHERE id = ?', [
+    0,d
   ]);
 
-  const results1 = yield call(ExecuteSQL, 'SELECT * FROM  Product;', []);
+  const results1 = yield call(ExecuteSQL, 'SELECT * FROM  Product where deleteProduct = ?;', [1]);
   // console.log("RESULTS FETCH CUSTOM SAGA : ", results);
   var len = results1.rows.length;
   const data = [];

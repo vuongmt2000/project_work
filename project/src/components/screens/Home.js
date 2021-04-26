@@ -21,7 +21,6 @@ function Home(props) {
 
   const [date, setDate] = useState(new Date())
   const data = useSelector((state) => state.homeReducer.dataPlace);
-  console.log(`data1111111111111111111111111111111111`, data);
 
   useEffect(() => {
     dispatch(fetchPlaceAction());

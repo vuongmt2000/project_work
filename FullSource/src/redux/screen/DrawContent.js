@@ -66,7 +66,7 @@ const DrawContent = ({props, navigation}) => {
           setForecast(response.data);
         })
         .catch(function (error) {
-          console.log(error);
+          console.log("drawContent", error);
         });
     }
     setRefreshing(false);
@@ -105,7 +105,7 @@ const DrawContent = ({props, navigation}) => {
                   lon: location.longitude,
                 });
               },
-              error => console.log(error),
+              error => console.log("Error local",error),
             );
             loadForecast();
           }}

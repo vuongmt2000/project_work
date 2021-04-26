@@ -19,7 +19,7 @@ function* HandleAddCustom(action) {
   console.log('dataUpdate : ', dataUpdate);
   const results = yield call(
     ExecuteSQL,
-    'INSERT INTO Customer VALUES (? , ?, ?, ?, ?, ?)',
+    'INSERT INTO Customer VALUES (? , ?, ?, ?, ?, ?,?)',
     [
       null,
       dataUpdate.name,
@@ -27,6 +27,7 @@ function* HandleAddCustom(action) {
       dataUpdate.address,
       dataUpdate.image,
       dataUpdate.note,
+      dataUpdate.stateCustomer
     ],
   );
   const results1 = yield call(ExecuteSQL, 'SELECT * FROM  Customer;', []);

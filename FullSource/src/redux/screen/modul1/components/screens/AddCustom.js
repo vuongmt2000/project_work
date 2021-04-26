@@ -31,7 +31,7 @@ function AddCustom(props) {
   function onAdd(name, phone, address, image, note) {
     if (name.length > 0 && phone.length > 0 && address.length > 0) {
       setCheck(false);
-      let newCustom = {name, phone, address, image, note};
+      let newCustom = {name, phone, address, image, note, stateCustomer:1};
       dispatch(addCustomAction(newCustom));
       setRefreshing(true);
       setTimeout(() => {

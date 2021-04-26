@@ -83,10 +83,10 @@ function ListProduct(props) {
         onPress={() => onChangeScreenEdit(item)}>
         <View
           style={{
-            width: '90%',
+            width: '95%',
             alignSelf: 'center',
             flexDirection: 'row',
-            backgroundColor: '#20e012',
+            backgroundColor: '#919eb3',
             marginTop: 10,
             borderRadius: 5,
             marginBottom: 10,
@@ -106,17 +106,17 @@ function ListProduct(props) {
           </View>
           <View
             style={{marginLeft: 10, justifyContent: 'center', width: '60%'}}>
-            <Text style={{fontSize: 16, fontWeight: 'bold'}}>
+            <Text style={{fontSize: 16, fontWeight: 'bold', color :"white"}}>
               Tên Sp: {item.nameProduct}
             </Text>
-            <Text style={{marginTop: 5}}>
+            <Text style={{marginTop: 5, color :"white"}}>
               Giá:{' '}
               {item.valueProduct
                 .toString()
                 .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
               đ
             </Text>
-            <Text style={{marginTop: 5, fontStyle: 'italic'}}>
+            <Text style={{marginTop: 5, fontStyle: 'italic', color :"white"}}>
               Ghi chú: {item.noteProdcut}
             </Text>
           </View>

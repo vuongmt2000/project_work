@@ -5,14 +5,13 @@ import {ExecuteSQL} from './OpenDataBase';
 import {ADD_PLACE} from '../actions/actionType';
 
 import {
-  FETCH_PLACE,
   FETCH_PLACE_FAILED,
   FETCH_PLACE_SUCCESS,
 } from '../actions/actionType';
 
 function* HandleAddPlace(action) {
   const dataPlace = action.newPlace;
-  console.log('dataPlace : ', dataPlace);
+  console.log('dataPlace : ', dataPlace.itemCustom.id);
   const results = yield call(
     ExecuteSQL,
     'INSERT INTO Place VALUES (? , ?, ?, ?, ?)',
@@ -26,7 +25,7 @@ function* HandleAddPlace(action) {
   );
   console.log('results: ', results.rowsAffected);
   const results1 = yield call(ExecuteSQL, 'SELECT * FROM Place ', []);
-  console.log('add place product1', results1.rowsAffected);
+  console.log('add place product1', results.rowsAffected);
   console.log('results1', results1);
   let len = results1.rows.length;
   const id_place = yield results1.rows.item(len - 1).id;
@@ -50,16 +49,18 @@ function* HandleAddPlace(action) {
 
   ////////////// fetch place action
   const results3 = yield call(ExecuteSQL, 'SELECT * from Place', []);
+ 
   const data = [];
   for (let i = 0; i < results3.rows.length; i++) {
     let rowPlace = results3.rows.item(i);
-
+    console.log(`result3 add Place saga : `, results3.rows.item(i));
     const result4 = yield call(
       ExecuteSQL,
       'SELECT * FROM Customer WHERE id = ?',
       [results3.rows.item(i).id_Customer],
     );
-    let rowCustom = result4.rows.item(i);
+    // console.log(`result4 add Place saga : `, result4.rows.item(i).name);
+    let rowCustom = result4.rows.item(0);
 
     const result5 = yield call(
       ExecuteSQL,

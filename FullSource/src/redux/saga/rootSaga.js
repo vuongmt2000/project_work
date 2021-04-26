@@ -13,6 +13,7 @@ import {watchUpdateProduct} from './UpdateProductSaga';
 import {watchAddProduct} from './AddProductSaga';
 import {watchAddPlace} from './AddPlaceSaga';
 import {watchDeletePlace} from './DeletePlaceSaga';
+import {watchUpdatePlace} from './UpdatePlaceSaga'
 export default function* rootSaga() {
   yield all([
     fork(watchFetchEarning),
@@ -29,5 +30,6 @@ export default function* rootSaga() {
     fork(watchAddProduct),
     fork(watchAddPlace),
     fork(watchDeletePlace),
+    fork(watchUpdatePlace),
   ]);
 }

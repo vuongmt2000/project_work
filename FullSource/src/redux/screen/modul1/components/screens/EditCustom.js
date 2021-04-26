@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {TouchableOpacity, View, Text, Image, TextInput} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {TouchableOpacity, View, Text, Image, TextInput, ScrollView} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import Feather from 'react-native-vector-icons/Feather';
 import ImagePicker from 'react-native-image-crop-picker';
@@ -8,7 +8,7 @@ import {
   deleteCustomAction,
 } from '../../../../actions/index';
 function EditCustom(props) {
-  const {item} = props.route.params;
+  const item = props.route.params?.item;
   const [fullName, setFullName] = useState(item.name);
   const [phone, setPhone] = useState(item.phone);
   const [image, setImage] = useState(item.image);
@@ -20,10 +20,17 @@ function EditCustom(props) {
     props.navigation.goBack();
   }
 
+  useEffect(() => {
+    console.log(`item editCustom: `, item)
+    if(!item){
+      props.navigation.goBack();
+    }    
+  }, [item])
+
   function onDelete(id) {
     dispatch(deleteCustomAction(id));
     setTimeout(() => {
-      props.navigation.navigate('ListCustom');
+      props.navigation.navigate('Khách hàng');
     }, 1000);
   }
 
@@ -71,6 +78,7 @@ function EditCustom(props) {
           </TouchableOpacity>
         </View>
       </View>
+      <ScrollView>
       <View
         style={{width: '90%', height: 230, marginTop: 10, alignSelf: 'center'}}>
         <TouchableOpacity onPress={editImage}>
@@ -234,6 +242,7 @@ function EditCustom(props) {
           <Text style={{color: 'white'}}>Cập nhật</Text>
         </TouchableOpacity>
       </View>
+      </ScrollView>
     </View>
   );
 }

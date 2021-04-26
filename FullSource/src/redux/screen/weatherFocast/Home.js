@@ -175,7 +175,7 @@ const Home = ({navigation, route}) => {
         let location = info.coords;
         setDataLocation({lat: location.latitude, lon: location.longitude});
       },
-      error => console.log(error),
+      error => console.log("weather",  error),
     );
   }, []);
 
@@ -309,7 +309,7 @@ const Home = ({navigation, route}) => {
                       lon: location.longitude,
                     });
                   },
-                  error => console.log(error),
+                  error => console.log("weatherfocast :", error),
                 );
               }
               loadForecast();
