@@ -15,9 +15,11 @@ import {deletePlaceAction, updatePlaceAction} from '../../../../actions/index';
 import {Input} from 'react-native-elements';
 import Moment from 'moment';
 
-// const dataProduct =[
-//   {"id": 1, "imageProduct": "asdfasdf", "nameProduct": "iphone 6", "noteProdcut": "hangf moiw vef", "valueProduct": 30000000}
-// ]
+const dataListState = [
+  {id:1, title: "New"},
+  {id:2, title: "Done"},
+  {id:3, title: "Cancel"}
+]
 function EditPlace(props) {
   const custom = props.route.params?.itemCustom;
   const itemProduct = props.route.params?.itemProduct;
@@ -25,27 +27,28 @@ function EditPlace(props) {
   // console.log('custom :>> ', custom);
   // console.log('itemProduct :>> ', itemProduct);
   console.log('item :>> ', item);
-  const [dataProduct, setDataProduct] = useState([]);
-  const [itemCustom, setItemCustom] = useState(null);
+  const [dataProduct, setDataProduct] = useState(item?.Place_Product||[]);
+  const [itemCustom, setItemCustom] = useState(item?.custom || []);
   const [notePlace, setNotePlace] = useState('');
   const [statusPlace, setStatusPlace] = useState('');
   const [refreshing, setRefreshing] = useState(false);
-
-  useEffect(() => {
-    console.log('22222222222222');
-    if (custom) {
-      setItemCustom(custom);
-    }
-  }, [custom]);
+  const [showListState, setShowListState] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     console.log(`item`, item);
     console.log('1111111111111111');
-    setDataProduct(item.Place_Product);
-    setItemCustom(item.custom);
-    setNotePlace(item.place.noteOrder);
-    setStatusPlace(item.place.statusOrder);
+    setDataProduct(item?.Place_Product);
+    setItemCustom(item?.custom);
+    setNotePlace(item?.place.noteOrder);
+    setStatusPlace(item?.place.statusOrder);
   }, [item]);
+
+  useEffect(() => {
+    if(custom){
+      setItemCustom(custom)
+    }
+  }, [custom]);
 
   useEffect(() => {
     if (itemProduct) {
@@ -62,7 +65,7 @@ function EditPlace(props) {
           check = false;
         }
       }
-      if (check) {
+       if (check) {
         let obj = {
           id: itemProduct.id,
           nameProduct: itemProduct.nameProduct,
@@ -79,10 +82,10 @@ function EditPlace(props) {
     }
   }, [itemProduct]);
 
-  const dispatch = useDispatch();
+
 
   function onBack() {
-    props.navigation.goBack();
+    props.navigation.navigate("Home")
   }
 
   // price
@@ -149,13 +152,16 @@ function EditPlace(props) {
     }
   }
 
+  function onShowStatus() {
+    setShowListState(!showListState);
+  }
   const RenderItemProduct = ({item}) => {
     return (
       <View
         style={{
           width: '95%',
           alignSelf: 'center',
-          backgroundColor: '#919eb3',
+          borderBottomWidth:0.5, borderBottomColor:"gray",
           marginTop: 10,
           borderRadius: 5,
           marginBottom: 10,
@@ -169,7 +175,7 @@ function EditPlace(props) {
           }}>
           <View
             style={{
-              width: '30%',
+              width: '20%',
               justifyContent: 'center',
               alignItems: 'center',
               marginTop: 10,
@@ -180,11 +186,19 @@ function EditPlace(props) {
             />
           </View>
           <View
-            style={{marginLeft: 10, justifyContent: 'center', width: '58%'}}>
-            <Text style={{fontSize: 16, fontWeight: 'bold', color :"white"}}>
+            style={{marginLeft: 20, justifyContent: 'center', width: '73%'}}>
+              <View style = {{flexDirection:"row", justifyContent:"space-between"}}>
+              <Text style={{fontSize: 18}}>
               Tên Sp: {item.nameProduct}
             </Text>
-            <Text style={{marginTop: 5, color :"white"}}>
+            <TouchableOpacity
+            onPress={() => deleteItem(item)}
+            style={{ }}>
+            <Feather name="x-circle" size={20}  />
+          </TouchableOpacity>
+              </View>
+            
+            <Text style={{marginTop: 5, fontWeight:"bold"}}>
               Giá gốc:{' '}
               {item.valueProduct
                 .toString()
@@ -192,58 +206,48 @@ function EditPlace(props) {
               đ
             </Text>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Text style={{alignItems: 'center', color :"white"}}>Giảm giá: </Text>
+              <Text style={{alignItems: 'center'}}>Giảm giá: </Text>
               <TextInput
                 value={item.discount.toString()}
                 style={{
                   height: 40,
-                  borderWidth: 1,
                   width: 60,
                   borderRadius: 10,
                   paddingLeft: 5,
-                  color :"white",
-                  borderColor:"white"
                 }}
                 keyboardType="numeric"
                 onChangeText={text => changeDiscount(text, item)}
               />
-              <Text style={{alignItems: 'center', color :"white"}}> %</Text>
+              <Text style={{alignItems: 'center'}}> %</Text>
             </View>
             <View
               style={{
                 flexDirection: 'row',
                 justifyContent: 'space-between',
-                width: '80%',
+                width: '60%',
               }}>
               {item.quantity > 1 ? (
                 <TouchableOpacity onPress={() => minusQuantity(item)}>
-                  <Feather name="minus-circle" size={20}  color ="white"/>
+                  <Feather name="minus-circle" size={20}  color ="black"/>
                 </TouchableOpacity>
               ) : (
                 <View />
               )}
-              <Text style ={{color :"white"}}> SL: {item.quantity}</Text>
+              <Text style ={{}}>{item.quantity}</Text>
               <TouchableOpacity onPress={() => plusQuantity(item)}>
-                <Feather name="plus-circle" size={20} color ="white"/>
+                <Feather name="plus-circle" size={20} color ="black"/>
               </TouchableOpacity>
             </View>
-            <Text style={{marginTop: 5, color :"white"}}>Giá : {price(item)} đ</Text>
-            <Text style={{marginTop: 5, fontStyle: 'italic', marginBottom: 5, color :"white"}}>
-              Ghi chú: {item.noteProdcut}
-            </Text>
+            <Text style={{marginTop: 5, fontWeight: "bold", marginBottom:10}}>Giá : {price(item)} đ</Text>
           </View>
-          <TouchableOpacity
-            onPress={() => deleteItem(item)}
-            style={{justifyContent: 'center', alignItems: 'center'}}>
-            <Feather name="trash-2" size={20} color ="white" />
-          </TouchableOpacity>
+        
         </View>
       </View>
     );
   };
 
   function changeToListCustom() {
-    props.navigation.navigate('ListCustom', {code: 2});
+    props.navigation.navigate('ListCustom', {code: 3});
   }
   function changeToListProduct() {
     props.navigation.navigate('ListProduct', {code: 1});
@@ -289,6 +293,21 @@ function EditPlace(props) {
       props.navigation.navigate('Home');
     }, 3000);
   }
+  function  setStatusPlace_(item){
+    setStatusPlace(item.title);
+    setShowListState(false);
+  }
+  const RenderItemStatus = ({item})=>{
+    return (
+      <TouchableOpacity onPress={()=> setStatusPlace_(item) }
+      style ={{height: 20, width:"100%", alignItems: "center", justifyContent:"center", marginTop:10,
+       borderBottomWidth: 0.5, width:"95%", alignSelf:"center", borderBottomColor:"gray"}}>
+       <Text>{item.title}</Text>
+     </TouchableOpacity>
+    )
+  }
+    
+
   return (
     <View style={{flex: 1}}>
       {/* Header */}
@@ -302,7 +321,7 @@ function EditPlace(props) {
             flexDirection: 'row',
             alignSelf: 'center',
           }}>
-          <TouchableOpacity onPress={() => props.navigation.goBack()}>
+          <TouchableOpacity onPress={onBack}>
             <Feather name="arrow-left" color="white" size={26} />
           </TouchableOpacity>
           <Text style={{color: 'white', fontSize: 18}}>Sửa đơn hàng</Text>
@@ -336,7 +355,7 @@ function EditPlace(props) {
                 width: '95%',
                 alignSelf: 'center',
                 flexDirection: 'row',
-                backgroundColor: '#919eb3',
+                borderBottomWidth:0.5, borderBottomColor:"gray",
                 marginTop: 10,
                 borderRadius: 5,
                 marginBottom: 10,
@@ -355,11 +374,11 @@ function EditPlace(props) {
                 />
               </View>
               <View style={{marginLeft: 10, justifyContent: 'center'}}>
-                <Text style={{fontSize: 16, fontWeight: 'bold', color : "white"}}>
+                <Text style={{fontSize: 18}}>
                   {itemCustom.name}
                 </Text>
-                <Text style={{marginTop: 5, color : "white"}}>SĐT: {itemCustom.phone}</Text>
-                <Text style={{marginTop: 5, fontStyle: 'italic', color : "white"}}>
+                <Text style={{marginTop: 5}}>SĐT: {itemCustom.phone}</Text>
+                <Text style={{marginTop: 5}}>
                   Địa chỉ: {itemCustom.address}
                 </Text>
               </View>
@@ -405,12 +424,13 @@ function EditPlace(props) {
             value={notePlace}
             onChangeText={setNotePlace}
             style={{
-              height: 50,
+             
               width: '100%',
             }}
           />
         </View>
-        <View
+        <TouchableOpacity
+         onPress={ onShowStatus}
           style={{
             width: '95%',
             alignSelf: 'center',
@@ -428,16 +448,20 @@ function EditPlace(props) {
             }}>
             <Feather name="star" color="blue" size={24} />
           </View>
-          <TextInput
-            placeholder="New, Done or Cancel"
-            value={statusPlace}
-            onChangeText={setStatusPlace}
+          <View style ={{alignItems: "center", justifyContent: 'center', height:50}}>
+          <Text
             style={{
-              height: 50,
-              width: '100%',
-            }}
-          />
-        </View>
+             
+            }}>{statusPlace}</Text>  
+          </View>
+
+         
+        </TouchableOpacity>
+        <ScrollView>
+            {showListState? dataListState.map((item, index)=>(
+              <RenderItemStatus item = {item} key = {index}/>
+            )):<View/>}
+            </ScrollView>
         <View style={{flexDirection: 'row', marginLeft: '5%', marginTop: 20}}>
           <Text style={{fontWeight: 'bold', fontSize: 20, color: 'red'}}>
             Tổng tiền : {sumPrice()} đ

@@ -51,10 +51,14 @@ function ListProduct(props) {
     }
   }
   function onChangeScreenEdit(item) {
-    if (code != 1) {
-      props.navigation.navigate('EditProduct', {item: item});
-    } else {
+    if (code === 1) {
+      props.navigation.navigate('EditPlace', {itemProduct: item});
+     
+    } else if(code === 4 ) {
       props.navigation.navigate('AddPlace', {itemProduct: item});
+    }
+    else {
+      props.navigation.navigate('EditProduct', {item: item});
     }
   }
 
@@ -86,7 +90,7 @@ function ListProduct(props) {
             width: '95%',
             alignSelf: 'center',
             flexDirection: 'row',
-            backgroundColor: '#919eb3',
+            borderBottomWidth:0.5, borderBottomColor:"gray",
             marginTop: 10,
             borderRadius: 5,
             marginBottom: 10,
@@ -106,17 +110,17 @@ function ListProduct(props) {
           </View>
           <View
             style={{marginLeft: 10, justifyContent: 'center', width: '60%'}}>
-            <Text style={{fontSize: 16, fontWeight: 'bold', color :"white"}}>
+            <Text style={{fontSize: 18}}>
               Tên Sp: {item.nameProduct}
             </Text>
-            <Text style={{marginTop: 5, color :"white"}}>
+            <Text style={{marginTop: 5, color :"gray"}}>
               Giá:{' '}
               {item.valueProduct
                 .toString()
                 .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
               đ
             </Text>
-            <Text style={{marginTop: 5, fontStyle: 'italic', color :"white"}}>
+            <Text style={{marginTop: 5, color :"gray"}}>
               Ghi chú: {item.noteProdcut}
             </Text>
           </View>

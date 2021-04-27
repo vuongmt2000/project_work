@@ -18,9 +18,7 @@ import {
 function* deletePlaceSaga(action) {
   console.log('deleteProduct', action.id);
   const d = action.id;
-  const results = yield call(ExecuteSQL, 'DELETE FROM Place WHERE id = ?;', [
-    d,
-  ]);
+  const results = yield call(ExecuteSQL, 'DELETE FROM Place WHERE id = ?;', [d]);
 
     ////////////// fetch place action
     const results3 = yield call(ExecuteSQL, 'SELECT * from Place', []);
@@ -33,7 +31,7 @@ function* deletePlaceSaga(action) {
         'SELECT * FROM Customer WHERE id = ?',
         [results3.rows.item(i).id_Customer],
       );
-      let rowCustom = result4.rows.item(i);
+      let rowCustom = result4.rows.item(0);
   
       const result5 = yield call(
         ExecuteSQL,

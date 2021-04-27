@@ -6,6 +6,7 @@ import {
   Image,
   TextInput,
   ScrollView,
+  RefreshControl
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import Feather from 'react-native-vector-icons/Feather';
@@ -22,6 +23,7 @@ function EditProduct(props) {
   );
   const [imageProduct, setImageProduct] = useState(item.imageProduct);
   const [noteProduct, setNoteProduct] = useState(item.noteProdcut);
+  const [refreshing, setRefreshing] = useState(false);
   const dispatch = useDispatch();
   function onBack() {
     props.navigation.goBack();
@@ -29,8 +31,10 @@ function EditProduct(props) {
 
   function onDelete(id) {
     dispatch(deleteProductAction(id));
+    setRefreshing(true)
     setTimeout(() => {
-      props.navigation.navigate('ListProduct');
+      setRefreshing(false)
+      props.navigation.navigate('Sản phẩm');
     }, 1000);
   }
 
@@ -58,13 +62,16 @@ function EditProduct(props) {
     console.log('run update Product');
     let obj = {id, nameProduct, valueProduct, imageProduct, noteProduct};
     dispatch(updateProductAction(obj));
+    setRefreshing(true)
     setTimeout(() => {
       props.navigation.goBack();
+      setRefreshing(false)
     }, 1000);
   }
 
   return (
-    <ScrollView style={{flex: 1}}>
+    <ScrollView refreshControl={<RefreshControl refreshing={refreshing} />}
+    style={{flex: 1}}>
       {/* Header */}
       <View style={{width: '100%', backgroundColor: '#34a4eb'}}>
         <View
