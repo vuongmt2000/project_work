@@ -30,7 +30,7 @@ function Covid_19(props) {
         setTg(response.data.Global);
       })
       .catch(function (error) {
-        console.log("covid19" ,error);
+        console.log('covid19', error);
       });
   }, []);
 
@@ -110,29 +110,77 @@ function Covid_19(props) {
       </View>
 
       <View style={styles.container_header}>
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}>
           <Text style={styles.tct}>Tổng ca nhiễm : </Text>
-          {/* <Text>{tg.TotalConfirmed.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Text> */}
+          <Text>
+            {tg?.TotalConfirmed.toString().replace(
+              /\B(?=(\d{3})+(?!\d))/g,
+              ',',
+            )}
+          </Text>
         </View>
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}>
           <Text style={styles.tct}>Tổng ca nhiễm mới : </Text>
-          {/* <Text>{tg.NewConfirmed.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Text> */}
+          <Text>
+            {tg?.NewConfirmed.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+          </Text>
         </View>
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}>
           <Text style={styles.tct}>Tổng ca mất mới : </Text>
-          {/* <Text>{tg.NewDeaths.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Text> */}
+          <Text>
+            {tg?.NewDeaths.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+          </Text>
         </View>
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}>
           <Text style={styles.tct}>Tổng ca số người mất : </Text>
-          {/* <Text>{tg.TotalDeaths.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Text> */}
+          <Text>
+            {tg?.TotalDeaths.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+          </Text>
         </View>
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}>
           <Text style={styles.tct}>Tổng ca mới hồi phục : </Text>
-          {/* <Text>{tg.NewRecovered.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Text> */}
+          <Text>
+            {tg?.NewRecovered.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+          </Text>
         </View>
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}>
           <Text style={styles.tct}>Tổng ca hồi phục : </Text>
-          {/* <Text>{tg.TotalRecovered.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Text> */}
+          <Text>
+            {tg?.TotalRecovered.toString().replace(
+              /\B(?=(\d{3})+(?!\d))/g,
+              ',',
+            )}
+          </Text>
         </View>
       </View>
       <ScrollView style={styles.header_body} horizontal>

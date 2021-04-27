@@ -168,6 +168,28 @@ const DrawerContent = ({props, navigation}) => {
             </View>
             <Switch value={km} onValueChange={toggleSwitchKm} />
           </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginVertical: 20,
+            }}>
+            <TouchableOpacity
+              style={{flexDirection: 'row'}}
+              onPress={() => navigation.navigate('Sale')}>
+              <IconA name="home" size={25} color="white" />
+              <Text
+                style={{
+                  fontSize: 16,
+                  color: 'white',
+                  marginLeft: 5,
+                  textAlign: 'center',
+                }}>
+                Về trang chủ
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </DrawerContentScrollView>
     </ImageBackground>

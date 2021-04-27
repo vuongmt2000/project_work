@@ -66,7 +66,7 @@ function* HandleUpdatePlace(action) {
       'SELECT * FROM Customer WHERE id = ?',
       [results3.rows.item(i).id_Customer],
     );
-    let rowCustom = result4.rows.item(i);
+    let rowCustom = result4.rows.item(0);
 
     const result5 = yield call(
       ExecuteSQL,
