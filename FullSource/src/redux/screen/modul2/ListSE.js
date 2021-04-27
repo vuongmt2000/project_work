@@ -393,7 +393,10 @@ const ListSE = ({navigation}) => {
                       <View style={styles.bodyChildrenHeader}>
                         <Text style={styles.title}>{fomatDate(it.title)}</Text>
                         <Text style={[styles.total, {color: 'blue'}]}>
-                          +{earnMoney}
+                          +
+                          {earnMoney
+                            ?.toString()
+                            .replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,')}
                         </Text>
                       </View>
                       {dataP?.map(item => {
@@ -435,7 +438,7 @@ const ListSE = ({navigation}) => {
                                     Trạng thái:{' '}
                                     {item.place.statusOrder === 'New' ? (
                                       <Text style={{color: '#e3e30e'}}>
-                                        {item.place.statusOrder}
+                                        Pending
                                       </Text>
                                     ) : (
                                       <Text style={{color: 'green'}}>
