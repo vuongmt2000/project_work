@@ -5,7 +5,6 @@ import {ExecuteSQL} from './OpenDataBase';
 import {UPDATE_PLACE} from '../actions/actionType';
 
 import {
-  FETCH_PLACE,
   FETCH_PLACE_FAILED,
   FETCH_PLACE_SUCCESS,
 } from '../actions/actionType';
@@ -66,7 +65,7 @@ function* HandleUpdatePlace(action) {
       'SELECT * FROM Customer WHERE id = ?',
       [results3.rows.item(i).id_Customer],
     );
-    let rowCustom = result4.rows.item(i);
+    let rowCustom = result4.rows.item(0);
 
     const result5 = yield call(
       ExecuteSQL,

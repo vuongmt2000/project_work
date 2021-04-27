@@ -107,7 +107,7 @@ function AddPlace(props) {
         style={{
           width: '95%',
           alignSelf: 'center',
-          backgroundColor: '#919eb3',
+          borderBottomWidth:0.5, borderBottomColor:"gray",
           marginTop: 10,
           borderRadius: 5,
           marginBottom: 10,
@@ -117,12 +117,11 @@ function AddPlace(props) {
             width: '95%',
             alignSelf: 'center',
             flexDirection: 'row',
-
             borderRadius: 5,
           }}>
           <View
             style={{
-              width: '30%',
+              width: '20%',
               justifyContent: 'center',
               alignItems: 'center',
               marginTop: 10,
@@ -133,11 +132,19 @@ function AddPlace(props) {
             />
           </View>
           <View
-            style={{marginLeft: 10, justifyContent: 'center', width: '58%'}}>
-            <Text style={{fontSize: 16, fontWeight: 'bold', color:"white"}}>
+            style={{marginLeft: 20, justifyContent: 'center', width: '73%'}}>
+              <View style = {{flexDirection:"row", justifyContent:"space-between"}}>
+              <Text style={{fontSize: 18}}>
               Tên Sp: {item.nameProduct}
             </Text>
-            <Text style={{marginTop: 5, color:"white"}}>
+            <TouchableOpacity
+            onPress={() => deleteItem(item)}
+            style={{ }}>
+            <Feather name="x-circle" size={20}  />
+          </TouchableOpacity>
+              </View>
+            
+            <Text style={{marginTop: 5, fontWeight:"bold"}}>
               Giá gốc:{' '}
               {item.valueProduct
                 .toString()
@@ -145,51 +152,41 @@ function AddPlace(props) {
               đ
             </Text>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Text style={{alignItems: 'center', color:"white"}}>Giảm giá: </Text>
+              <Text style={{alignItems: 'center'}}>Giảm giá: </Text>
               <TextInput
                 value={item.discount.toString()}
                 style={{
                   height: 40,
-                  borderWidth: 1,
                   width: 60,
                   borderRadius: 10,
-                  paddingLeft: 5, color:"white",
-                  borderColor:"white"
+                  paddingLeft: 5,
                 }}
                 keyboardType="numeric"
                 onChangeText={text => changeDiscount(text, item)}
               />
-              <Text style={{alignItems: 'center', color:"white"}}> %</Text>
+              <Text style={{alignItems: 'center'}}> %</Text>
             </View>
             <View
               style={{
                 flexDirection: 'row',
                 justifyContent: 'space-between',
-                width: '80%',
-                marginTop: 10,
+                width: '60%',
               }}>
               {item.quantity > 1 ? (
                 <TouchableOpacity onPress={() => minusQuantity(item)}>
-                  <Feather name="minus-circle" size={20} color ="white"/>
+                  <Feather name="minus-circle" size={20}  color ="black"/>
                 </TouchableOpacity>
               ) : (
                 <View />
               )}
-              <Text style ={{color : "white"}}> SL: {item.quantity}</Text>
+              <Text style ={{}}>{item.quantity}</Text>
               <TouchableOpacity onPress={() => plusQuantity(item)}>
-                <Feather name="plus-circle" size={20} color ="white" />
+                <Feather name="plus-circle" size={20} color ="black"/>
               </TouchableOpacity>
             </View>
-            <Text style={{marginTop: 5, color:"white"}}>Giá : {price(item)} đ</Text>
-            <Text style={{marginTop: 5, fontStyle: 'italic', marginBottom: 5, color:"white"}}>
-              Ghi chú: {item.noteProdcut}
-            </Text>
+            <Text style={{marginTop: 5, fontWeight: "bold", marginBottom:10}}>Giá : {price(item)} đ</Text>
           </View>
-          <TouchableOpacity
-            onPress={() => deleteItem(item)}
-            style={{justifyContent: 'center', alignItems: 'center'}}>
-            <Feather name="trash-2" size={20} color = "white"/>
-          </TouchableOpacity>
+        
         </View>
       </View>
     );
@@ -199,7 +196,7 @@ function AddPlace(props) {
     props.navigation.navigate('ListCustom', {code: 2});
   }
   function changeToListProduct() {
-    props.navigation.navigate('ListProduct', {code: 1});
+    props.navigation.navigate('ListProduct', {code: 4});
   }
 
   function plusQuantity(item) {
@@ -299,7 +296,7 @@ function AddPlace(props) {
                 width: '95%',
                 alignSelf: 'center',
                 flexDirection: 'row',
-                backgroundColor: '#919eb3',
+               borderBottomColor:"gray", borderBottomWidth:0.5,
                 marginTop: 10,
                 borderRadius: 5,
                 marginBottom: 10,
@@ -318,11 +315,11 @@ function AddPlace(props) {
                 />
               </View>
               <View style={{marginLeft: 10, justifyContent: 'center'}}>
-                <Text style={{fontSize: 16, fontWeight: 'bold', color:"white"}}>
+                <Text style={{fontSize: 18}}>
                   {itemCustom.name}
                 </Text>
-                <Text style={{marginTop: 5, color:"white"}}>SĐT: {itemCustom.phone}</Text>
-                <Text style={{marginTop: 5, fontStyle: 'italic', color:"white"}}>
+                <Text style={{marginTop: 5, color : "gray"}}>SĐT: {itemCustom.phone}</Text>
+                <Text style={{marginTop: 5, color : "gray"}}>
                   Địa chỉ: {itemCustom.address}
                 </Text>
               </View>

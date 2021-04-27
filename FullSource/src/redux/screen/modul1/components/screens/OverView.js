@@ -47,7 +47,7 @@ function OverView(props) {
     setCancelPlace(c);
     setDonePlace(d);
     setNewPlace(n);
-  }, data);
+  }, [data]);
   function changeEdit(item) {
     props.navigation.navigate('EditPlace', {item: item});
   }
@@ -59,10 +59,8 @@ function OverView(props) {
           width: '95%',
           alignSelf: 'center',
           height: 50,
-          backgroundColor: '#acc3e8',
-          marginTop: 5,
+          borderBottomWidth:0.5, borderBottomColor:"gray",
           justifyContent: 'center',
-          alignItems: 'center',
           borderRadius: 5,
           marginBottom: 5,
         }}>
@@ -141,6 +139,10 @@ function OverView(props) {
           </View>
         </View>
       </View>
+      <View style ={{width:"95%", alignSelf:"center", marginTop:10}}>
+      <Text style ={{fontSize:18}}>Tổng đơn hàng: {data.length}</Text>
+      </View>
+      
       <View style={{marginTop: 10}}>
         {data?.map((item, index) => (
           <RenderItem item={item} key={index} />

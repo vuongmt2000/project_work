@@ -30,7 +30,7 @@ function* HandleAddCustom(action) {
       dataUpdate.stateCustomer
     ],
   );
-  const results1 = yield call(ExecuteSQL, 'SELECT * FROM  Customer;', []);
+  const results1 = yield call(ExecuteSQL, 'SELECT * FROM  Customer where stateCustomer = ?;', [1]);
   // console.log("RESULTS FETCH CUSTOM SAGA : ", results);
   var len = results1.rows.length;
   const data = [];

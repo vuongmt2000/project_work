@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {TouchableOpacity, View, Text, Image, TextInput, ScrollView} from 'react-native';
+import {TouchableOpacity, View, Text, Image, TextInput, ScrollView, RefreshControl} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import Feather from 'react-native-vector-icons/Feather';
 import ImagePicker from 'react-native-image-crop-picker';
@@ -14,6 +14,7 @@ function EditCustom(props) {
   const [image, setImage] = useState(item.image);
   const [address, setAddress] = useState(item.address);
   const [note, setNote] = useState(item.note);
+  const [refreshing, setRefreshing] = useState(false); 
   const dispatch = useDispatch();
   const len = useSelector(state => state.listCustomReducer.len);
   function onBack() {
@@ -29,8 +30,10 @@ function EditCustom(props) {
 
   function onDelete(id) {
     dispatch(deleteCustomAction(id));
+    setRefreshing(true)
     setTimeout(() => {
       props.navigation.navigate('Khách hàng');
+      setRefreshing(false)
     }, 1000);
   }
 
@@ -49,7 +52,9 @@ function EditCustom(props) {
     console.log('run update');
     let obj = {id, name, phone, address, image, note};
     dispatch(updateCustomAction(obj));
+    setRefreshing(true);
     setTimeout(() => {
+      setRefreshing(false)
       props.navigation.goBack();
     }, 1000);
   }
@@ -78,7 +83,9 @@ function EditCustom(props) {
           </TouchableOpacity>
         </View>
       </View>
-      <ScrollView>
+      <ScrollView
+      refreshControl={<RefreshControl refreshing={refreshing} />}
+      >
       <View
         style={{width: '90%', height: 230, marginTop: 10, alignSelf: 'center'}}>
         <TouchableOpacity onPress={editImage}>

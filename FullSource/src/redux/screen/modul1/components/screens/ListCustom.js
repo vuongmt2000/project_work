@@ -43,10 +43,16 @@ function ListCustom(props, {navigation}) {
   }, []);
 
   function onChangeScreenEdit(item) {
-    if (code != 2) {
-      props.navigation.navigate('EditCustom', {item: item});
-    } else {
+    if (code === 2) {
       props.navigation.navigate('AddPlace', {itemCustom: item});
+      return;
+    } else if(code === 3) {
+      props.navigation.navigate('EditPlace', {itemCustom: item});
+      return;
+    }
+    else {
+      props.navigation.navigate('EditCustom', {item: item});
+      return;
     }
   }
 
@@ -73,8 +79,7 @@ function ListCustom(props, {navigation}) {
             width: '95%',
             alignSelf: 'center',
             flexDirection: 'row',
-            backgroundColor: '#919eb3',
-            marginTop: 10,
+            borderBottomWidth:0.5, borderBottomColor:"gray",
             borderRadius: 5,
             marginBottom: 10,
           }}>
@@ -92,9 +97,9 @@ function ListCustom(props, {navigation}) {
             />
           </View>
           <View style={{marginLeft: 10, justifyContent: 'center'}}>
-            <Text style={{fontSize: 16, fontWeight: 'bold', color:"white"}}>{item.name}</Text>
-            <Text style={{marginTop: 5, color:"white"}}>SĐT: {item.phone}</Text>
-            <Text style={{marginTop: 5, fontStyle: 'italic', color:"white"}}>
+            <Text style={{fontSize: 18}}>{item.name}</Text>
+            <Text style={{marginTop: 5, color:"gray"}}>SĐT: {item.phone}</Text>
+            <Text style={{marginTop: 5, color:"gray"}}>
               Địa chỉ: {item.address}
             </Text>
           </View>

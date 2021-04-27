@@ -44,7 +44,7 @@ function AddProduct(props) {
         );
         setNoteProduct('');
         setRefreshing(false);
-        props.navigation.goBack();
+        props.navigation.navigate("Sản phẩm");
       }, 2000);
     } else {
       setCheck(true);
