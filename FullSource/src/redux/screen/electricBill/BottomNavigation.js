@@ -2,6 +2,7 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import IconF from 'react-native-vector-icons/FontAwesome5';
 import ElectricBill from './ElectricBill';
 import Price from './Price';
 
@@ -21,7 +22,7 @@ const MyTabs = () => {
         options={{
           tabBarLabel: 'Tính Tiền Điện',
           tabBarIcon: ({color}) => (
-            <MaterialCommunityIcons name="home" size={26} color={color} />
+            <IconF name="dollar-sign" size={26} color={color} />
           ),
         }}
       />
@@ -31,7 +32,7 @@ const MyTabs = () => {
         options={{
           tabBarLabel: 'Đơn Giá',
           tabBarIcon: ({color}) => (
-            <MaterialCommunityIcons name="menu" size={26} color={color} />
+            <IconF name="receipt" size={26} color={color} />
           ),
         }}
       />

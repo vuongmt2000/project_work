@@ -381,7 +381,7 @@ const ListSE = ({navigation}) => {
                 let data = it.dataItem[2];
                 let dataP = filterStatusPlace(data, selectPicker);
                 for (let i = 0; i < it.dataItem[2].length; i++)
-                  if (it.dataItem[2][i].place.statusOrder === 'done')
+                  if (it.dataItem[2][i].place.statusOrder === 'Done')
                     earnMoney += caculateTotalP(
                       it.dataItem[2][i].Place_Product,
                     );
@@ -433,7 +433,7 @@ const ListSE = ({navigation}) => {
                                   </Text>
                                   <Text style={styles.txtContent}>
                                     Trạng thái:{' '}
-                                    {item.place.statusOrder === 'pending' ? (
+                                    {item.place.statusOrder === 'New' ? (
                                       <Text style={{color: '#e3e30e'}}>
                                         {item.place.statusOrder}
                                       </Text>

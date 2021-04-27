@@ -136,7 +136,21 @@ const HomeTodo = ({navigation}) => {
             alignItems: 'center',
             flexDirection: 'row',
           }}>
-          <Text style={{fontSize: 36, fontWeight: 'bold'}}>Todo</Text>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.toggleDrawer();
+              }}
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Icon name="menu-outline" size={40} />
+            </TouchableOpacity>
+            <Text style={{fontSize: 36, fontWeight: 'bold', marginLeft: 10}}>
+              Todo
+            </Text>
+          </View>
           <ToggleSwitch
             isOn={showSwitch}
             onColor="green"

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {
   View,
   Text,
@@ -7,6 +7,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   TextInput,
+  StatusBar,
 } from 'react-native';
 import {useEffect, useState} from 'react';
 import CountryPicker from 'react-native-country-picker-modal';
@@ -14,22 +15,23 @@ import axios from 'axios';
 import {Dimensions} from 'react-native';
 import IconFt from 'react-native-vector-icons/Fontisto';
 import IconA from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/Ionicons';
 const getFirstRate = currency => {
   axios({
     method: 'GET',
-    url: `https://v6.exchangerate-api.com/v6/bb2f64bc992a4a043ada0f86/latest/${currency}`,
+    url: `https://v6.exchangerate-api.com/v6/d44c29d16ec4f1dd8deebc93/latest/${currency}`,
   })
     .then(Response => {
       return Response.data['conversion_rates']['USD'];
     })
     .catch(Error => {
-      console.log("Home Converter", Error);
+      console.log('Home Converter', Error);
     });
 };
 
 let deviceHeight = Dimensions.get('window').height;
 
-const Home = () => {
+const ConverterCurrency = ({navigation}) => {
   const [country1, setCountry1] = useState(null);
   const [country2, setCountry2] = useState(null);
   const [countryCode1, setCountryCode1] = useState('VN');
@@ -48,22 +50,53 @@ const Home = () => {
   const [number8, setNumber8] = useState(0);
   const [number9, setNumber9] = useState(0);
   const [rate, setRate] = useState(() => getFirstRate('VND'));
+  const tmoney = useRef(0);
 
+  const a = tmoney.current.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  const b = number2.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   useEffect(() => {
     axios({
       method: 'GET',
-      url: `https://v6.exchangerate-api.com/v6/bb2f64bc992a4a043ada0f86/latest/${currency1}`,
+      url: `https://v6.exchangerate-api.com/v6/d44c29d16ec4f1dd8deebc93/latest/${currency1}`,
     })
       .then(Response => {
         setRate(Response.data['conversion_rates']);
       })
       .catch(Error => {
-        console.log("error converter", Error);
+        console.log('error converter', Error);
       });
   }, [currency1]);
 
   return (
-    <>
+    <View style={{flex: 1}}>
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          marginHorizontal: 5,
+          paddingVertical: 10,
+          borderBottomColor: 'gray',
+          borderBottomWidth: 0.5,
+        }}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.toggleDrawer();
+          }}
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <Icon name="menu-outline" size={38} />
+        </TouchableOpacity>
+        <Text
+          style={{
+            fontSize: 30,
+            flexGrow: 1,
+            marginLeft: 30,
+          }}>
+          Trang chủ
+        </Text>
+      </View>
       <View
         style={{
           flexDirection: 'row',
@@ -116,17 +149,36 @@ const Home = () => {
               keyboardType="numeric"
               placeholder="0"
               placeholderTextColor="white"
-              value={number1.toString()}
+              value={tmoney.current > 0 ? a : 0}
               onChangeText={val => {
-                setNumber1(val);
-                setNumber2((val * rate[`${currency2}`]).toFixed(2));
-                setNumber3((val * rate['GBP']).toFixed(2));
-                setNumber4((val * rate['CNY']).toFixed(2));
-                setNumber5((val * rate['JPY']).toFixed(2));
-                setNumber6((val * rate['CAD']).toFixed(2));
-                setNumber7((val * rate['AUD']).toFixed(2));
-                setNumber8((val * rate['RUB']).toFixed(2));
-                setNumber9((val * rate['SGD']).toFixed(2));
+                tmoney.current = val.replace(/\,/g, '');
+                setNumber1(parseFloat(val.replace(/\,/g, '')));
+                setNumber2(
+                  (
+                    parseFloat(val.replace(/\,/g, '')) * rate[`${currency2}`]
+                  ).toFixed(2),
+                );
+                setNumber3(
+                  (parseFloat(val.replace(/\,/g, '')) * rate['GBP']).toFixed(2),
+                );
+                setNumber4(
+                  (parseFloat(val.replace(/\,/g, '')) * rate['CNY']).toFixed(2),
+                );
+                setNumber5(
+                  (parseFloat(val.replace(/\,/g, '')) * rate['JPY']).toFixed(2),
+                );
+                setNumber6(
+                  (parseFloat(val.replace(/\,/g, '')) * rate['CAD']).toFixed(2),
+                );
+                setNumber7(
+                  (parseFloat(val.replace(/\,/g, '')) * rate['AUD']).toFixed(2),
+                );
+                setNumber8(
+                  (parseFloat(val.replace(/\,/g, '')) * rate['RUB']).toFixed(2),
+                );
+                setNumber9(
+                  (parseFloat(val.replace(/\,/g, '')) * rate['SGD']).toFixed(2),
+                );
               }}
               autoFocus={true}
             />
@@ -177,10 +229,10 @@ const Home = () => {
               keyboardType="numeric"
               placeholder="0"
               placeholderTextColor="white"
-              value={number2.toString()}
+              value={number2 > 0 ? b : 0}
               onChangeText={val => {
-                setNumber2(val);
-                setNumber1((val / rate[`${currency2}`]).toFixed(2));
+                setNumber2(parseFloat(val));
+                setNumber1((parseFloat(val) / rate[`${currency2}`]).toFixed(2));
               }}
             />
             <Text style={{color: 'white'}}>{currency2}</Text>
@@ -326,7 +378,7 @@ const Home = () => {
           </View>
         </View>
       </ScrollView>
-    </>
+    </View>
   );
 };
 
@@ -360,4 +412,4 @@ const styles = StyleSheet.create({
     resizeMode: 'center',
   },
 });
-export default Home;
+export default ConverterCurrency;

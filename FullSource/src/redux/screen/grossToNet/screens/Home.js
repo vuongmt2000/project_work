@@ -8,10 +8,13 @@ import {
   TouchableOpacity,
   Image,
   TextInput,
+  StatusBar,
 } from 'react-native';
 import GrossToNet from './GrossToNet';
 import {Keyboard} from 'react-native';
 import styles from './Styles';
+import Icon from 'react-native-vector-icons/Ionicons';
+
 const width = Dimensions.get('screen').width;
 const height = Dimensions.get('screen').height;
 const GrossToNetHome = ({navigation}) => {
@@ -118,6 +121,35 @@ const GrossToNetHome = ({navigation}) => {
   const a = salary.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   return (
     <View style={styles.container}>
+      <StatusBar hidden={true} />
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          marginHorizontal: 5,
+          paddingVertical: 10,
+          borderBottomColor: 'gray',
+          borderBottomWidth: 0.5,
+        }}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.toggleDrawer();
+          }}
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <Icon name="menu-outline" size={38} />
+        </TouchableOpacity>
+        <Text
+          style={{
+            fontSize: 30,
+            flexGrow: 1,
+            marginLeft: 30,
+          }}>
+          Trang chủ
+        </Text>
+      </View>
       <View style={styles.header}>
         <View style={styles.header1}>
           <Text style={styles.title1}>Áp dụng quy định: </Text>

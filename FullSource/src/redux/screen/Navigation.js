@@ -19,7 +19,7 @@ import HomeTodo from './modul3/HomeTodo';
 import DrawContent from './DrawContent';
 import Caro from './game/caro/Caro';
 import ElectricReception from './electricBill/ElectricReception';
-import ConverterCurrency from './converterCurrency/ConverterCurrency';
+import ConverterCurrency from './converterCurrency/Home';
 import WeatherFocast from './weatherFocast/WeatherFocast';
 import Screen_game_2468 from './game/2468/src/Screen_game';
 import Covid_19 from './covid19/src/Home';
