@@ -496,13 +496,13 @@ const genCost4 = numberBill => {
   );
 };
 const ElectricBill = ({navigation}) => {
-  const [numberBill, setNumberBill] = useState('');
-  const [beforeNumber, setBeforeNumber] = useState('');
-  const [currentNumber, setCurrentNumber] = useState('');
+  const [numberBill, setNumberBill] = useState(0);
+  const [beforeNumber, setBeforeNumber] = useState(0);
+  const [currentNumber, setCurrentNumber] = useState(0);
   useEffect(() => {
     if (
-      parseFloat(currentNumber.replace(/\,/g, '')) >
-      parseFloat(beforeNumber.replace(/\,/g, ''))
+      parseFloat(currentNumber.toString().replace(/\,/g, '')) >
+      parseFloat(beforeNumber.toString().replace(/\,/g, ''))
     ) {
       setNumberBill(
         parseFloat(currentNumber.replace(/\,/g, '')) -
@@ -510,6 +510,7 @@ const ElectricBill = ({navigation}) => {
       );
     }
   }, [currentNumber, beforeNumber]);
+  console.log('currentNumber :>> ', currentNumber);
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
@@ -519,7 +520,7 @@ const ElectricBill = ({navigation}) => {
           flexDirection: 'row',
           alignItems: 'center',
           marginHorizontal: 5,
-          paddingVertical:10,
+          paddingVertical: 10,
           borderBottomColor: 'gray',
           borderBottomWidth: 0.5,
         }}>
@@ -554,10 +555,14 @@ const ElectricBill = ({navigation}) => {
             placeholder="0"
             keyboardType="numeric"
             onChangeText={val => setBeforeNumber(val)}
-            value={beforeNumber
-              .toString()
-              .replace(/\,/g, '')
-              .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+            value={
+              parseFloat(beforeNumber?.toString().replace(/\,/g, '')) > 0
+                ? beforeNumber
+                    ?.toString()
+                    .replace(/\,/g, '')
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                : 0
+            }
           />
         </View>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -566,10 +571,14 @@ const ElectricBill = ({navigation}) => {
             placeholder="0"
             keyboardType="numeric"
             onChangeText={val => setCurrentNumber(val)}
-            value={currentNumber
-              .toString()
-              .replace(/\,/g, '')
-              .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+            value={
+              parseFloat(currentNumber?.toString().replace(/\,/g, '')) > 0
+                ? currentNumber
+                    ?.toString()
+                    .replace(/\,/g, '')
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                : 0
+            }
           />
         </View>
         <View
@@ -595,14 +604,18 @@ const ElectricBill = ({navigation}) => {
             keyboardType="numeric"
             onChangeText={val => setNumberBill(val)}
             autoFocus={true}
-            value={numberBill
-              .toString()
-              .replace(/\,/g, '')
-              .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+            value={
+              parseFloat(numberBill?.toString().replace(/\,/g, '')) > 0
+                ? numberBill
+                    ?.toString()
+                    .replace(/\,/g, '')
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                : 0
+            }
           />
         </View>
       </View>
-      {parseFloat(numberBill.replace(/\,/g, '')) > 0 && (
+      {parseFloat(numberBill?.toString().replace(/\,/g, '')) > 0 && (
         <View style={styles.Container2}>
           <View>
             <Text style={styles.header}>TIỀN ĐIỆN SINH HOẠT - HỘ GIA ĐÌNH</Text>
@@ -615,7 +628,9 @@ const ElectricBill = ({navigation}) => {
                 }}>
                 <Text style={{fontWeight: 'bold'}}>
                   Tổng số kWh sử dụng:{' '}
-                  {fotmatMoney(parseFloat(numberBill.replace(/\,/g, '')))}
+                  {fotmatMoney(
+                    parseFloat(numberBill?.toString().replace(/\,/g, '')),
+                  )}
                 </Text>
                 <Text style={{color: 'gray'}}>Ngày lập bảng: {datetime}</Text>
               </View>
@@ -628,7 +643,10 @@ const ElectricBill = ({navigation}) => {
                     height: 1,
                     borderWidth: 0.5,
                   }}></View>
-                {genCost(parseFloat(numberBill.replace(/\,/g, '')), cost)}
+                {genCost(
+                  parseFloat(numberBill?.toString().replace(/\,/g, '')),
+                  cost,
+                )}
                 <View
                   style={{
                     marginTop: 5,
@@ -674,7 +692,7 @@ const ElectricBill = ({navigation}) => {
           </View>
         </View>
       )}
-      {parseFloat(numberBill.replace(/\,/g, '')) > 0 && (
+      {parseFloat(numberBill?.toString().replace(/\,/g, '')) > 0 && (
         <View style={styles.Container2}>
           <View>
             <Text style={styles.header}>TIỀN ĐIỆN KINH DOANH DỊCH VỤ</Text>
@@ -687,7 +705,9 @@ const ElectricBill = ({navigation}) => {
                 }}>
                 <Text style={{fontWeight: 'bold'}}>
                   Tổng số kWh sử dụng:{' '}
-                  {fotmatMoney(parseFloat(numberBill.replace(/\,/g, '')))}
+                  {fotmatMoney(
+                    parseFloat(numberBill?.toString().replace(/\,/g, '')),
+                  )}
                 </Text>
                 <Text style={{color: 'gray'}}>Ngày lập bảng: {datetime}</Text>
               </View>
@@ -700,7 +720,9 @@ const ElectricBill = ({navigation}) => {
                     height: 1,
                     borderWidth: 0.5,
                   }}></View>
-                {genCost2(parseFloat(numberBill.replace(/\,/g, '')))}
+                {genCost2(
+                  parseFloat(numberBill?.toString().replace(/\,/g, '')),
+                )}
                 <View
                   style={{
                     marginTop: 5,
@@ -745,7 +767,7 @@ const ElectricBill = ({navigation}) => {
           </View>
         </View>
       )}
-      {parseFloat(numberBill.replace(/\,/g, '')) > 0 && (
+      {parseFloat(numberBill?.toString().replace(/\,/g, '')) > 0 && (
         <View style={styles.Container2}>
           <View>
             <Text style={styles.header}>TIỀN ĐIỆN SẢN XUẤT</Text>
@@ -758,7 +780,9 @@ const ElectricBill = ({navigation}) => {
                 }}>
                 <Text style={{fontWeight: 'bold'}}>
                   Tổng số kWh sử dụng:{' '}
-                  {fotmatMoney(parseFloat(numberBill.replace(/\,/g, '')))}
+                  {fotmatMoney(
+                    parseFloat(numberBill?.toString().replace(/\,/g, '')),
+                  )}
                 </Text>
                 <Text style={{color: 'gray'}}>Ngày lập bảng: {datetime}</Text>
               </View>
@@ -771,7 +795,9 @@ const ElectricBill = ({navigation}) => {
                     height: 1,
                     borderWidth: 0.5,
                   }}></View>
-                {genCost3(parseFloat(numberBill.replace(/\,/g, '')))}
+                {genCost3(
+                  parseFloat(numberBill?.toString().replace(/\,/g, '')),
+                )}
                 <View
                   style={{
                     marginTop: 5,
@@ -816,7 +842,7 @@ const ElectricBill = ({navigation}) => {
           </View>
         </View>
       )}
-      {parseFloat(numberBill.replace(/\,/g, '')) > 0 && (
+      {parseFloat(numberBill?.toString().replace(/\,/g, '')) > 0 && (
         <View style={styles.Container2}>
           <View>
             <Text style={styles.header}>TIỀN ĐIỆN NHÀ NƯỚC</Text>
@@ -829,7 +855,9 @@ const ElectricBill = ({navigation}) => {
                 }}>
                 <Text style={{fontWeight: 'bold'}}>
                   Tổng số kWh sử dụng:{' '}
-                  {fotmatMoney(parseFloat(numberBill.replace(/\,/g, '')))}
+                  {fotmatMoney(
+                    parseFloat(numberBill?.toString().replace(/\,/g, '')),
+                  )}
                 </Text>
                 <Text style={{color: 'gray'}}>Ngày lập bảng: {datetime}</Text>
               </View>
@@ -843,7 +871,9 @@ const ElectricBill = ({navigation}) => {
                     borderWidth: 0.5,
                   }}></View>
 
-                {genCost4(parseFloat(numberBill.replace(/\,/g, '')))}
+                {genCost4(
+                  parseFloat(numberBill?.toString().replace(/\,/g, '')),
+                )}
                 <View
                   style={{
                     marginTop: 5,
