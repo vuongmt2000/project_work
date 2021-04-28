@@ -16,6 +16,7 @@ import {
   StatusBar,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Fontisto';
+import IconI from 'react-native-vector-icons/Ionicons';
 import {useDispatch, useSelector} from 'react-redux';
 import * as Action from '../../actions/index';
 const styles = StyleSheet.create({
@@ -168,14 +169,17 @@ const caculateTotalP = data => {
 };
 
 const caculateHeader = (dataAll, bmoney) => {
-  let earnMoney = parseFloat(bmoney);
+  console.log('bmoney :>> ', bmoney);
+  let earnMoney = 0;
+  if (parseFloat(bmoney?.toString().replace(/\,/g, '')) > 0)
+    earnMoney = parseFloat(bmoney?.toString().replace(/\,/g, ''));
   let spendMoney = 0;
   let total = 0;
   for (let i = 0; i < dataAll.length; i++) {
     earnMoney += caculateTotalE(dataAll[i].dataItem[1]);
 
     for (let j = 0; j < dataAll[i].dataItem[2].length; j++) {
-      if (dataAll[i].dataItem[2][j].place.statusOrder === 'done')
+      if (dataAll[i].dataItem[2][j].place.statusOrder === 'Done')
         earnMoney += caculateTotalP(dataAll[i].dataItem[2][j].Place_Product);
     }
 
@@ -262,40 +266,54 @@ const OverView = ({navigation, route}) => {
           paddingRight: 10,
           marginBottom: 10,
         }}>
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            alignSelf: 'flex-start',
+          }}>
+          <TouchableOpacity onPress={() => navigation.openDrawer()}>
+            <IconI name="menu-outline" size={35} color="#b50000" />
+          </TouchableOpacity>
+        </View>
         <View style={{flexDirection: 'row'}}>
           <View style={{flexDirection: 'row', paddingLeft: 10}}>
-            <View style={{justifyContent: 'center', alignItems: 'center'}}>
-              <Image
-                source={require('../assets/wallet.png')}
-                style={styles.image}
-              />
-            </View>
             <View
               style={{
                 marginLeft: 10,
+                justifyContent: 'center',
+                alignItems: 'center',
               }}>
               <Text style={{fontSize: 18}}>{nameWallet}</Text>
-              <Text style={{fontSize: 18}}>
+              <View style={{justifyContent: 'center', marginTop: 10}}>
                 {dataAll?.length > 0 ? (
-                  <Text>
+                  <Text style={{fontSize: 25}}>
                     {ESMoney[2]
                       ?.toString()
                       .replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,') ||
                       totalWallet
                         .toString()
-                        .replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,')}
+                        .replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,')}{' '}
+                    VND
                   </Text>
                 ) : (
-                  totalWallet
-                    .toString()
-                    .replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,')
+                  <Text style={{fontSize: 25}}>
+                    {totalWallet
+                      .toString()
+                      .replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,')}{' '}
+                    VND
+                  </Text>
                 )}
-              </Text>
+              </View>
             </View>
           </View>
         </View>
         <TouchableOpacity
-          style={{justifyContent: 'center', alignItems: 'center'}}
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            alignSelf: 'flex-start',
+          }}
           onPress={() => {
             Alert.alert(
               'Cảnh báo',
@@ -419,7 +437,7 @@ const OverView = ({navigation, route}) => {
               let spendMoney = caculateTotalS(item.dataItem[0]);
               let earnMoney = caculateTotalE(item.dataItem[1]);
               for (let i = 0; i < item.dataItem[2].length; i++)
-                if (item.dataItem[2][i].place.statusOrder === 'done')
+                if (item.dataItem[2][i].place.statusOrder === 'Done')
                   earnMoney += caculateTotalP(
                     item.dataItem[2][i].Place_Product,
                   );

@@ -262,7 +262,7 @@ const HomeTodo = ({navigation}) => {
                       <Text
                         style={[
                           {fontSize: 18},
-                          item.place.statusOrder === 'done'
+                          item.place.statusOrder === 'Done'
                             ? {
                                 textDecorationLine: 'line-through',
                               }
