@@ -9,6 +9,7 @@
 import React, {useEffect, useState} from 'react';
 import update from 'immutability-helper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import IconI from 'react-native-vector-icons/Ionicons';
 import {
   SafeAreaView,
   StyleSheet,
@@ -84,7 +85,7 @@ const hasNulls = inputArray => {
   return hasNulls;
 };
 var theWinner = undefined;
-const Caro = () => {
+const Caro = ({navigation}) => {
   const [gameState, setGameState] = useState(() => {
     init();
     return gameMatrix;
@@ -173,107 +174,120 @@ const Caro = () => {
   };
 
   return (
-    <>
-      <SafeAreaView style={{flex: 1}}>
-        <ImageBackground
-          source={require('../../assets/white-concrete-wall.jpg')}
+    <ImageBackground
+      source={require('../../assets/white-concrete-wall.jpg')}
+      style={{
+        resizeMode: 'cover',
+        alignItems: 'center',
+        flex: 1,
+      }}>
+      <View
+        style={{
+          height: 200,
+          alignItems: 'center',
+        }}>
+        <View
           style={{
-            justifyContent: 'center',
-            resizeMode: 'cover',
+            flexDirection: 'row',
             alignItems: 'center',
-            height: '100%',
-            width: '100%',
+            paddingVertical: 10,
+            marginVertical: 10,
+            borderBottomColor: 'gray',
+            borderBottomWidth: 0.5,
           }}>
+          <TouchableOpacity
+            style={{
+              alignSelf: 'flex-start',
+              left: 15,
+            }}
+            onPress={() => navigation.openDrawer()}>
+            <IconI name="menu-outline" size={38} />
+          </TouchableOpacity>
+          <Text style={{fontSize: 30, textAlign: 'center', flexGrow: 1}}>
+            Cờ Caro
+          </Text>
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            flex: 1,
+            alignItems: 'center',
+          }}>
+          <View style={{marginLeft: 10, flex: 1}}>
+            <Image
+              source={require('../../assets/note.png')}
+              style={{width: 30, height: 30, marginLeft: 5}}
+            />
+            <View style={{flexDirection: 'row', margin: 5}}>
+              <Icon name="close" size={20} color="#F80606" />
+              <Text>: {gamePlayer.player1.win}</Text>
+            </View>
+            <View style={{flexDirection: 'row', margin: 5}}>
+              <Icon name="circle-outline" size={20} color="#0921D7" />
+              <Text>: {gamePlayer.player2.win}</Text>
+            </View>
+          </View>
           <View
             style={{
-              height: 150,
-              justifyContent: 'center',
-              alignItems: 'center',
+              flex: 1,
             }}>
-            <Text style={{fontSize: 30}}>Cờ Caro</Text>
-            <View
+            <Text
               style={{
-                flexDirection: 'row',
-                flex: 1,
-                alignItems: 'center',
+                fontSize: 20,
+                marginRight: 15,
+                alignSelf: 'flex-end',
               }}>
-              <View style={{marginLeft: 10, flex: 1}}>
-                <Image
-                  source={require('../../assets/note.png')}
-                  style={{width: 30, height: 30, marginLeft: 5}}
-                />
-                <View style={{flexDirection: 'row', margin: 5}}>
-                  <Icon name="close" size={20} color="#F80606" />
-                  <Text>: {gamePlayer.player1.win}</Text>
-                </View>
-                <View style={{flexDirection: 'row', margin: 5}}>
-                  <Icon name="circle-outline" size={20} color="#0921D7" />
-                  <Text>: {gamePlayer.player2.win}</Text>
-                </View>
-              </View>
-              <View
-                style={{
-                  flex: 1,
-                }}>
-                <Text
-                  style={{
-                    fontSize: 20,
-                    marginRight: 15,
-                    alignSelf: 'flex-end',
-                  }}>
-                  {!winnerSymbol && `Turn: ${turn}`}
-                </Text>
-              </View>
-            </View>
-            <Text style={{fontSize: 28}}>{winnerSymbol}</Text>
+              {!winnerSymbol && `Turn: ${turn}`}
+            </Text>
           </View>
-          {genMap(gameState, (i, j) => {
-            if (theWinner || gameState[i][j]) {
-              return;
-            }
-            const newStage = update(gameState, {
-              [i]: {
-                [j]: {$set: turn},
-              },
-            });
-            nextTurn();
-            setGameState(newStage);
-            theWinner = Winner(newStage);
-            if (theWinner) {
-              setWinnerSymbol(`${theWinner} thắng!`);
-            } else if (!hasNulls(gameState)) {
-              setWinnerSymbol('Hòa');
-            }
-          })}
-          {showReset == true ? (
-            <TouchableOpacity
-              onPress={() => {
-                setGameState(gameMatrix);
-                setTurn(X_SYMBOL);
-                setWinnerSymbol(undefined);
-                theWinner = null;
-                setShowReset(false);
-              }}
-              style={{
-                borderRadius: 8,
-                marginVertical: 10,
-                borderWidth: 0.5,
-                marginTop: 30,
-              }}>
-              <Text
-                style={{
-                  fontSize: 28,
-                  // textTransform: 'uppercase',
-                  fontFamily: 'vincHand',
-                  padding: 10,
-                }}>
-                Chơi lại
-              </Text>
-            </TouchableOpacity>
-          ) : null}
-        </ImageBackground>
-      </SafeAreaView>
-    </>
+        </View>
+        <Text style={{fontSize: 28}}>{winnerSymbol}</Text>
+      </View>
+      {genMap(gameState, (i, j) => {
+        if (theWinner || gameState[i][j]) {
+          return;
+        }
+        const newStage = update(gameState, {
+          [i]: {
+            [j]: {$set: turn},
+          },
+        });
+        nextTurn();
+        setGameState(newStage);
+        theWinner = Winner(newStage);
+        if (theWinner) {
+          setWinnerSymbol(`${theWinner} thắng!`);
+        } else if (!hasNulls(gameState)) {
+          setWinnerSymbol('Hòa');
+        }
+      })}
+      {showReset == true ? (
+        <TouchableOpacity
+          onPress={() => {
+            setGameState(gameMatrix);
+            setTurn(X_SYMBOL);
+            setWinnerSymbol(undefined);
+            theWinner = null;
+            setShowReset(false);
+          }}
+          style={{
+            borderRadius: 8,
+            marginVertical: 10,
+            borderWidth: 0.5,
+            marginTop: 30,
+          }}>
+          <Text
+            style={{
+              fontSize: 28,
+              // textTransform: 'uppercase',
+              fontFamily: 'vincHand',
+              padding: 10,
+            }}>
+            Chơi lại
+          </Text>
+        </TouchableOpacity>
+      ) : null}
+    </ImageBackground>
   );
 };
 

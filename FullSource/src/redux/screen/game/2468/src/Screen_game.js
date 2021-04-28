@@ -14,7 +14,7 @@ import CustomColor from './CustomColor';
 const height = Dimensions.get('screen').height;
 const width = Dimensions.get('screen').width;
 
-const Screen_game_2468 = () => {
+const Screen_game_2468 = ({navigation}) => {
   const [action, setAction] = useState('none');
   const [score, setScore] = useState(0);
   const [heightScore, setHeightScore] = useState(0);
@@ -503,6 +503,11 @@ const Screen_game_2468 = () => {
           </View>
         </View>
         <View style={styles.button_playAgain}>
+          <TouchableOpacity
+            style={[styles.button_again, {alignSelf: 'flex-start'}]}
+            onPress={() => navigation.openDrawer()}>
+            <Text style={styles.title_button}>Menu</Text>
+          </TouchableOpacity>
           <TouchableOpacity style={styles.button_again} onPress={selectRandom}>
             <Text style={styles.title_button}>Chơi lại</Text>
           </TouchableOpacity>
@@ -686,6 +691,8 @@ const styles = StyleSheet.create({
     marginTop: 30,
     width: 0.9 * width,
     alignItems: 'flex-end',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   view_game: {
     zIndex: 100,
