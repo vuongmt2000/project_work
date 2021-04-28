@@ -440,8 +440,12 @@ const ListSE = ({navigation}) => {
                                       <Text style={{color: '#e3e30e'}}>
                                         Pending
                                       </Text>
-                                    ) : (
+                                    ) : item.place.statusOrder === 'Done' ? (
                                       <Text style={{color: 'green'}}>
+                                        {item.place.statusOrder}
+                                      </Text>
+                                    ) : (
+                                      <Text style={{color: '#b50000'}}>
                                         {item.place.statusOrder}
                                       </Text>
                                     )}
