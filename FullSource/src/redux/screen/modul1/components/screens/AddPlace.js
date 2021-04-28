@@ -140,7 +140,7 @@ function AddPlace(props) {
             <TouchableOpacity
             onPress={() => deleteItem(item)}
             style={{ }}>
-            <Feather name="x-circle" size={20}  />
+            <Feather name="x-circle" size={20} color = "#b50000" />
           </TouchableOpacity>
               </View>
             
@@ -158,8 +158,10 @@ function AddPlace(props) {
                 style={{
                   height: 40,
                   width: 60,
-                  borderRadius: 10,
+                  borderRadius: 2,
                   paddingLeft: 5,
+                  borderWidth:0.1,
+                  padding :0
                 }}
                 keyboardType="numeric"
                 onChangeText={text => changeDiscount(text, item)}
@@ -377,7 +379,7 @@ function AddPlace(props) {
             alignSelf: 'center',
             marginTop: 10,
           }}>
-          <Text style={{fontWeight: 'bold', fontSize: 20, color: 'red'}}>
+          <Text style={{fontWeight: 'bold', fontSize: 20, color: '#0542a3'}}>
             Tổng tiền : {sumPrice()} Đ
           </Text>
         </View>

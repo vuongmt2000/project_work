@@ -165,14 +165,17 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   salary_: {
-    flexDirection: 'row',
+    flexDirection: 'row'
+  },
+  salary_1: {
     justifyContent: 'center',
-    width: width * 0.9,
+    width: width * 0.95,
     alignSelf: 'center',
     marginTop: 30,
-    backgroundColor: '#d1d1d1',
+    elevation: 10,
     borderRadius: 5,
-    // alignItems : "center"
+    alignItems : "center",
+    justifyContent:"center"
   },
   txt_salary_: {
     fontSize: 20,

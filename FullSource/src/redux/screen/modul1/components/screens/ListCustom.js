@@ -55,6 +55,9 @@ function ListCustom(props, {navigation}) {
       return;
     }
   }
+  function onChangEdit(item){
+    props.navigation.navigate('EditCustom', {item: item});
+  }
 
   function changeAddCustom(navigation) {
     props.navigation.navigate('AddCustom');
@@ -71,15 +74,16 @@ function ListCustom(props, {navigation}) {
 
   const RenderItemListCustom = ({item}) => {
     return (
+      <View style ={{flex :1, flexDirection:"row", borderBottomWidth:0.5, borderBottomColor:"gray" , width: '95%',
+      alignSelf: 'center',}}>
       <TouchableOpacity
-        Style={{flex: 1}}
+        Style={{width:"90%", alignSelf:"center"}}
         onPress={() => onChangeScreenEdit(item)}>
         <View
           style={{
-            width: '95%',
-            alignSelf: 'center',
+           
             flexDirection: 'row',
-            borderBottomWidth:0.5, borderBottomColor:"gray",
+           
             borderRadius: 5,
             marginBottom: 10,
           }}>
@@ -96,7 +100,7 @@ function ListCustom(props, {navigation}) {
               source={{uri: item.image}}
             />
           </View>
-          <View style={{marginLeft: 10, justifyContent: 'center'}}>
+          <View style={{marginLeft: 10, justifyContent: 'center', width:"55%"}}>
             <Text style={{fontSize: 18}}>{item.name}</Text>
             <Text style={{marginTop: 5, color:"gray"}}>SĐT: {item.phone}</Text>
             <Text style={{marginTop: 5, color:"gray"}}>
@@ -104,7 +108,12 @@ function ListCustom(props, {navigation}) {
             </Text>
           </View>
         </View>
+      </TouchableOpacity >
+      <TouchableOpacity onPress={() => onChangEdit(item)}
+      style ={{justifyContent:"center", alignItems:"center"}}>
+          <Feather name ="edit-3" size ={24}/>
       </TouchableOpacity>
+      </View>
     );
   };
 

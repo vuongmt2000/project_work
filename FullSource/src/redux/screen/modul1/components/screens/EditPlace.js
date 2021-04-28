@@ -9,11 +9,13 @@ import {
   RefreshControl,
 } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
+import Icon from 'react-native-vector-icons/Foundation';
 import {useDispatch} from 'react-redux';
 import ImagePicker from 'react-native-image-crop-picker';
 import {deletePlaceAction, updatePlaceAction} from '../../../../actions/index';
 import {Input} from 'react-native-elements';
 import Moment from 'moment';
+import { duration } from 'moment';
 
 const dataListState = [
   {id:1, title: "New"},
@@ -85,7 +87,7 @@ function EditPlace(props) {
 
 
   function onBack() {
-    props.navigation.navigate("Home")
+    props.navigation.goBack();
   }
 
   // price
@@ -144,7 +146,7 @@ function EditPlace(props) {
       dispatch(updatePlaceAction(a));
       setRefreshing(true);
       setTimeout(() => {
-        props.navigation.navigate('Home');
+        props.navigation.goBack();
         setRefreshing(false);
       }, 2000);
     } else {
@@ -194,7 +196,7 @@ function EditPlace(props) {
             <TouchableOpacity
             onPress={() => deleteItem(item)}
             style={{ }}>
-            <Feather name="x-circle" size={20}  />
+            <Feather name="x-circle" size={20} color ="#b50000" />
           </TouchableOpacity>
               </View>
             
@@ -297,12 +299,48 @@ function EditPlace(props) {
     setStatusPlace(item.title);
     setShowListState(false);
   }
+  function iconList(id){
+    switch(id){
+      case 1: return(
+        <Icon name="burst-new" color="red" size={24} />
+      );
+      case 2 : return(
+        <Icon name="check" color="gray" size={24} />
+      )
+      case 3 : return(
+        <Icon name="x" color="gray" size={24} />
+      )
+      default: return(
+        <Icon name="burst-new" color="red" size={24} />
+      )
+    }
+  }
   const RenderItemStatus = ({item})=>{
     return (
-      <TouchableOpacity onPress={()=> setStatusPlace_(item) }
-      style ={{height: 20, width:"100%", alignItems: "center", justifyContent:"center", marginTop:10,
-       borderBottomWidth: 0.5, width:"95%", alignSelf:"center", borderBottomColor:"gray"}}>
-       <Text>{item.title}</Text>
+      <TouchableOpacity
+      onPress={()=>setStatusPlace_(item) }
+       style={{
+         width: '95%',
+         alignSelf: 'center',
+         flexDirection: 'row',
+         borderColor: 'gray'
+       }}>
+       <View
+         style={{
+           width: '10%',
+           justifyContent: 'center',
+           alignItems: 'center',
+         }}>
+           {iconList(item.id)}
+       </View>
+       <View style ={{alignItems: "center", justifyContent: 'center', height:40}}>
+       <Text
+         style={{
+          
+         }}>{item.title}</Text>  
+       </View>
+
+      
      </TouchableOpacity>
     )
   }
@@ -417,7 +455,7 @@ function EditPlace(props) {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <Feather name="file-text" color="blue" size={24} />
+            <Feather name="file-text" color="gray" size={24} />
           </View>
           <TextInput
             placeholder="Ghi chú"
@@ -446,7 +484,7 @@ function EditPlace(props) {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <Feather name="star" color="blue" size={24} />
+            <Feather name="star" color="gray" size={24} />
           </View>
           <View style ={{alignItems: "center", justifyContent: 'center', height:50}}>
           <Text
@@ -463,7 +501,7 @@ function EditPlace(props) {
             )):<View/>}
             </ScrollView>
         <View style={{flexDirection: 'row', marginLeft: '5%', marginTop: 20}}>
-          <Text style={{fontWeight: 'bold', fontSize: 20, color: 'red'}}>
+          <Text style={{fontWeight: 'bold', fontSize: 20, color: '#0542a3'}}>
             Tổng tiền : {sumPrice()} đ
           </Text>
         </View>

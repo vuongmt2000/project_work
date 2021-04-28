@@ -49,14 +49,20 @@ function EditCustom(props) {
   }
 
   function updateCustomer(name, phone, address, image, note, id) {
-    console.log('run update');
-    let obj = {id, name, phone, address, image, note};
-    dispatch(updateCustomAction(obj));
-    setRefreshing(true);
-    setTimeout(() => {
-      setRefreshing(false)
-      props.navigation.goBack();
-    }, 1000);
+    if(name && phone.match( /(84|0[3|5|7|8|9])+([0-9]{8})\b/g)){
+      console.log('run update');
+      let obj = {id, name, phone, address, image, note};
+      dispatch(updateCustomAction(obj));
+      setRefreshing(true);
+      setTimeout(() => {
+        setRefreshing(false)
+        props.navigation.goBack();
+      }, 1000);
+    }
+    else{
+      alert("kiểm tra tên với sđt :>");
+    }
+
   }
 
   return (
@@ -98,9 +104,8 @@ function EditCustom(props) {
             }}
             source={{uri: image}}
           />
-          <View style={{flexDirection: 'row', marginTop: 5}}>
+          <View style={{position :"absolute", marginLeft:"68%"}}>
             <Feather name="edit-3" color="black" size={24} />
-            <Text style={{alignItems: 'flex-end', marginLeft: 5}}>Edit</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -120,7 +125,7 @@ function EditCustom(props) {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Feather name="user" color="blue" size={24} />
+          <Feather name="user" color="gray" size={24} />
         </View>
         <TextInput
           value={fullName}
@@ -128,6 +133,7 @@ function EditCustom(props) {
           style={{
             height: 50,
             width: '100%',
+            fontSize: 18
           }}
         />
       </View>
@@ -147,7 +153,7 @@ function EditCustom(props) {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Feather name="phone" color="blue" size={24} />
+          <Feather name="phone" color="gray" size={24} />
         </View>
         <TextInput
           keyboardType="numeric"
@@ -156,6 +162,7 @@ function EditCustom(props) {
           style={{
             height: 50,
             width: '100%',
+            fontSize: 18
           }}
         />
       </View>
@@ -175,7 +182,7 @@ function EditCustom(props) {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Feather name="map-pin" color="blue" size={24} />
+          <Feather name="map-pin" color="gray" size={24} />
         </View>
         <TextInput
           value={address}
@@ -183,6 +190,7 @@ function EditCustom(props) {
           style={{
             height: 50,
             width: '100%',
+            fontSize: 18
           }}
         />
       </View>
@@ -202,7 +210,7 @@ function EditCustom(props) {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Feather name="file-text" color="blue" size={24} />
+          <Feather name="file-text" color="gray" size={24} />
         </View>
         <TextInput
           value={note}
@@ -210,6 +218,7 @@ function EditCustom(props) {
           style={{
             height: 50,
             width: '100%',
+            fontSize: 18
           }}
         />
       </View>

@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 import {View, Text, ScrollView, FlatList} from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import Feather from 'react-native-vector-icons/Feather';
 import styles from './Styles';
 
 function GrossToNet({navigation, route}) {
@@ -203,7 +205,7 @@ function GrossToNet({navigation, route}) {
   const renderItem = ({item}) => (
     <View style={styles.view_flat}>
       <Text style={styles.item_txt}>{item.title}</Text>
-      <Text>{item.value}</Text>
+      <Text>{item.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Text>
     </View>
   );
 
@@ -213,36 +215,46 @@ function GrossToNet({navigation, route}) {
         <Text style = {styles.item_txt}>{item.title}</Text>
       </View>
       <View style={styles.item_txt1}>
-        <Text >{item.tax}</Text>
+        <Text >{item.tax.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Text>
       </View>
       <View style={styles.item_txt2}>
-        <Text>{item.value}</Text>
+        <Text>{item.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Text>
       </View>
     </View>
   );
 
   return (
     <ScrollView style={styles.container} nestedScrollEnabled={true}>
+      <View style ={{width:"90%", alignSelf:"center", marginTop:20, flexDirection:"row"}}>
+        <TouchableOpacity onPress = {()=>navigation.goBack()}>
+          <Feather name = "arrow-left" size ={26}/>
+        </TouchableOpacity>
+
+        <Text style ={{fontSize:20, flexGrow:1, textAlign: 'center'}}>Bảng lương chi tiết</Text>
+      </View>
       {/* view xem luong  */}
+      <View  style={styles.salary_1}>
       <View style={styles.salary_}>
         <View style={styles.header_salary1}>
           <Text style={styles.txt_salary_}>Lương Gross</Text>
-          <Text style={styles.txt_money}>{salary}</Text>
+          <Text style={styles.txt_money}>{salary.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Text>
         </View>
         <View style={styles.header_salary}>
           <Text style={styles.txt_salary_}>Bảo hiểm</Text>
-          <Text style={styles.txt_money}>- {bao_hiem}</Text>
+          <Text style={styles.txt_money}>- {bao_hiem.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Text>
         </View>
-      </View>
+        </View>
+
       <View style={styles.salary_}>
         <View style={styles.header_salary1}>
           <Text style={styles.txt_salary_}>Thuế TNCN</Text>
-          <Text style={styles.txt_money}>-{thue_thu_nhap_ca_nhan}</Text>
+          <Text style={styles.txt_money}>-{thue_thu_nhap_ca_nhan.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Text>
         </View>
         <View style={styles.header_salary}>
           <Text style={styles.txt_salary_}> Lương Net</Text>
-          <Text style={styles.txt_money}>{net}</Text>
+          <Text style={styles.txt_money}>{net.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Text>
         </View>
+      </View>
       </View>
 
       {/* đơn giá chi tiết */}

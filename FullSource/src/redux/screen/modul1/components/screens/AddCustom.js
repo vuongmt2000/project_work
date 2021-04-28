@@ -29,7 +29,7 @@ function AddCustom(props) {
   }
 
   function onAdd(name, phone, address, image, note) {
-    if (name.length > 0 && phone.length > 0 && address.length > 0) {
+    if (name.length > 0 && phone.match( /(84|0[3|5|7|8|9])+([0-9]{8})\b/g) && address.length > 0) {
       setCheck(false);
       let newCustom = {name, phone, address, image, note, stateCustomer:1};
       dispatch(addCustomAction(newCustom));
@@ -92,6 +92,9 @@ function AddCustom(props) {
       <View
         style={{width: '90%', height: 230, marginTop: 10, alignSelf: 'center'}}>
         <TouchableOpacity onPress={editImage}>
+        <View style={{position:"absolute", marginLeft:"68%"}}>
+            <Feather name="edit-3" color="black" size={24} />
+          </View>
           <Image
             style={{
               width: 200,
@@ -101,10 +104,7 @@ function AddCustom(props) {
             }}
             source={{uri: image}}
           />
-          <View style={{flexDirection: 'row', marginTop: 5}}>
-            <Feather name="edit-3" color="black" size={24} />
-            <Text style={{alignItems: 'flex-end', marginLeft: 5}}>Edit</Text>
-          </View>
+         
         </TouchableOpacity>
       </View>
       <View
@@ -123,7 +123,7 @@ function AddCustom(props) {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Feather name="user" color="blue" size={24} />
+          <Feather name="user" color="gray" size={24} />
         </View>
         <TextInput
           placeholder="Họ tên"
@@ -132,6 +132,7 @@ function AddCustom(props) {
           style={{
             height: 50,
             width: '100%',
+            fontSize : 18
           }}
         />
       </View>
@@ -151,7 +152,7 @@ function AddCustom(props) {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Feather name="phone" color="blue" size={24} />
+          <Feather name="phone" color="gray" size={24} />
         </View>
         <TextInput
           placeholder="Số điện thoại"
@@ -161,6 +162,7 @@ function AddCustom(props) {
           style={{
             height: 50,
             width: '100%',
+            fontSize : 18
           }}
         />
       </View>
@@ -180,7 +182,7 @@ function AddCustom(props) {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Feather name="map-pin" color="blue" size={24} />
+          <Feather name="map-pin" color="gray" size={24} />
         </View>
         <TextInput
           placeholder="Địa chỉ"
@@ -189,6 +191,7 @@ function AddCustom(props) {
           style={{
             height: 50,
             width: '100%',
+            fontSize : 18
           }}
         />
       </View>
@@ -208,7 +211,7 @@ function AddCustom(props) {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Feather name="file-text" color="blue" size={24} />
+          <Feather name="file-text" color="gray" size={24} />
         </View>
         <TextInput
           placeholder="Ghi chú"
@@ -217,6 +220,7 @@ function AddCustom(props) {
           style={{
             height: 50,
             width: '100%',
+            fontSize : 18
           }}
         />
       </View>
