@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import Feather from 'react-native-vector-icons/Feather';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import ImagePicker from 'react-native-image-crop-picker';
 import {
   updateProductAction,
@@ -59,14 +60,26 @@ function EditProduct(props) {
     noteProduct,
     id,
   ) {
-    console.log('run update Product');
-    let obj = {id, nameProduct, valueProduct, imageProduct, noteProduct};
-    dispatch(updateProductAction(obj));
-    setRefreshing(true)
-    setTimeout(() => {
-      props.navigation.goBack();
-      setRefreshing(false)
-    }, 1000);
+    if (nameProduct && valueProduct) {
+      console.log('run update Product');
+      let obj = {id, nameProduct, valueProduct, imageProduct, noteProduct};
+      dispatch(updateProductAction(obj));
+      setRefreshing(true)
+      setTimeout(() => {
+        props.navigation.goBack();
+        setRefreshing(false)
+      }, 1000);
+    }
+   else {
+     alert("xen lại thông tin tên và giá :>")
+   }
+  }
+  function onChangeTextValue(text) {
+    if (text) {
+      setValueProduct(parseInt(text.replace(/\,/g, '')));
+    } else {
+      setValueProduct(0);
+    }
   }
 
   return (
@@ -106,9 +119,8 @@ function EditProduct(props) {
             }}
             source={{uri: imageProduct}}
           />
-          <View style={{flexDirection: 'row', marginTop: 5}}>
+          <View style={{position:"absolute", marginLeft:"81%"}}>
             <Feather name="edit-3" color="black" size={24} />
-            <Text style={{alignItems: 'flex-end', marginLeft: 5}}>Edit</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -128,7 +140,7 @@ function EditProduct(props) {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Feather name="user" color="blue" size={24} />
+          <Feather name="user" color="gray" size={24} />
         </View>
         <TextInput
           value={nameProduct}
@@ -136,6 +148,7 @@ function EditProduct(props) {
           style={{
             height: 50,
             width: '100%',
+            fontSize:18
           }}
         />
       </View>
@@ -154,16 +167,20 @@ function EditProduct(props) {
             width: '10%',
             justifyContent: 'center',
             alignItems: 'center',
+            fontSize:18
           }}>
-          <Feather name="phone" color="blue" size={24} />
+          <Icon name="money" color="gray" size={24} />
         </View>
         <TextInput
           keyboardType="numeric"
-          value={valueProduct}
-          onChangeText={setValueProduct}
+          value={valueProduct.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+          onChangeText={text => {
+            onChangeTextValue(text);
+          }}
           style={{
             height: 50,
             width: '100%',
+            fontSize:18
           }}
         />
       </View>
@@ -183,7 +200,7 @@ function EditProduct(props) {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Feather name="map-pin" color="blue" size={24} />
+          <Feather name="map-pin" color="gray" size={24} />
         </View>
         <TextInput
           value={noteProduct}
@@ -191,6 +208,7 @@ function EditProduct(props) {
           style={{
             height: 50,
             width: '100%',
+            fontSize:18
           }}
         />
       </View>

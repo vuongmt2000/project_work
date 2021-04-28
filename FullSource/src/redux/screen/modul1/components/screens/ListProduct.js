@@ -61,6 +61,9 @@ function ListProduct(props) {
       props.navigation.navigate('EditProduct', {item: item});
     }
   }
+  function  onChangEdit(item){
+    props.navigation.navigate('EditProduct', {item: item});
+  }
 
   function setName_Product() {
     setNameProduct(input_name);
@@ -82,18 +85,16 @@ function ListProduct(props) {
 
   const RenderItemListProduct = ({item}) => {
     return (
+      <View  style={{flexDirection: 'row',width: '95%',alignSelf:"center",
+      borderBottomWidth:0.5, borderBottomColor:"gray"}}>
       <TouchableOpacity
-        Style={{flex: 1}}
+       
         onPress={() => onChangeScreenEdit(item)}>
         <View
           style={{
-            width: '95%',
+            // width: '95%',
             alignSelf: 'center',
             flexDirection: 'row',
-            borderBottomWidth:0.5, borderBottomColor:"gray",
-            marginTop: 10,
-            borderRadius: 5,
-            marginBottom: 10,
           }}>
           <View
             style={{
@@ -109,7 +110,7 @@ function ListProduct(props) {
             />
           </View>
           <View
-            style={{marginLeft: 10, justifyContent: 'center', width: '60%'}}>
+            style={{marginLeft: 10, justifyContent: 'center', width: '55%'}}>
             <Text style={{fontSize: 18}}>
               Tên Sp: {item.nameProduct}
             </Text>
@@ -126,6 +127,11 @@ function ListProduct(props) {
           </View>
         </View>
       </TouchableOpacity>
+      <TouchableOpacity onPress={() => onChangEdit(item)}
+      style ={{justifyContent:"center", alignItems:"center"}}>
+          <Feather name ="edit-3" size ={24}/>
+      </TouchableOpacity>
+      </View>
     );
   };
   return (

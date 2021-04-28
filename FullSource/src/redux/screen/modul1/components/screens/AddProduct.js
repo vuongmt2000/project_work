@@ -44,7 +44,7 @@ function AddProduct(props) {
         );
         setNoteProduct('');
         setRefreshing(false);
-        props.navigation.navigate("Sản phẩm");
+        props.navigation.goBack();
       }, 2000);
     } else {
       setCheck(true);
@@ -111,9 +111,8 @@ function AddProduct(props) {
             }}
             source={{uri: imageProduct}}
           />
-          <View style={{flexDirection: 'row', marginTop: 5}}>
+          <View style={{position:"absolute", marginLeft:"81%"}}>
             <Feather name="edit-3" color="black" size={24} />
-            <Text style={{alignItems: 'flex-end', marginLeft: 5}}>Edit</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -133,7 +132,7 @@ function AddProduct(props) {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Feather name="user" color="#b50000" size={24} />
+          <Feather name="user" color="gray" size={24} />
         </View>
         <TextInput
           placeholder="Tên sản phẩm"
@@ -142,6 +141,7 @@ function AddProduct(props) {
           style={{
             height: 50,
             width: '100%',
+            fontSize:18
           }}
         />
       </View>
@@ -161,7 +161,7 @@ function AddProduct(props) {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Icon name="money" color="#b50000" size={24} />
+          <Icon name="money" color="gray" size={24} />
         </View>
         <TextInput
           value={valueProduct.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
@@ -172,6 +172,7 @@ function AddProduct(props) {
           style={{
             height: 50,
             width: '100%',
+            fontSize:18
           }}
         />
       </View>
@@ -191,7 +192,7 @@ function AddProduct(props) {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Feather name="file-text" color="#b50000" size={24} />
+          <Feather name="file-text" color="gray" size={24} />
         </View>
         <TextInput
           placeholder="Ghi chú"
@@ -200,6 +201,7 @@ function AddProduct(props) {
           style={{
             height: 50,
             width: '100%',
+            fontSize:18
           }}
         />
       </View>
