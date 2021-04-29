@@ -26,7 +26,6 @@ const foteDate = a => {
     return '0' + a;
   } else return a;
 };
-var date = new Date();
 
 const storeData = async (value, key) => {
   try {
@@ -50,6 +49,18 @@ const getData = async key => {
   }
 };
 
+const mergeData = (data, dataPlace) => {
+  for (let i = 0; i < dataPlace?.length; i++) {
+    dataPlace[i] = {
+      ...dataPlace[i],
+      dateTime: `${moment(dataPlace[i].place.timeOrder).format(
+        'DD/MM/yyyy hh:mm:ss',
+      )}`,
+    };
+  }
+  return data?.concat(dataPlace);
+};
+
 const HomeTodo = ({navigation}) => {
   const [todoItems, setTodoItems] = useState([]);
   const itemE = useRef({});
@@ -58,6 +69,7 @@ const HomeTodo = ({navigation}) => {
   const dispatch = useDispatch();
   const [showSwitch, setShowSwitch] = useState(false);
   const dataPlace = useSelector(state => state.HomeReducer.dataPlace);
+  const [dataMerge, setDataMerge] = useState([]);
 
   dataPlace
     .sort((a, b) => {
@@ -81,6 +93,24 @@ const HomeTodo = ({navigation}) => {
     dispatch(Action.fetchPlaceAction());
   }, []);
 
+  useEffect(() => {
+    let dataMerge = mergeData(todoItems, dataPlace);
+    dataMerge
+      .sort((a, b) => {
+        if (a.dateTime < b.dateTime) {
+          return -1;
+        }
+        if (a.dateTime > b.dateTime) {
+          return 1;
+        }
+        return 0;
+      })
+      .reverse();
+    setDataMerge(dataMerge);
+  }, [todoItems, dataPlace]);
+
+  console.log('dataMerge :>> ', dataMerge);
+
   // Add a new item to the state
   function addTodoItem(_text) {
     let date = new Date();
@@ -89,12 +119,10 @@ const HomeTodo = ({navigation}) => {
       {
         text: _text,
         completed: false,
-        dateTime: `${foteDate(date.getDate())}/${foteDate(
-          date.getMonth() + 1,
-        )}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`,
+        dateTime: `${moment(date).format('DD/MM/yyyy hh:mm:ss')}`,
       },
     ];
-    setTodoItems(temp.reverse());
+    setTodoItems(temp);
   }
 
   // Delete an item from state by index
@@ -106,9 +134,15 @@ const HomeTodo = ({navigation}) => {
 
   // Function to set completed to true by index.
   function completeTodoItem(_index) {
-    let tempArr = [...todoItems];
-    tempArr[_index].completed = true;
-    setTodoItems(tempArr);
+    if (todoItems[_index].completed === true) {
+      let tempArr = [...todoItems];
+      tempArr[_index].completed = false;
+      setTodoItems(tempArr);
+    } else {
+      let tempArr = [...todoItems];
+      tempArr[_index].completed = true;
+      setTodoItems(tempArr);
+    }
   }
   // edit item
   const editTodoItem = _index => {
@@ -120,7 +154,7 @@ const HomeTodo = ({navigation}) => {
 
   // Render
 
-  console.log('dataPlace :>> ', dataPlace);
+  //console.log('dataPlace :>> ', dataPlace);
 
   return (
     <>
@@ -165,14 +199,70 @@ const HomeTodo = ({navigation}) => {
         </View>
         {showSwitch === false ? (
           <FlatList
-            data={todoItems}
+            data={dataMerge}
             keyExtractor={(item, index) =>
               index.toString() + Math.random() * 10
             }
             renderItem={({item, index}) => {
-              return (
+              return item?.custom ? (
                 <TouchableOpacity
-                  onPress={() => completeTodoItem(index)}
+                  onPress={() =>
+                    navigation.navigate('Sale', {
+                      screen: 'EditPlace',
+                      params: {
+                        item: item,
+                      },
+                    })
+                  }
+                  style={{
+                    paddingVertical: 8,
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                  }}>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'flex-start',
+                      alignItems: 'center',
+                      flex: 10,
+                    }}>
+                    <IconF name="pencil-square-o" size={30} color="#b50000" />
+                    <View style={{marginLeft: 10, marginRight: 20}}>
+                      <Text style={{color: 'gray'}}>
+                        {moment(new Date(item?.place.timeOrder)).format(
+                          'DD/MM/yyyy hh:mm:ss',
+                        )}
+                      </Text>
+                      <Text
+                        style={[
+                          {fontSize: 18},
+                          item.place.statusOrder === 'Done'
+                            ? {
+                                textDecorationLine: 'line-through',
+                              }
+                            : {
+                                textDecorationLine: 'none',
+                              },
+                        ]}>
+                        Đơn hàng của {item.custom?.name}
+                      </Text>
+                    </View>
+                  </View>
+                  <View style={{alignItems: 'center'}}>
+                    <IconFe name="box" size={30} color="#b50000" />
+                  </View>
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity
+                  onPress={() => {
+                    let indexF = todoItems
+                      .map(e => {
+                        return e.dateTime;
+                      })
+                      .indexOf(item.dateTime);
+                    completeTodoItem(indexF);
+                  }}
                   style={{
                     paddingVertical: 8,
                     flexDirection: 'row',
@@ -191,7 +281,7 @@ const HomeTodo = ({navigation}) => {
                     }}>
                     <IconF name="pencil-square-o" size={30} color="#b50000" />
                     <View style={{marginLeft: 10, marginRight: 20}}>
-                      <Text>{item.dateTime}</Text>
+                      <Text style={{color: 'gray'}}>{item.dateTime}</Text>
                       <Text
                         style={[
                           {fontSize: 18},
@@ -215,7 +305,10 @@ const HomeTodo = ({navigation}) => {
                       flex: 1,
                       marginLeft: 5,
                     }}
-                    onPress={() => deleteTodoItem(index)}>
+                    onPress={() => {
+                      let indexF = todoItems.findIndex(() => item.dateTime);
+                      deleteTodoItem(indexF);
+                    }}>
                     <Icon name="trash" size={30} color="#b50000" />
                   </TouchableOpacity>
                 </TouchableOpacity>
@@ -256,7 +349,7 @@ const HomeTodo = ({navigation}) => {
                     <View style={{marginLeft: 10, marginRight: 20}}>
                       <Text style={{color: 'gray'}}>
                         {moment(new Date(item?.place.timeOrder)).format(
-                          'DD/MM/yyyy',
+                          'DD/MM/yyyy hh:mm:ss',
                         )}
                       </Text>
                       <Text

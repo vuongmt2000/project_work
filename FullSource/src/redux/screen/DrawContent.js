@@ -113,16 +113,21 @@ const DrawContent = ({props, navigation}) => {
       }
       showsVerticalScrollIndicator={false}
       style={{flex: 1, padding: 5}}>
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <IconM
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
+        {/* <IconM
           name="category"
           size={30}
           color="#b50000"
           style={{marginLeft: 30}}
-        />
+        /> */}
         <Text
           style={{
-            fontSize: 30,
+            fontSize: 38,
             textAlign: 'center',
             width: '60%',
           }}>
@@ -167,13 +172,13 @@ const DrawContent = ({props, navigation}) => {
       )}
       <View>
         <DrawerItem
-          label="Quản lí đơn hàng"
+          label="Đơn hàng"
           onPress={() => navigation.navigate('Sale')}
           labelStyle={{fontSize: 20, color: 'black'}}
           icon={() => <IconFe name="box" size={22} color="#b50000" />}
         />
         <DrawerItem
-          label="Quản lí chi thu"
+          label="Thu chi"
           onPress={() => navigation.navigate('Side')}
           labelStyle={{fontSize: 20, color: 'black'}}
           icon={() => (
@@ -181,7 +186,7 @@ const DrawContent = ({props, navigation}) => {
           )}
         />
         <DrawerItem
-          label="Quản lí công việc"
+          label="Công việc"
           onPress={() => navigation.navigate('HomeTodo')}
           labelStyle={{fontSize: 20, color: 'black'}}
           icon={() => (
@@ -247,7 +252,7 @@ const DrawContent = ({props, navigation}) => {
         {showTool === true ? (
           <View style={{marginLeft: 5}}>
             <DrawerItem
-              label="Xem thời tiết"
+              label="Thời tiết"
               labelStyle={{fontSize: 15}}
               onPress={() => navigation.navigate('WeatherFocast')}
               icon={() => (
