@@ -51,6 +51,15 @@ function OverView(props) {
   function changeEdit(item) {
     props.navigation.navigate('EditPlace', {item: item});
   }
+  function sumPrice(item) {
+    let tong = 0;
+    for (let k = 0; k < item.length; k++) {
+      tong += Math.floor(
+        (1 - item[k].discount / 100) * item[k].valueProduct * item[k].quantity,
+      );
+    }
+    return tong.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }
   const RenderItem = ({item}) => {
     return (
       <TouchableOpacity
@@ -58,13 +67,15 @@ function OverView(props) {
         style={{
           width: '95%',
           alignSelf: 'center',
-          height: 50,
+          height: 30,
           borderBottomWidth:0.5, borderBottomColor:"gray",
-          justifyContent: 'center',
+          justifyContent: 'space-between',
           borderRadius: 5,
-          marginBottom: 5,
+          marginBottom: 10,
+          flexDirection:"row"
         }}>
-        <Text style={{fontSize: 18}}> Đơn hàng của: {item.custom?.name}</Text>
+        <Text style={{fontSize: 18}}>{item.custom?.name}</Text>
+        <Text>{sumPrice(item.Place_Product)}</Text>
       </TouchableOpacity>
     );
   };

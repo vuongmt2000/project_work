@@ -7,6 +7,7 @@ import {
   updateCustomAction,
   deleteCustomAction,
 } from '../../../../actions/index';
+import {Input} from 'react-native-elements'
 function EditCustom(props) {
   const item = props.route.params?.item;
   const [fullName, setFullName] = useState(item.name);
@@ -109,119 +110,42 @@ function EditCustom(props) {
           </View>
         </TouchableOpacity>
       </View>
-      <View
-        style={{
-          width: '90%',
-          alignSelf: 'center',
-          flexDirection: 'row',
-          borderRadius: 5,
-          borderWidth: 1,
-          borderColor: 'gray',
-          marginTop: 10,
-        }}>
-        <View
-          style={{
-            width: '10%',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Feather name="user" color="gray" size={24} />
-        </View>
-        <TextInput
-          value={fullName}
-          onChangeText={setFullName}
-          style={{
-            height: 50,
-            width: '100%',
-            fontSize: 18
-          }}
-        />
-      </View>
-      <View
-        style={{
-          width: '90%',
-          alignSelf: 'center',
-          flexDirection: 'row',
-          borderRadius: 5,
-          borderWidth: 1,
-          borderColor: 'gray',
-          marginTop: 10,
-        }}>
-        <View
-          style={{
-            width: '10%',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Feather name="phone" color="gray" size={24} />
-        </View>
-        <TextInput
-          keyboardType="numeric"
-          value={phone}
-          onChangeText={setPhone}
-          style={{
-            height: 50,
-            width: '100%',
-            fontSize: 18
-          }}
-        />
-      </View>
-      <View
-        style={{
-          width: '90%',
-          alignSelf: 'center',
-          flexDirection: 'row',
-          borderRadius: 5,
-          borderWidth: 1,
-          borderColor: 'gray',
-          marginTop: 10,
-        }}>
-        <View
-          style={{
-            width: '10%',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Feather name="map-pin" color="gray" size={24} />
-        </View>
-        <TextInput
-          value={address}
-          onChangeText={setAddress}
-          style={{
-            height: 50,
-            width: '100%',
-            fontSize: 18
-          }}
-        />
-      </View>
-      <View
-        style={{
-          width: '90%',
-          alignSelf: 'center',
-          flexDirection: 'row',
-          borderRadius: 5,
-          borderWidth: 1,
-          borderColor: 'gray',
-          marginTop: 10,
-        }}>
-        <View
-          style={{
-            width: '10%',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Feather name="file-text" color="gray" size={24} />
-        </View>
-        <TextInput
-          value={note}
-          onChangeText={setNote}
-          style={{
-            height: 50,
-            width: '100%',
-            fontSize: 18
-          }}
-        />
-      </View>
+      <Input
+       containerStyle ={{ height:90}}
+           leftIcon={<Feather name="user" size={24} color="gray" style ={{marginLeft:2}} />}
+            inputContainerStyle={{borderWidth: 1, marginTop:5, borderRadius:5}}
+          label = "Họ tên"
+            placeholder="Họ tên "
+            value={fullName}
+            onChangeText={setFullName}
+          />
+           <Input
+           containerStyle ={{ height:90}}
+           leftIcon={<Feather name="phone" size={24} color="gray" style ={{marginLeft:2}} />}
+            inputContainerStyle={{borderWidth: 1, marginTop:5, borderRadius:5}}
+            keyboardType ="numeric"
+          label = "SĐT"
+            placeholder="Số điện thoại"
+            value={phone}
+            onChangeText={setPhone}
+          />
+          <Input
+          containerStyle ={{ height:90}}
+           leftIcon={<Feather name="map-pin" size={24} color="gray" style ={{marginLeft:2}} />}
+            inputContainerStyle={{borderWidth: 1, marginTop:5, borderRadius:5}}
+          label = "Địa chỉ"
+            placeholder="Địa chỉ"
+            value={address}
+            onChangeText={setAddress}
+          />
+          <Input
+           leftIcon={<Feather name="file-text" size={24} color="gray" style ={{marginLeft:2}} />}
+            inputContainerStyle={{borderWidth: 1, marginTop:5, borderRadius:5}}
+          label = "Ghi chú"
+            placeholder="Ghi chú"
+            value={note}
+            onChangeText={setNote}
+          />
 
       <View
         style={{

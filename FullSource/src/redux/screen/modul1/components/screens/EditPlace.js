@@ -439,34 +439,15 @@ function EditPlace(props) {
         {dataProduct?.map((item, index) => (
           <RenderItemProduct item={item} key={index} />
         ))}
-        <View
-          style={{
-            width: '95%',
-            alignSelf: 'center',
-            flexDirection: 'row',
-            borderRadius: 5,
-            borderWidth: 1,
-            borderColor: 'gray',
-            marginTop: 10,
-          }}>
-          <View
-            style={{
-              width: '10%',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <Feather name="file-text" color="gray" size={24} />
-          </View>
-          <TextInput
+            <Input
+            containerStyle={{height:90}}
+           leftIcon={<Feather name="file-text" size={24} color="gray" style ={{marginLeft:2}} />}
+            inputContainerStyle={{borderWidth: 1, marginTop:5, borderRadius:5}}
+          label = "Ghi chú"
             placeholder="Ghi chú"
             value={notePlace}
             onChangeText={setNotePlace}
-            style={{
-             
-              width: '100%',
-            }}
           />
-        </View>
         <TouchableOpacity
          onPress={ onShowStatus}
           style={{
