@@ -4,10 +4,11 @@ import {
   View,
   Text,
   Image,
-  TextInput,
   ScrollView,
   RefreshControl,
+  TextInput
 } from 'react-native';
+import {Input} from 'react-native-elements'
 import Feather from 'react-native-vector-icons/Feather';
 import {useDispatch} from 'react-redux';
 import ImagePicker from 'react-native-image-crop-picker';
@@ -107,125 +108,44 @@ function AddCustom(props) {
          
         </TouchableOpacity>
       </View>
-      <View
-        style={{
-          width: '90%',
-          alignSelf: 'center',
-          flexDirection: 'row',
-          borderRadius: 5,
-          borderWidth: 1,
-          borderColor: 'gray',
-          marginTop: 10,
-        }}>
-        <View
-          style={{
-            width: '10%',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Feather name="user" color="gray" size={24} />
-        </View>
-        <TextInput
-          placeholder="Họ tên"
-          value={fullName}
-          onChangeText={setFullName}
-          style={{
-            height: 50,
-            width: '100%',
-            fontSize : 18
-          }}
-        />
-      </View>
-      <View
-        style={{
-          width: '90%',
-          alignSelf: 'center',
-          flexDirection: 'row',
-          borderRadius: 5,
-          borderWidth: 1,
-          borderColor: 'gray',
-          marginTop: 10,
-        }}>
-        <View
-          style={{
-            width: '10%',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Feather name="phone" color="gray" size={24} />
-        </View>
-        <TextInput
-          placeholder="Số điện thoại"
-          value={phone}
-          keyboardType="numeric"
-          onChangeText={setPhone}
-          style={{
-            height: 50,
-            width: '100%',
-            fontSize : 18
-          }}
-        />
-      </View>
-      <View
-        style={{
-          width: '90%',
-          alignSelf: 'center',
-          flexDirection: 'row',
-          borderRadius: 5,
-          borderWidth: 1,
-          borderColor: 'gray',
-          marginTop: 10,
-        }}>
-        <View
-          style={{
-            width: '10%',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Feather name="map-pin" color="gray" size={24} />
-        </View>
-        <TextInput
-          placeholder="Địa chỉ"
-          value={address}
-          onChangeText={setAddress}
-          style={{
-            height: 50,
-            width: '100%',
-            fontSize : 18
-          }}
-        />
-      </View>
-      <View
-        style={{
-          width: '90%',
-          alignSelf: 'center',
-          flexDirection: 'row',
-          borderRadius: 5,
-          borderWidth: 1,
-          borderColor: 'gray',
-          marginTop: 10,
-        }}>
-        <View
-          style={{
-            width: '10%',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Feather name="file-text" color="gray" size={24} />
-        </View>
-        <TextInput
-          placeholder="Ghi chú"
-          value={note}
-          onChangeText={setNote}
-          style={{
-            height: 50,
-            width: '100%',
-            fontSize : 18
-          }}
-        />
-      </View>
+      <Input
+       containerStyle ={{ height:90}}
+           leftIcon={<Feather name="user" size={24} color="gray" style ={{marginLeft:2}} />}
+            inputContainerStyle={{borderWidth: 1, marginTop:5, borderRadius:5}}
+          label = "Họ tên"
+            placeholder="Họ tên "
+            value={fullName}
+            onChangeText={setFullName}
+          />
+           <Input
+           containerStyle ={{ height:90}}
+           leftIcon={<Feather name="phone" size={24} color="gray" style ={{marginLeft:2}} />}
+            inputContainerStyle={{borderWidth: 1, marginTop:5, borderRadius:5}}
+            keyboardType ="numeric"
+          label = "SĐT"
+            placeholder="Số điện thoại"
+            value={phone}
+            onChangeText={setPhone}
+          />
+          <Input
+          containerStyle ={{ height:90}}
+           leftIcon={<Feather name="map-pin" size={24} color="gray" style ={{marginLeft:2}} />}
+            inputContainerStyle={{borderWidth: 1, marginTop:5, borderRadius:5}}
+          label = "Địa chỉ"
+            placeholder="Địa chỉ"
+            value={address}
+            onChangeText={setAddress}
+          />
+          <Input
+           leftIcon={<Feather name="file-text" size={24} color="gray" style ={{marginLeft:2}} />}
+            inputContainerStyle={{borderWidth: 1, marginTop:5, borderRadius:5}}
+          label = "Ghi chú"
+            placeholder="Ghi chú"
+            value={note}
+            onChangeText={setNote}
+          />
       {check ? (
-        <Text style={{color: 'red', marginTop: 20, alignSelf: 'center'}}>
+        <Text style={{color: 'red', marginBottom: 20, alignSelf: 'center'}}>
           Kiểm tra thông tin họ tên, số điện thoại và địa chỉ :v
         </Text>
       ) : (

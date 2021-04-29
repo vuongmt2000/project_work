@@ -13,6 +13,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import {useDispatch} from 'react-redux';
 import ImagePicker from 'react-native-image-crop-picker';
 import {addProductAction} from '../../../../actions/index';
+import {Input} from 'react-native-elements';
 
 function AddProduct(props) {
   const [nameProduct, setNameProduct] = useState('');
@@ -111,100 +112,43 @@ function AddProduct(props) {
             }}
             source={{uri: imageProduct}}
           />
-          <View style={{position:"absolute", marginLeft:"81%"}}>
+          <View style={{position: 'absolute', marginLeft: '81%'}}>
             <Feather name="edit-3" color="black" size={24} />
           </View>
         </TouchableOpacity>
       </View>
-      <View
-        style={{
-          width: '90%',
-          alignSelf: 'center',
-          flexDirection: 'row',
-          borderRadius: 5,
-          borderWidth: 1,
-          borderColor: 'gray',
-          marginTop: 10,
-        }}>
-        <View
-          style={{
-            width: '10%',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Feather name="user" color="gray" size={24} />
-        </View>
-        <TextInput
-          placeholder="Tên sản phẩm"
-          value={nameProduct}
-          onChangeText={setNameProduct}
-          style={{
-            height: 50,
-            width: '100%',
-            fontSize:18
-          }}
-        />
-      </View>
-      <View
-        style={{
-          width: '90%',
-          alignSelf: 'center',
-          flexDirection: 'row',
-          borderRadius: 5,
-          borderWidth: 1,
-          borderColor: 'gray',
-          marginTop: 10,
-        }}>
-        <View
-          style={{
-            width: '10%',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Icon name="money" color="gray" size={24} />
-        </View>
-        <TextInput
-          value={valueProduct.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-          keyboardType="numeric"
-          onChangeText={text => {
-            onChangeTextValue(text);
-          }}
-          style={{
-            height: 50,
-            width: '100%',
-            fontSize:18
-          }}
-        />
-      </View>
-      <View
-        style={{
-          width: '90%',
-          alignSelf: 'center',
-          flexDirection: 'row',
-          borderRadius: 5,
-          borderWidth: 1,
-          borderColor: 'gray',
-          marginTop: 10,
-        }}>
-        <View
-          style={{
-            width: '10%',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Feather name="file-text" color="gray" size={24} />
-        </View>
-        <TextInput
-          placeholder="Ghi chú"
-          value={noteProduct}
-          onChangeText={setNoteProduct}
-          style={{
-            height: 50,
-            width: '100%',
-            fontSize:18
-          }}
-        />
-      </View>
+          <Input
+           containerStyle ={{ height:90}}
+           leftIcon={<Feather name="user" size={24} color="gray" style ={{marginLeft:2}} />}
+            inputContainerStyle={{borderWidth: 1, marginTop:5, borderRadius:5}}
+          label = "Tên sản phẩm"
+            placeholder="Tên sản phẩm"
+            value={nameProduct}
+            onChangeText={setNameProduct}
+          />
+          <Input
+           containerStyle ={{ height:90}}
+              label="Giá sản phẩm*"
+              leftIcon={<Icon name="money" size={20} color="gray" style ={{marginLeft:2}} />}
+              inputContainerStyle={{borderWidth: 1, marginTop:5, borderRadius:5}}
+            value={valueProduct
+              .toString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+            keyboardType="numeric"
+            onChangeText={text => {
+              onChangeTextValue(text);
+            }}
+           
+          />
+      <Input
+       containerStyle ={{ height:90}}
+        value={noteProduct}
+        onChangeText={setNoteProduct}
+        placeholder="Ghi chú"
+        label="Ghi chú*"
+        leftIcon={<Feather name="file-text" size={24} color="gray" />}
+        inputContainerStyle={{borderWidth: 1, marginTop:5, borderRadius:5}}
+      />
       {check ? (
         <Text style={{color: 'red', marginTop: 20, alignSelf: 'center'}}>
           Kiểm tra thông tin tên, giá sản phẩm :v

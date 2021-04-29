@@ -93,14 +93,13 @@ function ListProduct(props) {
         <View
           style={{
             // width: '95%',
-            alignSelf: 'center',
             flexDirection: 'row',
           }}>
           <View
             style={{
               width: '30%',
               justifyContent: 'center',
-              alignItems: 'center',
+              // alignItems: 'center',
               marginTop: 10,
               marginBottom: 10,
             }}>

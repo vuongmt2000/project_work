@@ -91,7 +91,7 @@ function ListCustom(props, {navigation}) {
             style={{
               width: '30%',
               justifyContent: 'center',
-              alignItems: 'center',
+              // alignItems: 'center',
               marginTop: 10,
               marginBottom: 10,
             }}>

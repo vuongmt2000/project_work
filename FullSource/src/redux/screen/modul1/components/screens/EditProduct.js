@@ -12,6 +12,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import Feather from 'react-native-vector-icons/Feather';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ImagePicker from 'react-native-image-crop-picker';
+import {Input} from 'react-native-elements'
 import {
   updateProductAction,
   deleteProductAction,
@@ -124,95 +125,38 @@ function EditProduct(props) {
           </View>
         </TouchableOpacity>
       </View>
-      <View
-        style={{
-          width: '90%',
-          alignSelf: 'center',
-          flexDirection: 'row',
-          borderRadius: 5,
-          borderWidth: 1,
-          borderColor: 'gray',
-          marginTop: 10,
-        }}>
-        <View
-          style={{
-            width: '10%',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Feather name="user" color="gray" size={24} />
-        </View>
-        <TextInput
-          value={nameProduct}
-          onChangeText={setNameProduct}
-          style={{
-            height: 50,
-            width: '100%',
-            fontSize:18
-          }}
-        />
-      </View>
-      <View
-        style={{
-          width: '90%',
-          alignSelf: 'center',
-          flexDirection: 'row',
-          borderRadius: 5,
-          borderWidth: 1,
-          borderColor: 'gray',
-          marginTop: 10,
-        }}>
-        <View
-          style={{
-            width: '10%',
-            justifyContent: 'center',
-            alignItems: 'center',
-            fontSize:18
-          }}>
-          <Icon name="money" color="gray" size={24} />
-        </View>
-        <TextInput
-          keyboardType="numeric"
-          value={valueProduct.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-          onChangeText={text => {
-            onChangeTextValue(text);
-          }}
-          style={{
-            height: 50,
-            width: '100%',
-            fontSize:18
-          }}
-        />
-      </View>
-      <View
-        style={{
-          width: '90%',
-          alignSelf: 'center',
-          flexDirection: 'row',
-          borderRadius: 5,
-          borderWidth: 1,
-          borderColor: 'gray',
-          marginTop: 10,
-        }}>
-        <View
-          style={{
-            width: '10%',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Feather name="map-pin" color="gray" size={24} />
-        </View>
-        <TextInput
-          value={noteProduct}
-          onChangeText={setNoteProduct}
-          style={{
-            height: 50,
-            width: '100%',
-            fontSize:18
-          }}
-        />
-      </View>
-
+      <Input
+       containerStyle ={{ height:90}}
+           leftIcon={<Feather name="user" size={24} color="gray" style ={{marginLeft:2}} />}
+            inputContainerStyle={{borderWidth: 1, marginTop:5, borderRadius:5}}
+          label = "Tên sản phẩm"
+            placeholder="Tên sản phẩm"
+            value={nameProduct}
+            onChangeText={setNameProduct}
+          />
+          <Input
+           containerStyle ={{ height:90}}
+              label="Giá sản phẩm*"
+              leftIcon={<Icon name="money" size={20} color="gray" style ={{marginLeft:2}} />}
+              inputContainerStyle={{borderWidth: 1, marginTop:5, borderRadius:5}}
+            value={valueProduct
+              .toString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+            keyboardType="numeric"
+            onChangeText={text => {
+              onChangeTextValue(text);
+            }}
+           
+          />
+      <Input
+       containerStyle ={{ height:90}}
+        value={noteProduct}
+        onChangeText={setNoteProduct}
+        placeholder="Ghi chú"
+        label="Ghi chú*"
+        leftIcon={<Feather name="file-text" size={24} color="gray" />}
+        inputContainerStyle={{borderWidth: 1, marginTop:5, borderRadius:5}}
+      />
       <View
         style={{
           flexDirection: 'row',
@@ -220,6 +164,7 @@ function EditProduct(props) {
           width: '90%',
           justifyContent: 'flex-end',
           alignSelf: 'center',
+          marginBottom:20
         }}>
         <TouchableOpacity
           style={{

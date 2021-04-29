@@ -344,34 +344,15 @@ function AddPlace(props) {
         {dataProduct?.map((item, index) => (
           <RenderItemProduct item={item} key={index} />
         ))}
-        <View
-          style={{
-            width: '95%',
-            alignSelf: 'center',
-            flexDirection: 'row',
-            borderRadius: 5,
-            borderWidth: 1,
-            borderColor: 'gray',
-            marginTop: 10,
-          }}>
-          <View
-            style={{
-              width: '10%',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <Feather name="file-text" color="blue" size={24} />
-          </View>
-          <TextInput
-            placeholder="Ghi chú"
-            value={notePlace}
-            onChangeText={setNotePlace}
-            style={{
-              height: 50,
-              width: '100%',
-            }}
-          />
-        </View>
+         <Input
+       containerStyle ={{ height:90, marginTop:10}}
+        value={notePlace}
+        onChangeText={setNotePlace}
+        placeholder="Ghi chú"
+        label="Ghi chú*"
+        leftIcon={<Feather name="file-text" size={24} color="gray" />}
+        inputContainerStyle={{borderWidth: 1, marginTop:5, borderRadius:5}}
+      />
         <View
           style={{
             flexDirection: 'row',
