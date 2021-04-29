@@ -214,17 +214,15 @@ const Caro = ({navigation}) => {
             alignItems: 'center',
           }}>
           <View style={{marginLeft: 10, flex: 1}}>
-            <Image
-              source={require('../../assets/note.png')}
-              style={{width: 30, height: 30, marginLeft: 5}}
-            />
-            <View style={{flexDirection: 'row', margin: 5}}>
-              <Icon name="close" size={20} color="#F80606" />
-              <Text>: {gamePlayer.player1.win}</Text>
+            <View
+              style={{flexDirection: 'row', margin: 5, alignItems: 'center'}}>
+              <Icon name="close" size={28} color="#F80606" />
+              <Text style={{fontSize: 20}}>: {gamePlayer.player1.win}</Text>
             </View>
-            <View style={{flexDirection: 'row', margin: 5}}>
-              <Icon name="circle-outline" size={20} color="#0921D7" />
-              <Text>: {gamePlayer.player2.win}</Text>
+            <View
+              style={{flexDirection: 'row', margin: 5, alignItems: 'center'}}>
+              <Icon name="circle-outline" size={28} color="#0921D7" />
+              <Text style={{fontSize: 20}}>: {gamePlayer.player2.win}</Text>
             </View>
           </View>
           <View

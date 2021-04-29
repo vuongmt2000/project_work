@@ -549,6 +549,8 @@ const ElectricBill = ({navigation}) => {
           style={{
             flexDirection: 'row',
             justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: 10,
           }}>
           <Text>Nhập chỉ số cũ: </Text>
           <TextInput
@@ -563,9 +565,15 @@ const ElectricBill = ({navigation}) => {
                     .replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                 : 0
             }
+            style={{padding: 0}}
           />
         </View>
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}>
           <Text>Nhập chỉ số mới: </Text>
           <TextInput
             placeholder="0"
@@ -579,6 +587,7 @@ const ElectricBill = ({navigation}) => {
                     .replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                 : 0
             }
+            style={{padding: 0}}
           />
         </View>
         <View
@@ -597,7 +606,12 @@ const ElectricBill = ({navigation}) => {
               borderColor: '#E4E6E8',
             }}></View>
         </View>
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}>
           <Text>Nhập số điện sử dụng: </Text>
           <TextInput
             placeholder="0"
@@ -612,6 +626,7 @@ const ElectricBill = ({navigation}) => {
                     .replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                 : 0
             }
+            style={{padding: 0}}
           />
         </View>
       </View>
