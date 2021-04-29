@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 
 import Wellcome from './Wellcome';
+import OverView from './OverView';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -69,7 +70,7 @@ const Side = ({route, navigation}) => {
         setIsWellCome(true);
       }
     } catch (error) {
-      console.log("side :",error);
+      console.log('side :', error);
     }
   }, []);
 
@@ -80,7 +81,7 @@ const Side = ({route, navigation}) => {
   }, [isdel]);
 
   if (isWellCome) {
-    return <Wellcome navigation={navigation} />;
+    return <OverView navigation={navigation} />;
   } else {
     return (
       <SafeAreaView style={styles.Container}>

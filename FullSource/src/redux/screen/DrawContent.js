@@ -203,9 +203,9 @@ const DrawContent = ({props, navigation}) => {
             Mini game
           </Text>
           {showGame === false ? (
-            <IconA name="down" size={20} color="#b50000" />
+            <IconA name="down" size={16} color="#b50000" />
           ) : (
-            <IconA name="up" size={20} color="#b50000" />
+            <IconA name="up" size={16} color="#b50000" />
           )}
         </TouchableOpacity>
         {showGame === true ? (
@@ -244,9 +244,9 @@ const DrawContent = ({props, navigation}) => {
             Mini tool
           </Text>
           {showTool === false ? (
-            <IconA name="down" size={20} color="#b50000" />
+            <IconA name="down" size={16} color="#b50000" />
           ) : (
-            <IconA name="up" size={20} color="#b50000" />
+            <IconA name="up" size={16} color="#b50000" />
           )}
         </TouchableOpacity>
         {showTool === true ? (
@@ -307,7 +307,9 @@ const DrawContent = ({props, navigation}) => {
               )}
             />
           </View>
-        ) : null}
+        ) : (
+          <View style={{height: 50}}></View>
+        )}
       </View>
     </DrawerContentScrollView>
   );
