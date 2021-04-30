@@ -53,9 +53,15 @@ const genCost = numberBill => {
       } else if (i == 2) {
         rowJsx.push(numberBill);
       } else if (i == 3) {
-        rowJsx.push(Recipe[1].price);
+        rowJsx.push(
+          Recipe[1].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+        );
       } else {
-        rowJsx.push(Recipe[1].price * numberBill);
+        rowJsx.push(
+          (Recipe[1].price * numberBill)
+            .toString()
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+        );
       }
     }
     mapJsx.push(rowJsx);
@@ -83,9 +89,15 @@ const genCost = numberBill => {
           } else if (j == 1) {
             mapJsx[i].push(50);
           } else if (j == 2) {
-            mapJsx[i].push(Recipe[1].price);
+            mapJsx[i].push(
+              Recipe[1].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+            );
           } else {
-            mapJsx[i].push(Recipe[1].price * 50);
+            mapJsx[i].push(
+              (Recipe[1].price * 50)
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+            );
           }
         } else if (i == 1) {
           if (j == 0) {
@@ -93,9 +105,15 @@ const genCost = numberBill => {
           } else if (j == 1) {
             mapJsx[i].push(numberBill - 50);
           } else if (j == 2) {
-            mapJsx[i].push(Recipe[2].price);
+            mapJsx[i].push(
+              Recipe[2].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+            );
           } else {
-            mapJsx[i].push(Recipe[2].price * (numberBill - 50));
+            mapJsx[i].push(
+              (Recipe[2].price * (numberBill - 50))
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+            );
           }
         }
       }
@@ -125,9 +143,15 @@ const genCost = numberBill => {
           } else if (j == 1) {
             mapJsx[i].push(50);
           } else if (j == 2) {
-            mapJsx[i].push(Recipe[1].price);
+            mapJsx[i].push(
+              Recipe[1].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+            );
           } else {
-            mapJsx[i].push(Recipe[1].price * 50);
+            mapJsx[i].push(
+              (Recipe[1].price * 50)
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+            );
           }
         } else if (i == 1) {
           if (j == 0) {
@@ -135,9 +159,15 @@ const genCost = numberBill => {
           } else if (j == 1) {
             mapJsx[i].push(50);
           } else if (j == 2) {
-            mapJsx[i].push(Recipe[2].price);
+            mapJsx[i].push(
+              Recipe[2].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+            );
           } else {
-            mapJsx[i].push(Recipe[2].price * 50);
+            mapJsx[i].push(
+              (Recipe[2].price * 50)
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+            );
           }
         } else if (i == 2) {
           if (j == 0) {
@@ -145,9 +175,15 @@ const genCost = numberBill => {
           } else if (j == 1) {
             mapJsx[i].push(numberBill - 100);
           } else if (j == 2) {
-            mapJsx[i].push(Recipe[3].price);
+            mapJsx[i].push(
+              Recipe[3].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+            );
           } else {
-            mapJsx[i].push(Recipe[3].price * (numberBill - 100));
+            mapJsx[i].push(
+              (Recipe[3].price * (numberBill - 100))
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+            );
           }
         }
       }
@@ -180,9 +216,15 @@ const genCost = numberBill => {
           } else if (j == 1) {
             mapJsx[i].push(50);
           } else if (j == 2) {
-            mapJsx[i].push(Recipe[1].price);
+            mapJsx[i].push(
+              Recipe[1].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+            );
           } else {
-            mapJsx[i].push(Recipe[1].price * 50);
+            mapJsx[i].push(
+              (Recipe[1].price * 50)
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+            );
           }
         } else if (i == 1) {
           if (j == 0) {
@@ -190,9 +232,15 @@ const genCost = numberBill => {
           } else if (j == 1) {
             mapJsx[i].push(50);
           } else if (j == 2) {
-            mapJsx[i].push(Recipe[2].price);
+            mapJsx[i].push(
+              Recipe[2].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+            );
           } else {
-            mapJsx[i].push(Recipe[2].price * 50);
+            mapJsx[i].push(
+              (Recipe[2].price * 50)
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+            );
           }
         } else if (i == 2) {
           if (j == 0) {
@@ -200,9 +248,15 @@ const genCost = numberBill => {
           } else if (j == 1) {
             mapJsx[i].push(100);
           } else if (j == 2) {
-            mapJsx[i].push(Recipe[3].price);
+            mapJsx[i].push(
+              Recipe[3].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+            );
           } else {
-            mapJsx[i].push(Recipe[3].price * 100);
+            mapJsx[i].push(
+              (Recipe[3].price * 100)
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+            );
           }
         } else if (i == 3) {
           if (j == 0) {
@@ -210,9 +264,15 @@ const genCost = numberBill => {
           } else if (j == 1) {
             mapJsx[i].push(numberBill - 200);
           } else if (j == 2) {
-            mapJsx[i].push(Recipe[4].price);
+            mapJsx[i].push(
+              Recipe[4].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+            );
           } else {
-            mapJsx[i].push(Recipe[4].price * (numberBill - 200));
+            mapJsx[i].push(
+              (Recipe[4].price * (numberBill - 200))
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+            );
           }
         }
       }
@@ -246,9 +306,15 @@ const genCost = numberBill => {
           } else if (j == 1) {
             mapJsx[i].push(50);
           } else if (j == 2) {
-            mapJsx[i].push(Recipe[1].price);
+            mapJsx[i].push(
+              Recipe[1].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+            );
           } else {
-            mapJsx[i].push(Recipe[1].price * 50);
+            mapJsx[i].push(
+              (Recipe[1].price * 50)
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+            );
           }
         } else if (i == 1) {
           if (j == 0) {
@@ -256,9 +322,15 @@ const genCost = numberBill => {
           } else if (j == 1) {
             mapJsx[i].push(50);
           } else if (j == 2) {
-            mapJsx[i].push(Recipe[2].price);
+            mapJsx[i].push(
+              Recipe[2].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+            );
           } else {
-            mapJsx[i].push(Recipe[2].price * 50);
+            mapJsx[i].push(
+              (Recipe[2].price * 50)
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+            );
           }
         } else if (i == 2) {
           if (j == 0) {
@@ -266,9 +338,15 @@ const genCost = numberBill => {
           } else if (j == 1) {
             mapJsx[i].push(100);
           } else if (j == 2) {
-            mapJsx[i].push(Recipe[3].price);
+            mapJsx[i].push(
+              Recipe[3].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+            );
           } else {
-            mapJsx[i].push(Recipe[3].price * 100);
+            mapJsx[i].push(
+              (Recipe[3].price * 100)
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+            );
           }
         } else if (i == 3) {
           if (j == 0) {
@@ -276,9 +354,15 @@ const genCost = numberBill => {
           } else if (j == 1) {
             mapJsx[i].push(100);
           } else if (j == 2) {
-            mapJsx[i].push(Recipe[4].price);
+            mapJsx[i].push(
+              Recipe[4].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+            );
           } else {
-            mapJsx[i].push(Recipe[4].price * 100);
+            mapJsx[i].push(
+              (Recipe[4].price * 100)
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+            );
           }
         } else if (i == 4) {
           if (j == 0) {
@@ -286,9 +370,15 @@ const genCost = numberBill => {
           } else if (j == 1) {
             mapJsx[i].push(numberBill - 300);
           } else if (j == 2) {
-            mapJsx[i].push(Recipe[5].price);
+            mapJsx[i].push(
+              Recipe[5].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+            );
           } else {
-            mapJsx[i].push(Recipe[5].price * (numberBill - 300));
+            mapJsx[i].push(
+              (Recipe[5].price * (numberBill - 300))
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+            );
           }
         }
       }
@@ -323,9 +413,15 @@ const genCost = numberBill => {
           } else if (j == 1) {
             mapJsx[i].push(50);
           } else if (j == 2) {
-            mapJsx[i].push(Recipe[1].price);
+            mapJsx[i].push(
+              Recipe[1].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+            );
           } else {
-            mapJsx[i].push(Recipe[1].price * 50);
+            mapJsx[i].push(
+              (Recipe[1].price * 50)
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+            );
           }
         } else if (i == 1) {
           if (j == 0) {
@@ -333,9 +429,15 @@ const genCost = numberBill => {
           } else if (j == 1) {
             mapJsx[i].push(50);
           } else if (j == 2) {
-            mapJsx[i].push(Recipe[2].price);
+            mapJsx[i].push(
+              Recipe[2].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+            );
           } else {
-            mapJsx[i].push(Recipe[2].price * 50);
+            mapJsx[i].push(
+              (Recipe[2].price * 50)
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+            );
           }
         } else if (i == 2) {
           if (j == 0) {
@@ -343,9 +445,15 @@ const genCost = numberBill => {
           } else if (j == 1) {
             mapJsx[i].push(100);
           } else if (j == 2) {
-            mapJsx[i].push(Recipe[3].price);
+            mapJsx[i].push(
+              Recipe[3].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+            );
           } else {
-            mapJsx[i].push(Recipe[3].price * 100);
+            mapJsx[i].push(
+              (Recipe[3].price * 100)
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+            );
           }
         } else if (i == 3) {
           if (j == 0) {
@@ -353,9 +461,15 @@ const genCost = numberBill => {
           } else if (j == 1) {
             mapJsx[i].push(100);
           } else if (j == 2) {
-            mapJsx[i].push(Recipe[4].price);
+            mapJsx[i].push(
+              Recipe[4].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+            );
           } else {
-            mapJsx[i].push(Recipe[4].price * 100);
+            mapJsx[i].push(
+              (Recipe[4].price * 100)
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+            );
           }
         } else if (i == 4) {
           if (j == 0) {
@@ -363,19 +477,35 @@ const genCost = numberBill => {
           } else if (j == 1) {
             mapJsx[i].push(100);
           } else if (j == 2) {
-            mapJsx[i].push(Recipe[5].price);
+            mapJsx[i].push(
+              Recipe[5].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+            );
           } else {
-            mapJsx[i].push(Recipe[5].price * 100);
+            mapJsx[i].push(
+              (Recipe[5].price * 100)
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+            );
           }
         } else if (i == 5) {
           if (j == 0) {
             mapJsx[i].push(6);
           } else if (j == 1) {
-            mapJsx[i].push(numberBill - 400);
+            mapJsx[i].push(
+              (numberBill - 400)
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+            );
           } else if (j == 2) {
-            mapJsx[i].push(Recipe[6].price);
+            mapJsx[i].push(
+              Recipe[6].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+            );
           } else {
-            mapJsx[i].push(Recipe[6].price * (numberBill - 400));
+            mapJsx[i].push(
+              (Recipe[6].price * (numberBill - 400))
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+            );
           }
         }
       }
@@ -412,11 +542,13 @@ const genCost2 = numberBill => {
   cost2 = numberBill * 2666;
   for (let i = 1; i <= 3; i++) {
     if (i == 1) {
-      rowJsx.push(numberBill);
+      rowJsx.push(numberBill.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','));
     } else if (i == 2) {
-      rowJsx.push(2666);
+      rowJsx.push('2,666');
     } else {
-      rowJsx.push(numberBill * 2666);
+      rowJsx.push(
+        (numberBill * 2666).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+      );
     }
   }
   mapJsx.push(rowJsx);
@@ -442,11 +574,13 @@ const genCost3 = numberBill => {
   cost3 = numberBill * 1685;
   for (let i = 1; i <= 3; i++) {
     if (i == 1) {
-      rowJsx.push(numberBill);
+      rowJsx.push(numberBill.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','));
     } else if (i == 2) {
-      rowJsx.push(1685);
+      rowJsx.push('1,685');
     } else {
-      rowJsx.push(numberBill * 1685);
+      rowJsx.push(
+        (numberBill * 1685).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+      );
     }
   }
   mapJsx.push(rowJsx);
@@ -472,11 +606,13 @@ const genCost4 = numberBill => {
   cost4 = numberBill * 1902;
   for (let i = 1; i <= 3; i++) {
     if (i == 1) {
-      rowJsx.push(numberBill);
+      rowJsx.push(numberBill.toString());
     } else if (i == 2) {
-      rowJsx.push(1902);
+      rowJsx.push('1,902');
     } else {
-      rowJsx.push(numberBill * 1902);
+      rowJsx.push(
+        (numberBill * 1902).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+      );
     }
   }
   mapJsx.push(rowJsx);
@@ -565,7 +701,7 @@ const ElectricBill = ({navigation}) => {
                     .replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                 : 0
             }
-            style={{padding: 0}}
+            style={{padding: 0, width: '20%', textAlign: 'center'}}
           />
         </View>
         <View
@@ -587,7 +723,7 @@ const ElectricBill = ({navigation}) => {
                     .replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                 : 0
             }
-            style={{padding: 0}}
+            style={{padding: 0, width: '20%', textAlign: 'center'}}
           />
         </View>
         <View
@@ -616,7 +752,11 @@ const ElectricBill = ({navigation}) => {
           <TextInput
             placeholder="0"
             keyboardType="numeric"
-            onChangeText={val => setNumberBill(val)}
+            onChangeText={val => {
+              setNumberBill(val);
+              setBeforeNumber(0);
+              setCurrentNumber(0);
+            }}
             autoFocus={true}
             value={
               parseFloat(numberBill?.toString().replace(/\,/g, '')) > 0
@@ -626,7 +766,7 @@ const ElectricBill = ({navigation}) => {
                     .replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                 : 0
             }
-            style={{padding: 0}}
+            style={{padding: 0, width: '20%', textAlign: 'center'}}
           />
         </View>
       </View>

@@ -15,6 +15,7 @@ import Wellcome from './Wellcome';
 import OverView from './OverView';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {MyTabs} from '../Navigation';
 
 const styles = StyleSheet.create({
   Container: {
@@ -81,7 +82,7 @@ const Side = ({route, navigation}) => {
   }, [isdel]);
 
   if (isWellCome) {
-    return <OverView navigation={navigation} />;
+    return <MyTabs />;
   } else {
     return (
       <SafeAreaView style={styles.Container}>

@@ -77,9 +77,7 @@ const HomeTodo = ({navigation}) => {
     })
     .reverse();
   useEffect(() => {
-    if (todoItems?.length > 0) {
-      storeData(todoItems, 'data');
-    }
+    storeData(todoItems, 'data');
   }, [todoItems]);
 
   useEffect(() => {
@@ -127,9 +125,13 @@ const HomeTodo = ({navigation}) => {
 
   // Delete an item from state by index
   function deleteTodoItem(_index) {
-    let tempArr = [...todoItems];
-    tempArr.splice(_index, 1);
-    setTodoItems(tempArr);
+    if (_index === 0) {
+      setTodoItems([]);
+    } else {
+      let tempArr = [...todoItems];
+      tempArr.splice(_index, 1);
+      setTodoItems(tempArr);
+    }
   }
 
   // Function to set completed to true by index.
@@ -182,7 +184,7 @@ const HomeTodo = ({navigation}) => {
               <Icon name="menu-outline" size={40} />
             </TouchableOpacity>
             <Text style={{fontSize: 36, fontWeight: 'bold', marginLeft: 10}}>
-              Todo
+              Công việc
             </Text>
           </View>
           <ToggleSwitch
@@ -228,7 +230,7 @@ const HomeTodo = ({navigation}) => {
                       flex: 10,
                     }}>
                     <IconF name="pencil-square-o" size={30} color="#b50000" />
-                    <View style={{marginLeft: 10, marginRight: 20}}>
+                    <View style={{marginLeft: 10, marginRight: 25}}>
                       <Text style={{color: 'gray'}}>
                         {moment(new Date(item?.place.timeOrder)).format(
                           'DD/MM/yyyy hh:mm:ss',
@@ -241,11 +243,21 @@ const HomeTodo = ({navigation}) => {
                             ? {
                                 textDecorationLine: 'line-through',
                               }
-                            : {
-                                textDecorationLine: 'none',
-                              },
+                            : [
+                                item.place.statusOrder === 'Cancel'
+                                  ? {textDecorationLine: 'line-through'}
+                                  : {textDecorationLine: 'none'},
+                              ],
                         ]}>
-                        Đơn hàng của {item.custom?.name}
+                        {item.place.statusOrder === 'Cancel' ? (
+                          <Text style={{fontSize: 18}}>
+                            Đơn hàng của {item.custom.name} đã hủy
+                          </Text>
+                        ) : (
+                          <Text style={{fontSize: 18}}>
+                            Đơn hàng của {item.custom.name}
+                          </Text>
+                        )}
                       </Text>
                     </View>
                   </View>
@@ -306,7 +318,11 @@ const HomeTodo = ({navigation}) => {
                       marginLeft: 5,
                     }}
                     onPress={() => {
-                      let indexF = todoItems.findIndex(() => item.dateTime);
+                      let indexF = todoItems
+                        .map(e => {
+                          return e.dateTime;
+                        })
+                        .indexOf(item.dateTime);
                       deleteTodoItem(indexF);
                     }}>
                     <Icon name="trash" size={30} color="#b50000" />

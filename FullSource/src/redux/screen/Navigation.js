@@ -31,13 +31,14 @@ const tabs = createBottomTabNavigator();
 const stack = createStackNavigator();
 const draw = createDrawerNavigator();
 
-const MyTabs = () => {
+export const MyTabs = () => {
   return (
     <tabs.Navigator
       tabBarOptions={{
         activeTintColor: '#b50000',
         activeBackgroundColor: '#fff0f0',
-      }}>
+      }}
+      initialRouteName="OverView">
       <tabs.Screen
         name="OverView"
         component={OverView}

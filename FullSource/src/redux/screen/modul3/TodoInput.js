@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {TouchableOpacity, View, Text, TextInput} from 'react-native';
+import {TouchableOpacity, View, Text, TextInput, Keyboard} from 'react-native';
 export default function TodoInput(props) {
   const [text, setText] = useState(null);
 
@@ -16,7 +16,7 @@ export default function TodoInput(props) {
         }}
         onChangeText={text => setText(text)}
         value={text}
-        placeholder={props.contentItem || 'Todo....'}
+        placeholder={props.contentItem || 'Công việc....'}
         placeholderTextColor="gray"
         multiline={true}
       />
@@ -30,6 +30,7 @@ export default function TodoInput(props) {
           borderRadius: 8,
         }}
         onPress={() => {
+          Keyboard.dismiss();
           props.onPress(text);
           setText(null);
         }}>

@@ -209,31 +209,45 @@ const Caro = ({navigation}) => {
         </View>
         <View
           style={{
-            flexDirection: 'row',
             flex: 1,
             alignItems: 'center',
           }}>
-          <View style={{marginLeft: 10, flex: 1}}>
+          <View
+            style={{
+              marginHorizontal: 10,
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}>
             <View
-              style={{flexDirection: 'row', margin: 5, alignItems: 'center'}}>
+              style={{
+                flexDirection: 'row',
+                margin: 5,
+                alignItems: 'center',
+                flex: 1,
+                justifyContent: 'center',
+              }}>
               <Icon name="close" size={28} color="#F80606" />
               <Text style={{fontSize: 20}}>: {gamePlayer.player1.win}</Text>
             </View>
             <View
-              style={{flexDirection: 'row', margin: 5, alignItems: 'center'}}>
+              style={{
+                flexDirection: 'row',
+                margin: 5,
+                alignItems: 'center',
+                flex: 1,
+                justifyContent: 'center',
+              }}>
               <Icon name="circle-outline" size={28} color="#0921D7" />
               <Text style={{fontSize: 20}}>: {gamePlayer.player2.win}</Text>
             </View>
           </View>
-          <View
-            style={{
-              flex: 1,
-            }}>
+          <View style={{flex: 1}}>
             <Text
               style={{
                 fontSize: 20,
                 marginRight: 15,
-                alignSelf: 'flex-end',
+                justifyContent: 'flex-end',
               }}>
               {!winnerSymbol && `Turn: ${turn}`}
             </Text>

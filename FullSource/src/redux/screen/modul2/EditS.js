@@ -214,7 +214,7 @@ const EditS = ({route, navigation}) => {
           )}`,
           tmoney.current,
           img,
-          'done',
+          'Hoàn thành',
           id,
         ],
         (tx, results) => {
@@ -222,7 +222,7 @@ const EditS = ({route, navigation}) => {
           if (results.rowsAffected > 0) {
             Alert.alert(
               'Success',
-              'Updated successfully',
+              'Cập nhật thành công',
               [
                 {
                   text: 'Ok',
@@ -251,7 +251,7 @@ const EditS = ({route, navigation}) => {
           )}`,
           tmoney.current,
           img,
-          'done',
+          'Hoàn thành',
           id,
         ],
         (tx, results) => {
@@ -259,7 +259,7 @@ const EditS = ({route, navigation}) => {
           if (results.rowsAffected > 0) {
             Alert.alert(
               'Success',
-              'Updated successfully',
+              'Cập nhật thành công',
               [
                 {
                   text: 'Ok',
