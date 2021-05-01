@@ -26,6 +26,7 @@ function EditPlace(props) {
   const custom = props.route.params?.itemCustom;
   const itemProduct = props.route.params?.itemProduct;
   const item = props.route.params?.item;
+  const code = props.route.params?.code;
   // console.log('custom :>> ', custom);
   // console.log('itemProduct :>> ', itemProduct);
   console.log('item :>> ', item);
@@ -87,7 +88,18 @@ function EditPlace(props) {
 
 
   function onBack() {
-    props.navigation.goBack();
+    if(code === 10){
+      props.navigation.navigate('OverViewTabs', {screen:'ListSE',params:{
+        showSale :true
+      }});
+    }
+    else if(code ===11){
+      props.navigation.navigate('HomeTodo');
+    }
+    else{
+      props.navigation.goBack();
+    }
+   
   }
 
   // price
@@ -146,7 +158,18 @@ function EditPlace(props) {
       dispatch(updatePlaceAction(a));
       setRefreshing(true);
       setTimeout(() => {
-        props.navigation.goBack();
+        if(code === 10){
+          props.navigation.navigate('OverViewTabs', {screen:'ListSE',params:{
+            showSale :true
+          }});
+        }
+        else if(code ===11){
+          props.navigation.push('HomeTodo');
+        }
+        else{
+          props.navigation.goBack();
+        }
+     
         setRefreshing(false);
       }, 2000);
     } else {
@@ -292,8 +315,18 @@ function EditPlace(props) {
     setRefreshing(true);
     setTimeout(() => {
       setRefreshing(false);
-      props.navigation.navigate('Home');
-    }, 3000);
+      if(code === 10){
+        props.navigation.navigate('OverViewTabs', {screen:'ListSE',params:{
+          showSale :true
+        }});
+      }
+      else if(code ===11){
+        props.navigation.push('HomeTodo');
+      }
+      else {
+        props.navigation.navigate('Home');
+      }
+    }, 2000);
   }
   function  setStatusPlace_(item){
     setStatusPlace(item.title);

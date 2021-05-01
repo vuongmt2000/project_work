@@ -213,6 +213,7 @@ const HomeTodo = ({navigation}) => {
                       screen: 'EditPlace',
                       params: {
                         item: item,
+                        code: 11
                       },
                     })
                   }
@@ -345,6 +346,7 @@ const HomeTodo = ({navigation}) => {
                       screen: 'EditPlace',
                       params: {
                         item: item,
+                        code: 11
                       },
                     })
                   }

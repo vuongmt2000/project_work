@@ -230,10 +230,17 @@ const caculateTotalP = data => {
   return sumP;
 };
 
-const ListSE = ({navigation}) => {
+const ListSE = ({navigation, route}) => {
   const [selectPicker, setSelectPicker] = useState('All');
   const [showSpending, setShowSpending] = useState(true);
   const [showSale, setShowSale] = useState(false);
+  const show = route.params?.showSale;
+  
+  useEffect(()=>{
+    if(show){
+      setShowSale(true);
+    }
+  },[show]);
 
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -351,7 +358,7 @@ const ListSE = ({navigation}) => {
             <TouchableOpacity
               style={styles.buttonTop}
               onPress={() => {
-                setShowSale(!showSale);
+                setShowSale(true);
               }}>
               <View>
                 {showSale === true ? (
@@ -420,6 +427,7 @@ const ListSE = ({navigation}) => {
                                   screen: 'EditPlace',
                                   params: {
                                     item: item,
+                                    code: 10
                                   },
                                 })
                               }>
