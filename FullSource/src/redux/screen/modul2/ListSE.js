@@ -12,11 +12,16 @@ import {
   ScrollView,
   FlatList,
   Alert,
+  Modal,
+  Dimensions,
 } from 'react-native';
 import IconI from 'react-native-vector-icons/Ionicons';
 import IconA from 'react-native-vector-icons/AntDesign';
+import IconM from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {useDispatch, useSelector} from 'react-redux';
+
+const windowHeight = Dimensions.get('window').height;
 
 const getImage = nameImg => {
   switch (nameImg) {
@@ -229,6 +234,9 @@ const ListSE = ({navigation}) => {
   const [selectPicker, setSelectPicker] = useState('All');
   const [showSpending, setShowSpending] = useState(true);
   const [showSale, setShowSale] = useState(false);
+
+  const [modalVisible, setModalVisible] = useState(false);
+
   const disPatch = useDispatch();
   const dataAll = useSelector(state => state.eaReducer.dataCustom);
 
@@ -239,7 +247,7 @@ const ListSE = ({navigation}) => {
         if (results.rowsAffected > 0) {
           Alert.alert(
             'Success',
-            'Deleted successfully',
+            'Xóa thành công',
             [
               {
                 text: 'Ok',
@@ -262,7 +270,7 @@ const ListSE = ({navigation}) => {
         if (results.rowsAffected > 0) {
           Alert.alert(
             'Success',
-            'Deleted successfully',
+            'Xóa thành công',
             [
               {
                 text: 'Ok',
@@ -281,12 +289,26 @@ const ListSE = ({navigation}) => {
   console.log(dataAll);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView
+      style={[
+        styles.container,
+        modalVisible === true ? {opacity: 0.3} : {opacity: 1},
+      ]}>
       <View style={styles.header}>
-        <View style={{flex: 2}}>
+        <View
+          style={{
+            flexDirection: 'row',
+            flex: 2,
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}>
           <View style={styles.logo}>
-            <IconI name="ios-wallet-sharp" size={60} color="#b50000" />
+            <IconI name="ios-wallet-sharp" size={38} color="#b50000" />
           </View>
+          <Text style={{color: 'white', fontSize: 30}}>Danh sách</Text>
+          <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
+            <IconA name="filter" size={38} color="white" />
+          </TouchableOpacity>
         </View>
         <View style={{flex: 1, justifyContent: 'flex-end'}}>
           <View style={styles.rowButtonTop}>
@@ -299,14 +321,12 @@ const ListSE = ({navigation}) => {
               <View>
                 {showSpending ? (
                   showSale === true ? (
-                    <Text style={[styles.txtButton]}>DS chi</Text>
+                    <Text style={[styles.txtButton]}>Chi</Text>
                   ) : (
-                    <Text style={[styles.txtButton, {color: 'red'}]}>
-                      DS chi
-                    </Text>
+                    <Text style={[styles.txtButton, {color: 'red'}]}>Chi</Text>
                   )
                 ) : (
-                  <Text style={[styles.txtButton]}>DS chi</Text>
+                  <Text style={[styles.txtButton]}>Chi</Text>
                 )}
               </View>
             </TouchableOpacity>
@@ -319,14 +339,12 @@ const ListSE = ({navigation}) => {
               <View>
                 {showSpending === false ? (
                   showSale === true ? (
-                    <Text style={[styles.txtButton]}>DS thu</Text>
+                    <Text style={[styles.txtButton]}>Thu</Text>
                   ) : (
-                    <Text style={[styles.txtButton, {color: 'blue'}]}>
-                      DS thu
-                    </Text>
+                    <Text style={[styles.txtButton, {color: 'blue'}]}>Thu</Text>
                   )
                 ) : (
-                  <Text style={[styles.txtButton]}>DS thu</Text>
+                  <Text style={[styles.txtButton]}>Thu</Text>
                 )}
               </View>
             </TouchableOpacity>
@@ -337,15 +355,15 @@ const ListSE = ({navigation}) => {
               }}>
               <View>
                 {showSale === true ? (
-                  <Text style={[styles.txtButton, {color: '#db146a'}]}>
-                    DS xuất
+                  <Text style={[styles.txtButton, {color: 'green'}]}>
+                    Đơn hàng
                   </Text>
                 ) : (
-                  <Text style={styles.txtButton}>DS xuất</Text>
+                  <Text style={styles.txtButton}>Đơn hàng</Text>
                 )}
               </View>
             </TouchableOpacity>
-            <View style={styles.buttonTop}>
+            {/* <View style={styles.buttonTop}>
               <Picker
                 selectedValue={selectPicker}
                 style={{height: 20, width: 100}}
@@ -357,18 +375,7 @@ const ListSE = ({navigation}) => {
                 <Picker.Item label="Done" value="Done" />
                 <Picker.Item label="All" value="All" />
               </Picker>
-            </View>
-            <TouchableOpacity
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                backgroundColor: 'white',
-                borderRadius: 50,
-                padding: 2,
-              }}
-              onPress={() => navigation.navigate('AddBill')}>
-              <IconA name="plus" size={30} color="black" />
-            </TouchableOpacity>
+            </View> */}
           </View>
         </View>
       </View>
@@ -438,15 +445,15 @@ const ListSE = ({navigation}) => {
                                     Trạng thái:{' '}
                                     {item.place.statusOrder === 'New' ? (
                                       <Text style={{color: '#e3e30e'}}>
-                                        Pending
+                                        Đang chờ xử lí
                                       </Text>
                                     ) : item.place.statusOrder === 'Done' ? (
-                                      <Text style={{color: 'green'}}>
-                                        {item.place.statusOrder}
+                                      <Text style={{color: 'black'}}>
+                                        Hoàn thành
                                       </Text>
                                     ) : (
                                       <Text style={{color: '#b50000'}}>
-                                        {item.place.statusOrder}
+                                        Đã hủy
                                       </Text>
                                     )}
                                   </Text>
@@ -527,7 +534,7 @@ const ListSE = ({navigation}) => {
                                 <Text style={styles.txtContent}>
                                   Trạng thái:{' '}
                                   {
-                                    <Text style={{color: 'green'}}>
+                                    <Text style={{color: 'black'}}>
                                       {e.status}
                                     </Text>
                                   }
@@ -626,7 +633,75 @@ const ListSE = ({navigation}) => {
                   );
               })}
         </ScrollView>
+        <TouchableOpacity
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: '#b50000',
+            borderRadius: 24,
+            position: 'absolute',
+            right: 10,
+            bottom: 18,
+            width: 48,
+            height: 48,
+          }}
+          onPress={() => navigation.navigate('AddBill')}>
+          <IconA name="plus" size={30} color="white" />
+        </TouchableOpacity>
       </View>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}>
+        <View
+          style={{
+            padding: 10,
+            backgroundColor: 'white',
+            justifyContent: 'center',
+            width: '100%',
+            top: windowHeight / 4,
+            borderRadius: 20,
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Text style={{fontWeight: 'bold', fontSize: 25}}>Trạng thái</Text>
+          </View>
+          <TouchableOpacity
+            style={{flexDirection: 'row', alignItems: 'center', padding: 10}}
+            onPress={() => {
+              setModalVisible(!modalVisible);
+              setSelectPicker('Done');
+            }}>
+            <IconI name="checkmark-done" size={38} color="#19ad05" />
+            <Text style={{fontSize: 20, marginLeft: 20}}>Hoàn thành</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{flexDirection: 'row', alignItems: 'center', padding: 10}}
+            onPress={() => {
+              setModalVisible(!modalVisible);
+              setSelectPicker('Pending');
+            }}>
+            <IconM name="pending-actions" size={38} color="#f0df29" />
+            <Text style={{fontSize: 20, marginLeft: 20}}>Đang chờ xử lí</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{flexDirection: 'row', alignItems: 'center', padding: 10}}
+            onPress={() => {
+              setModalVisible(!modalVisible);
+              setSelectPicker('All');
+            }}>
+            <IconM name="category" size={38} color="#b50000" />
+            <Text style={{fontSize: 20, marginLeft: 20}}>Tất cả</Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 };
@@ -639,29 +714,28 @@ const styles = StyleSheet.create({
   },
   header: {
     flex: 1,
-    borderBottomLeftRadius: 50,
-    borderBottomRightRadius: 50,
+
     backgroundColor: '#b50000',
-    padding: 6,
+    padding: 10,
   },
   body: {
-    flex: 2,
+    flex: 6,
     paddingTop: 20,
   },
   logo: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
+    width: 50,
+    height: 50,
+    borderRadius: 25,
     backgroundColor: 'white',
-    alignSelf: 'center',
+    alignSelf: 'flex-start',
     alignItems: 'center',
     justifyContent: 'center',
   },
   rowButtonTop: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     alignItems: 'flex-end',
-    padding: 10,
+    padding: 5,
   },
   buttonTop: {
     padding: 5,
@@ -669,6 +743,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'white',
+    width: '30%',
+    height: 30,
   },
   txtButton: {
     color: 'black',

@@ -209,7 +209,7 @@ const AddBill = ({route, navigation}) => {
           )}`,
           tmoney.current,
           Img,
-          'done',
+          'Hoàn thành',
         ],
         (tx, rs) => {
           console.log('started11111 insert');
@@ -217,7 +217,7 @@ const AddBill = ({route, navigation}) => {
             console.log('entering.........');
             Alert.alert(
               'Success',
-              'Insert successfully',
+              'Thêm thành công',
               [
                 {
                   text: 'Ok',
@@ -252,13 +252,13 @@ const AddBill = ({route, navigation}) => {
           )}`,
           tmoney.current,
           Img,
-          'done',
+          'Hoàn thành',
         ],
         (tx, rs) => {
           if (rs.rowsAffected > 0) {
             Alert.alert(
               'Success',
-              'Insert successfully',
+              'Thêm thành công',
               [
                 {
                   text: 'Ok',
