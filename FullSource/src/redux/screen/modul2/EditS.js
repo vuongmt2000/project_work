@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import * as Action from '../../actions/actionType';
+import * as Action from '../../actions/index';
 import {openDatabase} from 'react-native-sqlite-storage';
 import {
   View,
@@ -15,6 +15,9 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwsome from 'react-native-vector-icons/FontAwesome';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import DateTimePicker from '@react-native-community/datetimepicker';
+
+const moment = require('moment');
+var hasChanged = false;
 
 const styles = StyleSheet.create({
   Container: {
@@ -188,7 +191,7 @@ const EditS = ({route, navigation}) => {
   const [money, setMoney] = useState(0);
   const [note, setNote] = useState(data.note_S || data.note_E);
   const [colori, setColori] = useState('red');
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(new Date(data.time_S || data.time_E));
   const [show, setShow] = useState(false);
   const [img, setImg] = useState(data.img_S || data.img_E);
   const [title, setTitle] = useState(data.name_S || data.name_E);
@@ -196,9 +199,12 @@ const EditS = ({route, navigation}) => {
   const tmoney = useRef(data.cost_S || data.cost_E);
   const disPatch = useDispatch();
   const onChange = (event, selectedDate) => {
+    hasChanged = true;
     const currentDate = selectedDate || date;
     setDate(currentDate);
   };
+
+  const tempMoneyCompare = data.cost_S || data.cost_E;
 
   const a = tmoney.current.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
@@ -246,9 +252,7 @@ const EditS = ({route, navigation}) => {
         [
           title,
           note,
-          `${date.getFullYear()}-${foteDate(date.getMonth() + 1)}-${foteDate(
-            date.getDate(),
-          )}`,
+          moment(date).format('YYYY-MM-DD'),
           tmoney.current,
           img,
           'Hoàn thành',
@@ -342,8 +346,10 @@ const EditS = ({route, navigation}) => {
         </View>
         <TouchableOpacity
           onPress={() => {
-            if (editS) {
-              if (spmoney) {
+            if (editS === true) {
+              if (spmoney === true) {
+                UpdateDBActionS(data.id);
+              } else if (spmoney === undefined && hasChanged === true) {
                 UpdateDBActionS(data.id);
               } else {
                 Alert.alert('Error', 'Vui lòng chọn đúng mục chi tiêu', [
@@ -351,7 +357,9 @@ const EditS = ({route, navigation}) => {
                 ]);
               }
             } else {
-              if (!spmoney) {
+              if (spmoney === false) {
+                UpdateDBActionE(data.id);
+              } else if (spmoney === undefined && hasChanged === true) {
                 UpdateDBActionE(data.id);
               } else {
                 Alert.alert('Error', 'Vui lòng chọn đúng mục thu nguồn tiền', [
@@ -387,6 +395,7 @@ const EditS = ({route, navigation}) => {
             keyboardType="numeric"
             onChangeText={val => {
               tmoney.current = val.replace(/\,/g, '');
+              hasChanged = true;
               setMoney(val);
             }}
           />
@@ -455,6 +464,7 @@ const EditS = ({route, navigation}) => {
               style={{padding: 0, fontSize: 20, color: 'black'}}
               placeholder="Thêm ghi chú"
               onChangeText={val => {
+                hasChanged = true;
                 setNote(val);
               }}
             />
@@ -487,8 +497,7 @@ const EditS = ({route, navigation}) => {
               padding: 10,
             }}>
             <Text style={{fontSize: 20}}>
-              {date.getFullYear()}-{foteDate(date.getMonth() + 1)}-
-              {foteDate(date.getDate())}
+              {moment(date).format('DD/MM/yyyy')}
             </Text>
           </View>
         </TouchableOpacity>

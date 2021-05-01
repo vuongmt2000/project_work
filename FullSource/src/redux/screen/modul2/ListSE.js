@@ -196,7 +196,7 @@ const filterStatus = (data, status) => {
     case 'Pending':
       return data.filter(item => item.status == 'pending');
     default:
-      return data.filter(item => item.status == 'done');
+      return data.filter(item => item.status == 'Hoàn thành');
       break;
   }
 };
@@ -207,9 +207,9 @@ const filterStatusPlace = (data, status) => {
       return data;
       break;
     case 'Pending':
-      return data.filter(item => item.place.statusOrder == 'pending');
+      return data.filter(item => item.place.statusOrder == 'New');
     default:
-      return data.filter(item => item.place.statusOrder == 'done');
+      return data.filter(item => item.place.statusOrder == 'Done');
       break;
   }
 };
@@ -713,10 +713,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    flex: 1,
+    flex: 1.2,
 
     backgroundColor: '#b50000',
-    padding: 10,
+    paddingHorizontal: 10,
+    paddingTop: 10,
+    justifyContent: 'space-between',
   },
   body: {
     flex: 6,
@@ -727,7 +729,7 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 25,
     backgroundColor: 'white',
-    alignSelf: 'flex-start',
+
     alignItems: 'center',
     justifyContent: 'center',
   },
