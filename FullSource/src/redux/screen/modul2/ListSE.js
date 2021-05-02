@@ -22,6 +22,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {useDispatch, useSelector} from 'react-redux';
 
 const windowHeight = Dimensions.get('window').height;
+const moment = require('moment');
 
 const getImage = nameImg => {
   switch (nameImg) {
@@ -201,6 +202,8 @@ const filterStatus = (data, status) => {
   }
 };
 
+var dataAll = [];
+
 const filterStatusPlace = (data, status) => {
   switch (status) {
     case 'All':
@@ -230,22 +233,87 @@ const caculateTotalP = data => {
   return sumP;
 };
 
+const caculateData = (dataS, dataE, dataPlace) => {
+  let arrTitle = [];
+  let dataAfter = [];
+  for (let i = 0; i < dataS?.length; i++) {
+    if (!arrTitle.includes(dataS[i].time_S) && dataS[i].time_S !== null) {
+      arrTitle.push(dataS[i].time_S);
+    }
+  }
+  for (let i = 0; i < dataE?.length; i++) {
+    if (!arrTitle.includes(dataE[i].time_E) && dataE[i].time_E !== null) {
+      arrTitle.push(dataE[i].time_E);
+    }
+  }
+
+  for (let i = 0; i < dataPlace?.length; i++) {
+    let dt = new Date(dataPlace[i]?.place?.timeOrder);
+    if (
+      !arrTitle.includes(moment(dt).format('yyyy-MM-DD')) &&
+      moment(dt).format('yyyy-MM-DD') !== null
+    ) {
+      arrTitle.push(moment(dt).format('yyyy-MM-DD'));
+    }
+  }
+  arrTitle.sort().reverse();
+  ///////////////////////////////////////
+
+  for (let i = 0; i < arrTitle.length; i++) {
+    let title = arrTitle[i];
+    let tempS = [];
+    let tempE = [];
+    let tempPlace = [];
+    for (let j = 0; j < dataS?.length; j++) {
+      if (dataS[j]?.time_S === title) {
+        tempS.push(dataS[j]);
+      }
+    }
+    for (let j = 0; j < dataE?.length; j++) {
+      if (dataE[j].time_E === title) {
+        tempE.push(dataE[j]);
+      }
+    }
+
+    for (let j = 0; j < dataPlace?.length; j++) {
+      let dt = new Date(dataPlace[j]?.place?.timeOrder);
+      let time = moment(dt).format('yyyy-MM-DD');
+      if (time === title) {
+        tempPlace.push(dataPlace[j]);
+      }
+    }
+    if (tempE?.length > 0 || tempS?.length > 0 || tempPlace?.length > 0) {
+      dataAfter.push({
+        title: title,
+        dataItem: [tempS, tempE, tempPlace],
+      });
+    }
+  }
+  return dataAfter;
+};
+
 const ListSE = ({navigation, route}) => {
   const [selectPicker, setSelectPicker] = useState('All');
   const [showSpending, setShowSpending] = useState(true);
   const [showSale, setShowSale] = useState(false);
   const show = route.params?.showSale;
-  
-  useEffect(()=>{
-    if(show){
+  const dataS = useSelector(state => state.FSpending.dataSpending);
+  const dataE = useSelector(state => state.FEarning.dataEarning);
+  const dataPlace = useSelector(state => state.HomeReducer.dataPlace);
+
+  useEffect(() => {
+    if (show) {
       setShowSale(true);
     }
-  },[show]);
+  }, [show]);
+
+  useEffect(() => {
+    dataAll = caculateData(dataS, dataE, dataPlace);
+  }, [dataE, dataS, dataPlace]);
 
   const [modalVisible, setModalVisible] = useState(false);
 
   const disPatch = useDispatch();
-  const dataAll = useSelector(state => state.eaReducer.dataCustom);
 
   const DeleteRowDBActionS = id => {
     db.transaction(tx => {
@@ -370,19 +438,6 @@ const ListSE = ({navigation, route}) => {
                 )}
               </View>
             </TouchableOpacity>
-            {/* <View style={styles.buttonTop}>
-              <Picker
-                selectedValue={selectPicker}
-                style={{height: 20, width: 100}}
-                onValueChange={(itemValue, itemIndex) =>
-                  setSelectPicker(itemValue)
-                }
-                itemStyle={{fontSize: 12, padding: 0}}>
-                <Picker.Item label="Pending" value="Pending" />
-                <Picker.Item label="Done" value="Done" />
-                <Picker.Item label="All" value="All" />
-              </Picker>
-            </View> */}
           </View>
         </View>
       </View>
@@ -427,7 +482,7 @@ const ListSE = ({navigation, route}) => {
                                   screen: 'EditPlace',
                                   params: {
                                     item: item,
-                                    code: 10
+                                    code: 10,
                                   },
                                 })
                               }>
@@ -468,7 +523,12 @@ const ListSE = ({navigation, route}) => {
                                 </View>
                               </View>
                               <Text>
-                                {caculateTotalP(product)
+                                {(
+                                  e.quantity * e.valueProduct -
+                                  (e.discount / 100) *
+                                    e.quantity *
+                                    e.valueProduct
+                                )
                                   ?.toString()
                                   .replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,')}
                               </Text>
@@ -721,7 +781,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    flex: 1.2,
+    flex: 1.5,
 
     backgroundColor: '#b50000',
     paddingHorizontal: 10,
