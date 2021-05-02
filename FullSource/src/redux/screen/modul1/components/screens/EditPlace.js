@@ -15,13 +15,13 @@ import ImagePicker from 'react-native-image-crop-picker';
 import {deletePlaceAction, updatePlaceAction} from '../../../../actions/index';
 import {Input} from 'react-native-elements';
 import Moment from 'moment';
-import { duration } from 'moment';
+import {duration} from 'moment';
 
 const dataListState = [
-  {id:1, title: "New"},
-  {id:2, title: "Done"},
-  {id:3, title: "Cancel"}
-]
+  {id: 1, title: 'New'},
+  {id: 2, title: 'Done'},
+  {id: 3, title: 'Cancel'},
+];
 function EditPlace(props) {
   const custom = props.route.params?.itemCustom;
   const itemProduct = props.route.params?.itemProduct;
@@ -30,7 +30,7 @@ function EditPlace(props) {
   // console.log('custom :>> ', custom);
   // console.log('itemProduct :>> ', itemProduct);
   console.log('item :>> ', item);
-  const [dataProduct, setDataProduct] = useState(item?.Place_Product||[]);
+  const [dataProduct, setDataProduct] = useState(item?.Place_Product || []);
   const [itemCustom, setItemCustom] = useState(item?.custom || []);
   const [notePlace, setNotePlace] = useState('');
   const [statusPlace, setStatusPlace] = useState('');
@@ -48,8 +48,8 @@ function EditPlace(props) {
   }, [item]);
 
   useEffect(() => {
-    if(custom){
-      setItemCustom(custom)
+    if (custom) {
+      setItemCustom(custom);
     }
   }, [custom]);
 
@@ -68,7 +68,7 @@ function EditPlace(props) {
           check = false;
         }
       }
-       if (check) {
+      if (check) {
         let obj = {
           id: itemProduct.id,
           nameProduct: itemProduct.nameProduct,
@@ -85,21 +85,19 @@ function EditPlace(props) {
     }
   }, [itemProduct]);
 
-
-
   function onBack() {
-    if(code === 10){
-      props.navigation.navigate('OverViewTabs', {screen:'ListSE',params:{
-        showSale :true
-      }});
-    }
-    else if(code ===11){
+    if (code === 10) {
+      props.navigation.navigate('OverViewTabs', {
+        screen: 'ListSE',
+        params: {
+          showSale: true,
+        },
+      });
+    } else if (code === 11) {
       props.navigation.navigate('HomeTodo');
-    }
-    else{
+    } else {
       props.navigation.goBack();
     }
-   
   }
 
   // price
@@ -143,9 +141,9 @@ function EditPlace(props) {
   }
 
   function updatePlace(itemCustom, dataProduct, notePlace, time, status) {
-    console.log("--------------------------UPDatePlace")
+    console.log('--------------------------UPDatePlace');
     if (dataProduct.length > 0) {
-      console.log("--------------------------UPDatePlace")
+      console.log('--------------------------UPDatePlace');
       let idPlace = item.place.id;
       let a = {
         custom: itemCustom,
@@ -158,18 +156,19 @@ function EditPlace(props) {
       dispatch(updatePlaceAction(a));
       setRefreshing(true);
       setTimeout(() => {
-        if(code === 10){
-          props.navigation.navigate('OverViewTabs', {screen:'ListSE',params:{
-            showSale :true
-          }});
-        }
-        else if(code ===11){
+        if (code === 10) {
+          props.navigation.navigate('OverViewTabs', {
+            screen: 'ListSE',
+            params: {
+              showSale: true,
+            },
+          });
+        } else if (code === 11) {
           props.navigation.push('HomeTodo');
-        }
-        else{
+        } else {
           props.navigation.goBack();
         }
-     
+
         setRefreshing(false);
       }, 2000);
     } else {
@@ -186,7 +185,8 @@ function EditPlace(props) {
         style={{
           width: '95%',
           alignSelf: 'center',
-          borderBottomWidth:0.5, borderBottomColor:"gray",
+          borderBottomWidth: 0.5,
+          borderBottomColor: 'gray',
           marginTop: 10,
           borderRadius: 5,
           marginBottom: 10,
@@ -212,18 +212,15 @@ function EditPlace(props) {
           </View>
           <View
             style={{marginLeft: 20, justifyContent: 'center', width: '73%'}}>
-              <View style = {{flexDirection:"row", justifyContent:"space-between"}}>
-              <Text style={{fontSize: 18}}>
-              Tên Sp: {item.nameProduct}
-            </Text>
-            <TouchableOpacity
-            onPress={() => deleteItem(item)}
-            style={{ }}>
-            <Feather name="x-circle" size={20} color ="#b50000" />
-          </TouchableOpacity>
-              </View>
-            
-            <Text style={{marginTop: 5, fontWeight:"bold"}}>
+            <View
+              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              <Text style={{fontSize: 18}}>Tên Sp: {item.nameProduct}</Text>
+              <TouchableOpacity onPress={() => deleteItem(item)} style={{}}>
+                <Feather name="x-circle" size={20} color="#b50000" />
+              </TouchableOpacity>
+            </View>
+
+            <Text style={{marginTop: 5, fontWeight: 'bold'}}>
               Giá gốc:{' '}
               {item.valueProduct
                 .toString()
@@ -253,19 +250,20 @@ function EditPlace(props) {
               }}>
               {item.quantity > 1 ? (
                 <TouchableOpacity onPress={() => minusQuantity(item)}>
-                  <Feather name="minus-circle" size={20}  color ="black"/>
+                  <Feather name="minus-circle" size={20} color="black" />
                 </TouchableOpacity>
               ) : (
                 <View />
               )}
-              <Text style ={{}}>{item.quantity}</Text>
+              <Text style={{}}>{item.quantity}</Text>
               <TouchableOpacity onPress={() => plusQuantity(item)}>
-                <Feather name="plus-circle" size={20} color ="black"/>
+                <Feather name="plus-circle" size={20} color="black" />
               </TouchableOpacity>
             </View>
-            <Text style={{marginTop: 5, fontWeight: "bold", marginBottom:10}}>Giá : {price(item)} đ</Text>
+            <Text style={{marginTop: 5, fontWeight: 'bold', marginBottom: 10}}>
+              Giá : {price(item)} đ
+            </Text>
           </View>
-        
         </View>
       </View>
     );
@@ -315,69 +313,61 @@ function EditPlace(props) {
     setRefreshing(true);
     setTimeout(() => {
       setRefreshing(false);
-      if(code === 10){
-        props.navigation.navigate('OverViewTabs', {screen:'ListSE',params:{
-          showSale :true
-        }});
-      }
-      else if(code ===11){
+      if (code === 10) {
+        props.navigation.navigate('OverViewTabs', {
+          screen: 'ListSE',
+          params: {
+            showSale: true,
+          },
+        });
+      } else if (code === 11) {
         props.navigation.push('HomeTodo');
-      }
-      else {
+      } else {
         props.navigation.navigate('Home');
       }
     }, 2000);
   }
-  function  setStatusPlace_(item){
+  function setStatusPlace_(item) {
     setStatusPlace(item.title);
     setShowListState(false);
   }
-  function iconList(id){
-    switch(id){
-      case 1: return(
-        <Icon name="burst-new" color="red" size={24} />
-      );
-      case 2 : return(
-        <Icon name="check" color="gray" size={24} />
-      )
-      case 3 : return(
-        <Icon name="x" color="gray" size={24} />
-      )
-      default: return(
-        <Icon name="burst-new" color="red" size={24} />
-      )
+  function iconList(id) {
+    switch (id) {
+      case 1:
+        return <Icon name="burst-new" color="red" size={24} />;
+      case 2:
+        return <Icon name="check" color="gray" size={24} />;
+      case 3:
+        return <Icon name="x" color="gray" size={24} />;
+      default:
+        return <Icon name="burst-new" color="red" size={24} />;
     }
   }
-  const RenderItemStatus = ({item})=>{
+  const RenderItemStatus = ({item}) => {
     return (
       <TouchableOpacity
-      onPress={()=>setStatusPlace_(item) }
-       style={{
-         width: '95%',
-         alignSelf: 'center',
-         flexDirection: 'row',
-         borderColor: 'gray'
-       }}>
-       <View
-         style={{
-           width: '10%',
-           justifyContent: 'center',
-           alignItems: 'center',
-         }}>
-           {iconList(item.id)}
-       </View>
-       <View style ={{alignItems: "center", justifyContent: 'center', height:40}}>
-       <Text
-         style={{
-          
-         }}>{item.title}</Text>  
-       </View>
-
-      
-     </TouchableOpacity>
-    )
-  }
-    
+        onPress={() => setStatusPlace_(item)}
+        style={{
+          width: '95%',
+          alignSelf: 'center',
+          flexDirection: 'row',
+          borderColor: 'gray',
+        }}>
+        <View
+          style={{
+            width: '10%',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          {iconList(item.id)}
+        </View>
+        <View
+          style={{alignItems: 'center', justifyContent: 'center', height: 40}}>
+          <Text style={{}}>{item.title}</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
 
   return (
     <View style={{flex: 1}}>
@@ -426,7 +416,8 @@ function EditPlace(props) {
                 width: '95%',
                 alignSelf: 'center',
                 flexDirection: 'row',
-                borderBottomWidth:0.5, borderBottomColor:"gray",
+                borderBottomWidth: 0.5,
+                borderBottomColor: 'gray',
                 marginTop: 10,
                 borderRadius: 5,
                 marginBottom: 10,
@@ -445,9 +436,7 @@ function EditPlace(props) {
                 />
               </View>
               <View style={{marginLeft: 10, justifyContent: 'center'}}>
-                <Text style={{fontSize: 18}}>
-                  {itemCustom.name}
-                </Text>
+                <Text style={{fontSize: 18}}>{itemCustom.name}</Text>
                 <Text style={{marginTop: 5}}>SĐT: {itemCustom.phone}</Text>
                 <Text style={{marginTop: 5}}>
                   Địa chỉ: {itemCustom.address}
@@ -472,17 +461,24 @@ function EditPlace(props) {
         {dataProduct?.map((item, index) => (
           <RenderItemProduct item={item} key={index} />
         ))}
-            <Input
-            containerStyle={{height:90}}
-           leftIcon={<Feather name="file-text" size={24} color="gray" style ={{marginLeft:2}} />}
-            inputContainerStyle={{borderWidth: 1, marginTop:5, borderRadius:5}}
-          label = "Ghi chú"
-            placeholder="Ghi chú"
-            value={notePlace}
-            onChangeText={setNotePlace}
-          />
+        <Input
+          containerStyle={{height: 90}}
+          leftIcon={
+            <Feather
+              name="file-text"
+              size={24}
+              color="gray"
+              style={{marginLeft: 2}}
+            />
+          }
+          inputContainerStyle={{borderWidth: 1, marginTop: 5, borderRadius: 5}}
+          label="Ghi chú"
+          placeholder="Ghi chú"
+          value={notePlace}
+          onChangeText={setNotePlace}
+        />
         <TouchableOpacity
-         onPress={ onShowStatus}
+          onPress={onShowStatus}
           style={{
             width: '95%',
             alignSelf: 'center',
@@ -500,20 +496,24 @@ function EditPlace(props) {
             }}>
             <Feather name="star" color="gray" size={24} />
           </View>
-          <View style ={{alignItems: "center", justifyContent: 'center', height:50}}>
-          <Text
+          <View
             style={{
-             
-            }}>{statusPlace}</Text>  
+              alignItems: 'center',
+              justifyContent: 'center',
+              height: 50,
+            }}>
+            <Text style={{}}>{statusPlace}</Text>
           </View>
-
-         
         </TouchableOpacity>
         <ScrollView>
-            {showListState? dataListState.map((item, index)=>(
-              <RenderItemStatus item = {item} key = {index}/>
-            )):<View/>}
-            </ScrollView>
+          {showListState ? (
+            dataListState.map((item, index) => (
+              <RenderItemStatus item={item} key={index} />
+            ))
+          ) : (
+            <View />
+          )}
+        </ScrollView>
         <View style={{flexDirection: 'row', marginLeft: '5%', marginTop: 20}}>
           <Text style={{fontWeight: 'bold', fontSize: 20, color: '#0542a3'}}>
             Tổng tiền : {sumPrice()} đ

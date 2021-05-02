@@ -204,8 +204,6 @@ const EditS = ({route, navigation}) => {
     setDate(currentDate);
   };
 
-  const tempMoneyCompare = data.cost_S || data.cost_E;
-
   const a = tmoney.current.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
   const UpdateDBActionS = id => {
@@ -316,8 +314,6 @@ const EditS = ({route, navigation}) => {
     }
   }, [spmoney]);
 
-  console.log(`tempMoney: ` + tmoney.current);
-  console.log(`title: ` + title);
   return (
     <View style={styles.Container}>
       <View
