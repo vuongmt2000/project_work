@@ -21,17 +21,12 @@ import * as Action from '../../actions/index';
 
 const windowHeight = Dimensions.get('window').height;
 const moment = require('moment');
-const foteDate = a => {
-  if (a < 10) {
-    return '0' + a;
-  } else return a;
-};
 
 const storeData = async (value, key) => {
   try {
     const jsonValue = JSON.stringify(value);
     await AsyncStorage.setItem(key, jsonValue);
-    console.log('Ok stored');
+    console.log(`saved ok`);
   } catch (e) {
     // saving error
     console.log('khong luu duoc');
@@ -76,12 +71,15 @@ const HomeTodo = ({navigation}) => {
       return a.place.timeOrder.localeCompare(b.place.timeOrder);
     })
     .reverse();
+
   useEffect(() => {
-    storeData(todoItems, 'data');
+    if (todoItems?.length > 0) {
+      storeData(todoItems, 'dataItem');
+    }
   }, [todoItems]);
 
   useEffect(() => {
-    getData('data').then(rs => {
+    getData('dataItem').then(rs => {
       let data = JSON.parse(rs);
       setTodoItems(data);
     });
@@ -89,10 +87,11 @@ const HomeTodo = ({navigation}) => {
 
   useEffect(() => {
     dispatch(Action.fetchPlaceAction());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
-    let dataMerge = mergeData(todoItems, dataPlace);
+    let tempData = [...todoItems];
+    let dataMerge = mergeData(tempData, dataPlace);
     dataMerge
       .sort((a, b) => {
         if (a.dateTime < b.dateTime) {
@@ -106,8 +105,6 @@ const HomeTodo = ({navigation}) => {
       .reverse();
     setDataMerge(dataMerge);
   }, [todoItems, dataPlace]);
-
-  console.log('dataMerge :>> ', dataMerge);
 
   // Add a new item to the state
   function addTodoItem(_text) {
@@ -126,12 +123,11 @@ const HomeTodo = ({navigation}) => {
   // Delete an item from state by index
   function deleteTodoItem(_index) {
     if (_index === 0) {
-      setTodoItems([]);
-    } else {
-      let tempArr = [...todoItems];
-      tempArr.splice(_index, 1);
-      setTodoItems(tempArr);
+      storeData([], 'dataItem');
     }
+    let tempArr = [...todoItems];
+    tempArr.splice(_index, 1);
+    setTodoItems(tempArr);
   }
 
   // Function to set completed to true by index.
@@ -153,10 +149,6 @@ const HomeTodo = ({navigation}) => {
     tempArr[_index] = itemE.current;
     setTodoItems(tempArr);
   };
-
-  // Render
-
-  //console.log('dataPlace :>> ', dataPlace);
 
   return (
     <>
@@ -191,8 +183,6 @@ const HomeTodo = ({navigation}) => {
             isOn={showSwitch}
             onColor="green"
             offColor="#b50000"
-            labelStyle={{color: 'black', fontWeight: '900'}}
-            label="Đơn hàng"
             size="medium"
             onToggle={() => {
               setShowSwitch(!showSwitch);
@@ -213,7 +203,7 @@ const HomeTodo = ({navigation}) => {
                       screen: 'EditPlace',
                       params: {
                         item: item,
-                        code: 11
+                        code: 11,
                       },
                     })
                   }
@@ -346,7 +336,7 @@ const HomeTodo = ({navigation}) => {
                       screen: 'EditPlace',
                       params: {
                         item: item,
-                        code: 11
+                        code: 11,
                       },
                     })
                   }
@@ -372,16 +362,26 @@ const HomeTodo = ({navigation}) => {
                       </Text>
                       <Text
                         style={[
-                          {fontSize: 18},
+                          {fontSize: 18, marginRight: 20},
                           item.place.statusOrder === 'Done'
                             ? {
                                 textDecorationLine: 'line-through',
                               }
-                            : {
-                                textDecorationLine: 'none',
-                              },
+                            : [
+                                item.place.statusOrder === 'Cancel'
+                                  ? {textDecorationLine: 'line-through'}
+                                  : {textDecorationLine: 'none'},
+                              ],
                         ]}>
-                        Đơn hàng của {item.custom?.name}
+                        {item.place.statusOrder === 'Cancel' ? (
+                          <Text style={{fontSize: 18}}>
+                            Đơn hàng của {item.custom.name} đã hủy
+                          </Text>
+                        ) : (
+                          <Text style={{fontSize: 18}}>
+                            Đơn hàng của {item.custom.name}
+                          </Text>
+                        )}
                       </Text>
                     </View>
                   </View>
