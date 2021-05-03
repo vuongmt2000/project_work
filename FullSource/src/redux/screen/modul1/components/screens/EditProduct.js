@@ -90,7 +90,7 @@ function EditProduct(props) {
       <View style={{width: '100%', backgroundColor: '#34a4eb'}}>
         <View
           style={{
-            width: '90%',
+            width: '95%',
             height: 60,
             alignItems: 'center',
             justifyContent: 'space-between',
@@ -161,23 +161,11 @@ function EditProduct(props) {
         style={{
           flexDirection: 'row',
           marginTop: 20,
-          width: '90%',
+          width: '97.5%',
           justifyContent: 'flex-end',
-          alignSelf: 'center',
+          alignItems: 'center',
           marginBottom:20
         }}>
-        <TouchableOpacity
-          style={{
-            height: 50,
-            width: 120,
-            borderRadius: 5,
-            backgroundColor: '#ed422f',
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginRight: 10,
-          }}>
-          <Text style={{color: 'white'}}>Hủy</Text>
-        </TouchableOpacity>
         <TouchableOpacity
           onPress={() =>
             updateProduct(

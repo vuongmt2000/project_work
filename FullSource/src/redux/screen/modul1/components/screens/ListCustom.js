@@ -151,7 +151,10 @@ function ListCustom(props, {navigation}) {
             width: '95%',
             alignSelf: 'center',
           }}>
-          <View style={{width: 30, height: 20}} />
+            {code === 3? <TouchableOpacity onPress={()=>props.navigation.goBack()}>
+            <Feather name="arrow-left" color="white" size={26} />
+          </TouchableOpacity>:
+          <View style={{width: 30, height: 20}} />}
           <Text style={{color: 'white', fontSize: 18}}>{nameCustom}</Text>
           <TouchableOpacity onPress={searchListCustom}>
             <Feather name="search" size={26} color="white" />

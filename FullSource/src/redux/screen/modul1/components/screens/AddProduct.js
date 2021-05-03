@@ -81,7 +81,7 @@ function AddProduct(props) {
       <View style={{width: '100%', backgroundColor: '#34a4eb'}}>
         <View
           style={{
-            width: '90%',
+            width: '95%',
             height: 60,
             alignItems: 'center',
             justifyContent: 'space-between',

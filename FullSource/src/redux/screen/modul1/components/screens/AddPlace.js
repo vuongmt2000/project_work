@@ -179,7 +179,7 @@ function AddPlace(props) {
                   <Feather name="minus-circle" size={20}  color ="black"/>
                 </TouchableOpacity>
               ) : (
-                <View />
+                <Feather name="minus-circle" size={20}  color ="black"/>
               )}
               <Text style ={{}}>{item.quantity}</Text>
               <TouchableOpacity onPress={() => plusQuantity(item)}>
