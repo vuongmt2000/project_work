@@ -246,7 +246,7 @@ const Caro = ({navigation}) => {
             <Text
               style={{
                 fontSize: 20,
-                marginRight: 15,
+                marginLeft: 15,
                 justifyContent: 'flex-end',
               }}>
               {!winnerSymbol && `Turn: ${turn}`}
