@@ -202,7 +202,7 @@ const filterStatus = (data, status) => {
   }
 };
 
-var dataAll = [];
+var dataAll2 = [];
 
 const filterStatusPlace = (data, status) => {
   switch (status) {
@@ -296,24 +296,24 @@ const ListSE = ({navigation, route}) => {
   const [selectPicker, setSelectPicker] = useState('All');
   const [showSpending, setShowSpending] = useState(true);
   const [showSale, setShowSale] = useState(false);
+  const disPatch = useDispatch();
   const show = route.params?.showSale;
   const dataS = useSelector(state => state.FSpending.dataSpending);
   const dataE = useSelector(state => state.FEarning.dataEarning);
   const dataPlace = useSelector(state => state.HomeReducer.dataPlace);
-
   useEffect(() => {
-    if (show) {
+    if (show === true) {
       setShowSale(true);
     }
   }, [show]);
 
-  useEffect(() => {
-    dataAll = caculateData(dataS, dataE, dataPlace);
-  }, [dataE, dataS, dataPlace]);
+  if (dataE?.length > 0 || dataS?.length > 0 || dataPlace?.length > 0) {
+    dataAll2 = caculateData(dataS, dataE, dataPlace);
+  } else {
+    dataAll2 = [];
+  }
 
   const [modalVisible, setModalVisible] = useState(false);
-
-  const disPatch = useDispatch();
 
   const DeleteRowDBActionS = id => {
     db.transaction(tx => {
@@ -360,8 +360,6 @@ const ListSE = ({navigation, route}) => {
       });
     });
   };
-
-  console.log(dataAll);
 
   return (
     <SafeAreaView
@@ -445,7 +443,7 @@ const ListSE = ({navigation, route}) => {
       <View style={styles.body}>
         <ScrollView showsVerticalScrollIndicator={false}>
           {showSale === true
-            ? dataAll.map(it => {
+            ? dataAll2.map(it => {
                 let earnMoney = 0;
                 let data = it.dataItem[2];
                 let dataP = filterStatusPlace(data, selectPicker);
@@ -540,7 +538,7 @@ const ListSE = ({navigation, route}) => {
                   );
               })
             : showSpending === true
-            ? dataAll?.map(item => {
+            ? dataAll2?.map(item => {
                 let data = item.dataItem[0];
                 let dataS = filterStatus(data, selectPicker);
                 let totalS = caculateTotalS(dataS);
@@ -620,7 +618,7 @@ const ListSE = ({navigation, route}) => {
                     </View>
                   );
               })
-            : dataAll?.map(item => {
+            : dataAll2?.map(item => {
                 let data = item.dataItem[1];
                 let dataE = filterStatus(data, selectPicker);
                 let totalE = caculateTotalE(dataE);

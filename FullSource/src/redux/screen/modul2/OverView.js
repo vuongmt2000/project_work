@@ -228,6 +228,8 @@ const OverView = ({navigation, route}) => {
   const dataE = useSelector(state => state.FEarning.dataEarning);
   const dataPlace = useSelector(state => state.HomeReducer.dataPlace);
   let ESMoney = [];
+  // const show = route.params?.showSale;
+
   useEffect(() => {
     getData('header').then(rs => {
       let data = JSON.parse(rs);
@@ -236,6 +238,17 @@ const OverView = ({navigation, route}) => {
     });
     dispatch(Action.fetchSpending());
   }, []);
+
+  // useEffect(() => {
+  //   if (show === true) {
+  //     navigation.navigate('OverViewTabs', {
+  //       screen: 'ListSE',
+  //       params: {
+  //         sh: true,
+  //       },
+  //     });
+  //   }
+  // }, [show]);
 
   useEffect(() => {
     dispatch(Action.fetchPlaceAction());
