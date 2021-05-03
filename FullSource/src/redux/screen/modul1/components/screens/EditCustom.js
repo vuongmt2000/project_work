@@ -72,7 +72,7 @@ function EditCustom(props) {
       <View style={{width: '100%', backgroundColor: '#34a4eb'}}>
         <View
           style={{
-            width: '90%',
+            width: '95%',
             height: 60,
             alignItems: 'center',
             justifyContent: 'space-between',
@@ -139,6 +139,7 @@ function EditCustom(props) {
             onChangeText={setAddress}
           />
           <Input
+           containerStyle ={{ height:90}}
            leftIcon={<Feather name="file-text" size={24} color="gray" style ={{marginLeft:2}} />}
             inputContainerStyle={{borderWidth: 1, marginTop:5, borderRadius:5}}
           label = "Ghi chú"
@@ -151,22 +152,11 @@ function EditCustom(props) {
         style={{
           flexDirection: 'row',
           marginTop: 20,
-          width: '90%',
+          width: '95%',
           justifyContent: 'flex-end',
           alignSelf: 'center',
         }}>
-        <TouchableOpacity
-          style={{
-            height: 50,
-            width: 120,
-            borderRadius: 5,
-            backgroundColor: '#ed422f',
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginRight: 10,
-          }}>
-          <Text style={{color: 'white'}}>Hủy</Text>
-        </TouchableOpacity>
+
         <TouchableOpacity
           onPress={() =>
             updateCustomer(fullName, phone, address, image, note, item.id)
@@ -178,6 +168,7 @@ function EditCustom(props) {
             backgroundColor: '#0641cc',
             justifyContent: 'center',
             alignItems: 'center',
+            marginBottom: 20
           }}>
           <Text style={{color: 'white'}}>Cập nhật</Text>
         </TouchableOpacity>

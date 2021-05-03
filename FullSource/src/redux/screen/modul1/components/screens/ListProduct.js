@@ -146,7 +146,10 @@ function ListProduct(props) {
             width: '95%',
             alignSelf: 'center',
           }}>
-          <View style={{width: 30, height: 20}} />
+           {code === 1? <TouchableOpacity onPress={()=>props.navigation.goBack()}>
+            <Feather name="arrow-left" color="white" size={26} />
+          </TouchableOpacity>:
+          <View style={{width: 30, height: 20}} />}
           <Text style={{color: 'white', fontSize: 18}}>{nameProduct}</Text>
           <TouchableOpacity onPress={searchListProduct}>
             <Feather name="search" size={26} color="white" />

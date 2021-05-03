@@ -253,7 +253,7 @@ function EditPlace(props) {
                   <Feather name="minus-circle" size={20} color="black" />
                 </TouchableOpacity>
               ) : (
-                <View />
+                <Feather name="minus-circle" size={20} color="black" />
               )}
               <Text style={{}}>{item.quantity}</Text>
               <TouchableOpacity onPress={() => plusQuantity(item)}>
@@ -394,7 +394,7 @@ function EditPlace(props) {
       <ScrollView refreshControl={<RefreshControl refreshing={refreshing} />}>
         <View style={{width: '95%', alignSelf: 'center'}}>
           <Text style={{fontSize: 18}}>
-            {Moment(item?.place.timeOrder).format('DD/MM/yyyy HH:mm')}
+            {Moment(item?.place.timeOrder).format('DD/MM/yyyy HH:mm:ss')}
           </Text>
           <Text style={{fontSize: 16, marginTop: 20}}>Khách hàng</Text>
           {itemCustom ? (
@@ -528,18 +528,6 @@ function EditPlace(props) {
             justifyContent: 'flex-end',
             alignSelf: 'center',
           }}>
-          <TouchableOpacity
-            style={{
-              height: 50,
-              width: 120,
-              borderRadius: 5,
-              backgroundColor: '#ed422f',
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginRight: 10,
-            }}>
-            <Text style={{color: 'white'}}>Hủy</Text>
-          </TouchableOpacity>
           <TouchableOpacity
             onPress={() =>
               updatePlace(
