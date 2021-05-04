@@ -14,6 +14,7 @@ import {
   Alert,
   Modal,
   Dimensions,
+  StatusBar,
 } from 'react-native';
 import IconI from 'react-native-vector-icons/Ionicons';
 import IconA from 'react-native-vector-icons/AntDesign';
@@ -367,6 +368,7 @@ const ListSE = ({navigation, route}) => {
         styles.container,
         modalVisible === true ? {opacity: 0.3} : {opacity: 1},
       ]}>
+      <StatusBar hidden={true} />
       <View style={styles.header}>
         <View
           style={{

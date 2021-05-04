@@ -19,7 +19,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 const getFirstRate = currency => {
   axios({
     method: 'GET',
-    url: `https://v6.exchangerate-api.com/v6/d44c29d16ec4f1dd8deebc93/latest/${currency}`,
+    url: `https://v6.exchangerate-api.com/v6/deb819d983754b3cd4a690e8/latest/${currency}`,
   })
     .then(Response => {
       return Response.data['conversion_rates']['USD'];
@@ -57,7 +57,7 @@ const ConverterCurrency = ({navigation}) => {
   useEffect(() => {
     axios({
       method: 'GET',
-      url: `https://v6.exchangerate-api.com/v6/d44c29d16ec4f1dd8deebc93/latest/${currency1}`,
+      url: `https://v6.exchangerate-api.com/v6/deb819d983754b3cd4a690e8/latest/${currency1}`,
     })
       .then(Response => {
         setRate(Response.data['conversion_rates']);
